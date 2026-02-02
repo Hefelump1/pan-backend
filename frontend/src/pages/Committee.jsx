@@ -1,8 +1,27 @@
-import React from 'react';
-import { Users, Mail, Linkedin } from 'lucide-react';
-import { committeeMembers } from '../data/mock';
+import React, { useState, useEffect } from 'react';
+import { Users, Mail } from 'lucide-react';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Committee = () => {
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCommittee();
+  }, []);
+
+  const fetchCommittee = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/committee`);
+      setMembers(response.data);
+    } catch (error) {
+      console.error('Error fetching committee:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -21,8 +40,13 @@ export const Committee = () => {
       {/* Committee Members */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {committeeMembers.map((member) => (
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">Loading committee members...</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {members.map((member) => (
               <div key={member.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="relative h-80">
                   <img
@@ -42,6 +66,7 @@ export const Committee = () => {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Users, Building2, BookOpen, ArrowRight, Heart } from 'lucide-react';
-import { events } from '../data/mock';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Home = () => {
-  const upcomingEvents = events.slice(0, 3);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/events`);
+      const sorted = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+      setUpcomingEvents(sorted.slice(0, 3));
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen">
