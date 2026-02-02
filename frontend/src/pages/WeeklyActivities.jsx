@@ -3,10 +3,8 @@ import { Clock } from 'lucide-react';
 import { weeklyActivities } from '../data/mock';
 
 export const WeeklyActivities = () => {
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <section className="bg-gradient-to-r from-red-700 to-red-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center mb-4">
@@ -19,19 +17,18 @@ export const WeeklyActivities = () => {
         </div>
       </section>
 
-      {/* Activities Schedule */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
-            {weeklyActivities.map((day) => (
-              <div key={day.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+            {weeklyActivities.map((dayItem) => (
+              <div key={dayItem.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="bg-red-600 px-6 py-4">
-                  <h2 className="text-2xl font-bold text-white">{day.day}</h2>
+                  <h2 className="text-2xl font-bold text-white">{dayItem.day}</h2>
                 </div>
                 <div className="p-6">
                   <div className="space-y-6">
-                    {day.activities.map((activity, index) => (
-                      <div key={index} className={`${index !== 0 ? 'pt-6 border-t border-gray-200' : ''}`}>
+                    {dayItem.activities.map((activity, actIndex) => (
+                      <div key={actIndex} className={actIndex !== 0 ? 'pt-6 border-t border-gray-200' : ''}>
                         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                           <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">{activity.name}</h3>
                           <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg">
@@ -51,7 +48,6 @@ export const WeeklyActivities = () => {
         </div>
       </section>
 
-      {/* Additional Info */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Join Our Activities</h2>
