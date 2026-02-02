@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, MapPin, Clock } from 'lucide-react';
-import { events } from '../data/mock';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Events = () => {
-  const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/events`);
+      const sortedEvents = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+      setEvents(sortedEvents);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getCategoryColor = (category) => {
     const colors = {
@@ -33,8 +52,17 @@ export const Events = () => {
       {/* Events Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sortedEvents.map((event) => (
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">Loading events...</p>
+            </div>
+          ) : events.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">No events scheduled at this time.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {events.map((event) => (
               <div key={event.id} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div className="relative h-56">
                   <img
@@ -74,6 +102,7 @@ export const Events = () => {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 
