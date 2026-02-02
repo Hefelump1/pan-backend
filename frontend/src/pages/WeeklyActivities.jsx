@@ -3,18 +3,6 @@ import { Clock } from 'lucide-react';
 import { weeklyActivities } from '../data/mock';
 
 export const WeeklyActivities = () => {
-  const getDayColor = (day) => {
-    const colors = {
-      Monday: 'from-red-600 to-red-700',
-      Tuesday: 'from-blue-600 to-blue-700',
-      Wednesday: 'from-green-600 to-green-700',
-      Thursday: 'from-purple-600 to-purple-700',
-      Friday: 'from-orange-600 to-orange-700',
-      Saturday: 'from-pink-600 to-pink-700',
-      Sunday: 'from-indigo-600 to-indigo-700'
-    };
-    return colors[day] || 'from-gray-600 to-gray-700';
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -37,7 +25,7 @@ export const WeeklyActivities = () => {
           <div className="space-y-6">
             {weeklyActivities.map((day) => (
               <div key={day.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className={`bg-gradient-to-r ${getDayColor(day.day)} px-6 py-4`}>
+                <div className="bg-red-600 px-6 py-4">
                   <h2 className="text-2xl font-bold text-white">{day.day}</h2>
                 </div>
                 <div className="p-6">
