@@ -1,19 +1,6 @@
 import React from 'react';
 import { Clock } from 'lucide-react';
 
-const weeklyData = [
-  { day: 'Monday', activities: [{ name: 'Polish Seniors Group', time: '10:00 - 13:00', desc: 'Social gathering for Polish seniors', contact: 'seniors@polishassociation.com.au' }] },
-  { day: 'Tuesday', activities: [{ name: 'Little Poland Dining', time: '17:00 - 21:00', desc: 'Authentic Polish cuisine', contact: 'dining@polishassociation.com.au' }] },
-  { day: 'Wednesday', activities: [{ name: "Children's Polish School", time: '16:30 - 18:30', desc: 'Language classes for ages 5-15', contact: 'school@polishassociation.com.au' }] },
-  { day: 'Thursday', activities: [{ name: 'Rzeszowiacy Dance Practice', time: '18:00 - 20:00', desc: 'Traditional Polish folk dance', contact: 'dance@polishassociation.com.au' }] },
-  { day: 'Friday', activities: [{ name: 'Little Poland Dining', time: '17:00 - 22:00', desc: 'Authentic Polish cuisine', contact: 'dining@polishassociation.com.au' }] },
-  { day: 'Saturday', activities: [
-    { name: 'Adults Polish School', time: '10:00 - 12:00', desc: 'Language classes for adults', contact: 'adultschool@polishassociation.com.au' },
-    { name: 'Little Poland Dining', time: '17:00 - 22:00', desc: 'Authentic Polish cuisine', contact: 'dining@polishassociation.com.au' }
-  ]},
-  { day: 'Sunday', activities: [{ name: 'Little Poland Dining', time: '12:00 - 20:00', desc: 'Sunday lunch and dinner', contact: 'dining@polishassociation.com.au' }] }
-];
-
 export const WeeklyActivities = () => {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -31,28 +18,139 @@ export const WeeklyActivities = () => {
 
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          {weeklyData.map((item, idx) => (
-            <div key={idx} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="bg-red-600 px-6 py-4">
-                <h2 className="text-2xl font-bold text-white">{item.day}</h2>
+          
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Monday</h2>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Polish Seniors Group</h3>
+                <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                  <Clock size={18} className="mr-2" />
+                  10:00 - 13:00
+                </span>
               </div>
-              <div className="p-6 space-y-6">
-                {item.activities.map((act, i) => (
-                  <div key={i} className={i > 0 ? 'pt-6 border-t border-gray-200' : ''}>
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">{act.name}</h3>
-                      <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
-                        <Clock size={18} className="mr-2" />
-                        {act.time}
-                      </span>
-                    </div>
-                    <p className="text-gray-700 mb-2">{act.desc}</p>
-                    <p className="text-red-600 font-medium">{act.contact}</p>
-                  </div>
-                ))}
+              <p className="text-gray-700 mb-2">Social gathering for Polish seniors with coffee and conversation.</p>
+              <p className="text-red-600 font-medium">seniors@polishassociation.com.au</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Tuesday</h2>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Little Poland Dining</h3>
+                <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                  <Clock size={18} className="mr-2" />
+                  17:00 - 21:00
+                </span>
+              </div>
+              <p className="text-gray-700 mb-2">Enjoy authentic Polish cuisine in our restaurant.</p>
+              <p className="text-red-600 font-medium">dining@polishassociation.com.au</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Wednesday</h2>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Children's Polish School</h3>
+                <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                  <Clock size={18} className="mr-2" />
+                  16:30 - 18:30
+                </span>
+              </div>
+              <p className="text-gray-700 mb-2">Polish language and culture classes for children aged 5-15.</p>
+              <p className="text-red-600 font-medium">school@polishassociation.com.au</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Thursday</h2>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Rzeszowiacy Dance Practice</h3>
+                <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                  <Clock size={18} className="mr-2" />
+                  18:00 - 20:00
+                </span>
+              </div>
+              <p className="text-gray-700 mb-2">Traditional Polish folk dance rehearsals. New members welcome!</p>
+              <p className="text-red-600 font-medium">dance@polishassociation.com.au</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Friday</h2>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Little Poland Dining</h3>
+                <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                  <Clock size={18} className="mr-2" />
+                  17:00 - 22:00
+                </span>
+              </div>
+              <p className="text-gray-700 mb-2">Enjoy authentic Polish cuisine in our restaurant.</p>
+              <p className="text-red-600 font-medium">dining@polishassociation.com.au</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Saturday</h2>
+            </div>
+            <div className="p-6 space-y-6">
+              <div>
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Adults Polish School</h3>
+                  <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                    <Clock size={18} className="mr-2" />
+                    10:00 - 12:00
+                  </span>
+                </div>
+                <p className="text-gray-700 mb-2">Polish language classes for adults - all levels welcome.</p>
+                <p className="text-red-600 font-medium">adultschool@polishassociation.com.au</p>
+              </div>
+              <div className="pt-6 border-t border-gray-200">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Little Poland Dining</h3>
+                  <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                    <Clock size={18} className="mr-2" />
+                    17:00 - 22:00
+                  </span>
+                </div>
+                <p className="text-gray-700 mb-2">Enjoy authentic Polish cuisine in our restaurant.</p>
+                <p className="text-red-600 font-medium">dining@polishassociation.com.au</p>
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white">Sunday</h2>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 md:mb-0">Little Poland Dining</h3>
+                <span className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg w-fit">
+                  <Clock size={18} className="mr-2" />
+                  12:00 - 20:00
+                </span>
+              </div>
+              <p className="text-gray-700 mb-2">Sunday lunch and dinner service with traditional Polish dishes.</p>
+              <p className="text-red-600 font-medium">dining@polishassociation.com.au</p>
+            </div>
+          </div>
+
         </div>
       </section>
 
