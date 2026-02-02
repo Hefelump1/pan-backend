@@ -27,9 +27,13 @@ export const HallHire = () => {
     e.preventDefault();
     try {
       const bookingData = {
-        ...formData,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        event_type: formData.eventType,
+        guests: parseInt(formData.guests),
         date: selectedDate ? selectedDate.toISOString().split('T')[0] : null,
-        guests: parseInt(formData.guests)
+        message: formData.message
       };
       
       await axios.post(`${BACKEND_URL}/api/bookings`, bookingData);
