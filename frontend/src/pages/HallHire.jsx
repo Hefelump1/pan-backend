@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Building2, Users, Check, Send } from 'lucide-react';
 import { Calendar } from '../components/ui/calendar';
 import { toast } from 'sonner';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const facilities = [
   'Full kitchen facilities', 'Tables and chairs included', 'Sound system available',
@@ -20,11 +23,24 @@ export const HallHire = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', eventType: '', guests: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success('Enquiry submitted! We will contact you within 24 hours.');
-    setFormData({ name: '', email: '', phone: '', eventType: '', guests: '', message: '' });
-    setSelectedDate(null);
+    try {
+      const bookingData = {
+        ...formData,
+        date: selectedDate ? selectedDate.toISOString().split('T')[0] : null,
+        guests: parseInt(formData.guests)
+      };
+      
+      await axios.post(`${BACKEND_URL}/api/bookings`, bookingData);
+      toast.success('Enquiry submitted successfully! We will contact you within 24 hours.');
+      
+      setFormData({ name: '', email: '', phone: '', eventType: '', guests: '', message: '' });
+      setSelectedDate(null);
+    } catch (error) {
+      console.error('Error submitting booking:', error);
+      toast.error('Failed to submit enquiry. Please try again or contact us directly.');
+    }
   };
 
   return (
