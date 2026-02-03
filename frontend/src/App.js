@@ -9,23 +9,36 @@ import { HallHire } from "./pages/HallHire";
 import { Committee } from "./pages/Committee";
 import { AssociatedGroups } from "./pages/AssociatedGroups";
 import { Constitution } from "./pages/Constitution";
+import { AdminLogin } from "./pages/AdminLogin";
+import { AdminDashboard } from "./pages/AdminDashboard";
+import { AdminBookings } from "./pages/AdminBookings";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/weekly" element={<WeeklyActivities />} />
-          <Route path="/hall-hire" element={<HallHire />} />
-          <Route path="/committee" element={<Committee />} />
-          <Route path="/groups" element={<AssociatedGroups />} />
-          <Route path="/constitution" element={<Constitution />} />
+          {/* Public Routes */}
+          <Route path="/" element={
+            <>
+              <Navbar />
+              <Home />
+              <Footer />
+            </>
+          } />
+          <Route path="/events" element={<><Navbar /><Events /><Footer /></>} />
+          <Route path="/weekly" element={<><Navbar /><WeeklyActivities /><Footer /></>} />
+          <Route path="/hall-hire" element={<><Navbar /><HallHire /><Footer /></>} />
+          <Route path="/committee" element={<><Navbar /><Committee /><Footer /></>} />
+          <Route path="/groups" element={<><Navbar /><AssociatedGroups /><Footer /></>} />
+          <Route path="/constitution" element={<><Navbar /><Constitution /><Footer /></>} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/bookings" element={<AdminBookings />} />
         </Routes>
-        <Footer />
         <Toaster />
       </BrowserRouter>
     </div>
