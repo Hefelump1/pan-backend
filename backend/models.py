@@ -111,8 +111,24 @@ class AdminUser(BaseModel):
     username: str
     email: str
     hashed_password: str
+    full_name: Optional[str] = None
     is_active: bool = True
+    is_superuser: bool = False
     created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class AdminUserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+    full_name: Optional[str] = None
+
+class AdminUserLogin(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 # Collections
 events_collection = db['events']

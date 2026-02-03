@@ -5,6 +5,7 @@ import os
 import logging
 from pathlib import Path
 from routes import router
+from auth_routes import auth_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -14,6 +15,7 @@ app = FastAPI(title="Polish Association of Newcastle API", version="1.0.0")
 
 # Include API routes
 app.include_router(router)
+app.include_router(auth_router)
 
 # Add CORS middleware
 app.add_middleware(
