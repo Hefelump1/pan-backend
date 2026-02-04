@@ -184,11 +184,11 @@ async def delete_committee_member(member_id: str):
     return None
 
 # ==================== ASSOCIATED GROUPS ====================
-@router.get("/groups", response_model=List[AssociatedGroup])
+@router.get("/groups")
 async def get_groups():
     """Get all associated groups"""
-    groups = await groups_collection.find().to_list(1000)
-    return [AssociatedGroup(**group) for group in groups]
+    groups = await groups_collection.find({}, {"_id": 0}).to_list(1000)
+    return groups
 
 @router.post("/groups", response_model=AssociatedGroup, status_code=status.HTTP_201_CREATED)
 async def create_group(group: AssociatedGroupCreate):
