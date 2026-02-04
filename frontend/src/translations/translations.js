@@ -4,6 +4,7 @@ export const translations = {
     nav: {
       home: 'Home',
       events: 'Events',
+      news: 'Recent News',
       weekly: 'Weekly Activities',
       hallHire: 'Hall Hire',
       committee: 'Committee',
