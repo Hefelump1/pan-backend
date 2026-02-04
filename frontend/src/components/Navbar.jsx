@@ -12,6 +12,7 @@ export const Navbar = () => {
   const navLinks = [
     { path: '/', label: t(language, 'nav.home') },
     { path: '/events', label: t(language, 'nav.events') },
+    { path: '/news', label: t(language, 'nav.news') },
     { path: '/weekly', label: t(language, 'nav.weekly') },
     { path: '/hall-hire', label: t(language, 'nav.hallHire') },
     { path: '/committee', label: t(language, 'nav.committee') },
