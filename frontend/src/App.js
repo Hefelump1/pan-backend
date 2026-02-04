@@ -5,6 +5,7 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { Events } from "./pages/Events";
+import { News } from "./pages/News";
 import { WeeklyActivities } from "./pages/WeeklyActivities";
 import { HallHire } from "./pages/HallHire";
 import { Committee } from "./pages/Committee";
@@ -30,6 +31,7 @@ function App() {
               </>
             } />
             <Route path="/events" element={<><Navbar /><Events /><Footer /></>} />
+            <Route path="/news" element={<><Navbar /><News /><Footer /></>} />
             <Route path="/weekly" element={<><Navbar /><WeeklyActivities /><Footer /></>} />
             <Route path="/hall-hire" element={<><Navbar /><HallHire /><Footer /></>} />
             <Route path="/committee" element={<><Navbar /><Committee /><Footer /></>} />
