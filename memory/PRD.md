@@ -70,6 +70,9 @@ Collections:
 - [x] **Language toggle with flag icons - COMPLETED**
 - [x] **Associated Groups bilingual content (Dec 2025) - COMPLETED**
 - [x] **Committee data: 10 members added (Dec 2025)**
+- [x] **Recent News page - COMPLETED (Dec 2025)**
+- [x] **Useful Links section on Governance page - COMPLETED (Dec 2025)**
+- [x] **Polish Radio on 2NUR FM added to Associated Groups (Dec 2025)**
 - [x] **Testing completed - 100% pass rate**
 
 ### 📋 Backlog
