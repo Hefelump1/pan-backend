@@ -8,13 +8,6 @@ import { t } from '../translations/translations';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const facilities = [
-  'Full kitchen facilities', 'Tables and chairs included', 'Sound system available',
-  'Dance floor', 'Bar facilities', 'Parking available', 'Air conditioning/heating', 'Disabled access'
-];
-
-const suitableFor = ['Weddings', 'Birthdays', 'Christenings', 'Corporate events', 'Community gatherings', 'Cultural celebrations'];
-
 const hallImages = [
   'https://images.unsplash.com/photo-1747296252929-ca8fbe6d238c',
   'https://images.pexels.com/photos/12909650/pexels-photo-12909650.jpeg',
@@ -25,6 +18,9 @@ export const HallHire = () => {
   const { language } = useLanguage();
   const [selectedDate, setSelectedDate] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', eventType: '', guests: '', message: '' });
+
+  const facilities = t(language, 'hallHire.facilities');
+  const suitableFor = t(language, 'hallHire.suitableFor');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
