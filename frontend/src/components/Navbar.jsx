@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { t } from '../translations/translations';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { language, toggleLanguage } = useLanguage();
 
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/events', label: 'Events' },
-    { path: '/weekly', label: 'Weekly Activities' },
-    { path: '/hall-hire', label: 'Hall Hire' },
-    { path: '/committee', label: 'Committee' },
-    { path: '/groups', label: 'Associated Groups' },
-    { path: '/constitution', label: 'Governance' }
+    { path: '/', label: t(language, 'nav.home') },
+    { path: '/events', label: t(language, 'nav.events') },
+    { path: '/weekly', label: t(language, 'nav.weekly') },
+    { path: '/hall-hire', label: t(language, 'nav.hallHire') },
+    { path: '/committee', label: t(language, 'nav.committee') },
+    { path: '/groups', label: t(language, 'nav.groups') },
+    { path: '/constitution', label: t(language, 'nav.constitution') }
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -49,10 +52,35 @@ export const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="ml-4 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 flex items-center"
+              title={language === 'en' ? 'Przełącz na polski' : 'Switch to English'}
+            >
+              <img 
+                src={language === 'en' ? 'https://flagcdn.com/w40/pl.png' : 'https://flagcdn.com/w40/gb.png'}
+                alt={language === 'en' ? 'Polish' : 'English'}
+                className="w-6 h-4 rounded"
+              />
+            </button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center space-x-2">
+            {/* Mobile Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+            >
+              <img 
+                src={language === 'en' ? 'https://flagcdn.com/w40/pl.png' : 'https://flagcdn.com/w40/gb.png'}
+                alt={language === 'en' ? 'Polish' : 'English'}
+                className="w-6 h-4 rounded"
+              />
+            </button>
+            
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-700 hover:text-red-600 p-2 transition-colors duration-200"

@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LanguageProvider } from "./context/LanguageContext";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
@@ -17,30 +18,32 @@ import { Toaster } from "./components/ui/sonner";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={
-            <>
-              <Navbar />
-              <Home />
-              <Footer />
-            </>
-          } />
-          <Route path="/events" element={<><Navbar /><Events /><Footer /></>} />
-          <Route path="/weekly" element={<><Navbar /><WeeklyActivities /><Footer /></>} />
-          <Route path="/hall-hire" element={<><Navbar /><HallHire /><Footer /></>} />
-          <Route path="/committee" element={<><Navbar /><Committee /><Footer /></>} />
-          <Route path="/groups" element={<><Navbar /><AssociatedGroups /><Footer /></>} />
-          <Route path="/constitution" element={<><Navbar /><Constitution /><Footer /></>} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/bookings" element={<AdminBookings />} />
-        </Routes>
-        <Toaster />
-      </BrowserRouter>
+      <LanguageProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={
+              <>
+                <Navbar />
+                <Home />
+                <Footer />
+              </>
+            } />
+            <Route path="/events" element={<><Navbar /><Events /><Footer /></>} />
+            <Route path="/weekly" element={<><Navbar /><WeeklyActivities /><Footer /></>} />
+            <Route path="/hall-hire" element={<><Navbar /><HallHire /><Footer /></>} />
+            <Route path="/committee" element={<><Navbar /><Committee /><Footer /></>} />
+            <Route path="/groups" element={<><Navbar /><AssociatedGroups /><Footer /></>} />
+            <Route path="/constitution" element={<><Navbar /><Constitution /><Footer /></>} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/bookings" element={<AdminBookings />} />
+          </Routes>
+          <Toaster />
+        </BrowserRouter>
+      </LanguageProvider>
     </div>
   );
 }
