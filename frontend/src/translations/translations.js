@@ -106,7 +106,25 @@ export const translations = {
       messagePlaceholder: 'Tell us about your event...',
       submit: 'Submit Enquiry',
       successToast: 'Enquiry submitted successfully! We will contact you within 24 hours.',
-      errorToast: 'Failed to submit enquiry. Please try again or contact us directly.'
+      errorToast: 'Failed to submit enquiry. Please try again or contact us directly.',
+      facilities: [
+        'Full kitchen facilities',
+        'Tables and chairs included',
+        'Sound system available',
+        'Dance floor',
+        'Bar facilities',
+        'Parking available',
+        'Air conditioning/heating',
+        'Disabled access'
+      ],
+      suitableFor: [
+        'Weddings',
+        'Birthdays',
+        'Christenings',
+        'Corporate events',
+        'Community gatherings',
+        'Cultural celebrations'
+      ]
     },
     
     // Committee
