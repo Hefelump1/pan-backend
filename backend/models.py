@@ -89,9 +89,12 @@ class CommitteeMemberCreate(BaseModel):
 
 class AssociatedGroup(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: str
-    description: str
-    schedule: str
+    name_en: str
+    name_pl: str
+    description_en: str
+    description_pl: str
+    schedule_en: str
+    schedule_pl: str
     contact: str
     website: Optional[str] = None
     image: Optional[str] = None
@@ -99,9 +102,12 @@ class AssociatedGroup(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class AssociatedGroupCreate(BaseModel):
-    name: str
-    description: str
-    schedule: str
+    name_en: str
+    name_pl: str
+    description_en: str
+    description_pl: str
+    schedule_en: str
+    schedule_pl: str
     contact: str
     website: Optional[str] = None
     image: Optional[str] = None
