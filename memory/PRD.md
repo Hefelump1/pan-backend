@@ -68,6 +68,7 @@ Collections:
 - [x] **Admin booking management (approve/reject) - COMPLETED**
 - [x] **Full Internationalization (i18n) - English/Polish - COMPLETED**
 - [x] **Language toggle with flag icons - COMPLETED**
+- [x] **Associated Groups bilingual content (Dec 2025) - COMPLETED**
 - [x] **Committee data: 10 members added (Dec 2025)**
 - [x] **Testing completed - 100% pass rate**
 
