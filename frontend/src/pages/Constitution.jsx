@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, Download, Calendar as CalendarIcon, Scale } from 'lucide-react';
+import { FileText, Download, Calendar as CalendarIcon, Scale, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { t } from '../translations/translations';
 
@@ -7,6 +7,16 @@ const documents = [
   { name: 'Constitution 2025', type: 'PDF' },
   { name: 'AGM Notice 2025', type: 'PDF' },
   { name: 'Annual Report 2024', type: 'PDF' }
+];
+
+const usefulLinks = [
+  { name_en: 'Federation of Polish Organisations in NSW', name_pl: 'Federacja Polskich Organizacji w NSW', url: 'https://www.polishfederation.org.au/' },
+  { name_en: 'Polish Community Council in Australia', name_pl: 'Rada Polonii Australijskiej', url: 'https://www.polishcommunitycouncil.org.au/' },
+  { name_en: 'Embassy of Poland', name_pl: 'Ambasada RP', url: 'https://www.gov.pl/web/australia' },
+  { name_en: 'Consulate General of Poland', name_pl: 'Konsulat Generalny RP', url: 'https://www.gov.pl/web/australia' },
+  { name_en: 'Link to Poland', name_pl: 'Link to Poland', url: 'https://linktopoland.com/' },
+  { name_en: 'Mt Kosciuszko Inc.', name_pl: 'Mt Kosciuszko Inc.', url: 'https://mtkosciuszko.org.au/' },
+  { name_en: 'Polish Australian Business Forum', name_pl: 'Polsko-Australijskie Forum Biznesu', url: 'https://pabf.org.au/' }
 ];
 
 export const Constitution = () => {
