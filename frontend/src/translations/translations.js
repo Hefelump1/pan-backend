@@ -386,9 +386,21 @@ export const translations = {
       benefit3: 'Priorytetowa rezerwacja sali',
       benefit4: 'Wydarzenia tylko dla członków',
       applyMembership: 'Aplikuj o Członkostwo',
+      usefulLinks: 'Przydatne Linki',
+      usefulLinksDesc: 'Połącz się z polskimi organizacjami i zasobami w Australii',
       questionsTitle: 'Pytania o Zarządzanie?',
       questionsDesc: 'Skontaktuj się z naszym zarządem w sprawie pytań.',
       contactCommittee: 'Skontaktuj się z Zarządem'
+    },
+    
+    // News
+    news: {
+      title: 'Aktualności',
+      subtitle: 'Bądź na bieżąco z najnowszymi wiadomościami i wydarzeniami z naszej polskiej społeczności',
+      readMore: 'Czytaj Więcej',
+      stayConnected: 'Bądź w Kontakcie',
+      stayConnectedDesc: 'Zapisz się do naszego newslettera, aby otrzymywać najnowsze wiadomości i aktualizacje od Polskiego Stowarzyszenia w Newcastle.',
+      subscribe: 'Zapisz się do Newslettera'
     },
     
     common: {
