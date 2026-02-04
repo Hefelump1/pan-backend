@@ -48,31 +48,37 @@ export const AssociatedGroups = () => {
             </div>
           ) : (
             <div className="space-y-8">
-              {groups.map((group) => (
-                <div key={group.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <div className="grid md:grid-cols-2">
-                    <img src={group.image} alt={group.name} className="w-full h-full object-cover min-h-[300px]" />
-                    <div className="p-8 md:p-12 flex flex-col justify-center">
-                      <h2 className="text-3xl font-bold text-gray-900 mb-4">{group.name}</h2>
-                      <p className="text-gray-700 mb-6">{group.description}</p>
-                      <div className="space-y-3 mb-6">
-                        <div>
-                          <p className="font-semibold text-gray-900">{t(language, 'groups.schedule')}</p>
-                          <p className="text-gray-600">{group.schedule}</p>
+              {groups.map((group) => {
+                const name = language === 'pl' ? (group.name_pl || group.name) : (group.name_en || group.name);
+                const description = language === 'pl' ? (group.description_pl || group.description) : (group.description_en || group.description);
+                const schedule = language === 'pl' ? (group.schedule_pl || group.schedule) : (group.schedule_en || group.schedule);
+                
+                return (
+                  <div key={group.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div className="grid md:grid-cols-2">
+                      <img src={group.image} alt={name} className="w-full h-full object-cover min-h-[300px]" />
+                      <div className="p-8 md:p-12 flex flex-col justify-center">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">{name}</h2>
+                        <p className="text-gray-700 mb-6">{description}</p>
+                        <div className="space-y-3 mb-6">
+                          <div>
+                            <p className="font-semibold text-gray-900">{t(language, 'groups.schedule')}</p>
+                            <p className="text-gray-600">{schedule}</p>
+                          </div>
+                          <div>
+                            <p className="font-semibold text-gray-900">{t(language, 'groups.contact')}</p>
+                            <a href={`mailto:${group.contact}`} className="text-red-600 hover:text-red-700">{group.contact}</a>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-semibold text-gray-900">{t(language, 'groups.contact')}</p>
-                          <a href={`mailto:${group.contact}`} className="text-red-600 hover:text-red-700">{group.contact}</a>
-                        </div>
+                        <a href={`mailto:${group.contact}`} className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 w-fit">
+                          <Mail size={18} className="mr-2" />
+                          {t(language, 'groups.getInTouch')}
+                        </a>
                       </div>
-                      <a href={`mailto:${group.contact}`} className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 w-fit">
-                        <Mail size={18} className="mr-2" />
-                        {t(language, 'groups.getInTouch')}
-                      </a>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
