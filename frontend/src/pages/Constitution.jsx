@@ -121,6 +121,34 @@ export const Constitution = () => {
       </section>
 
       <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t(language, 'constitution.usefulLinks')}</h2>
+            <div className="w-24 h-1 bg-red-600 mx-auto mb-4"></div>
+            <p className="text-gray-600 text-lg">{t(language, 'constitution.usefulLinksDesc')}</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {usefulLinks.map((link, i) => {
+              const name = language === 'pl' ? link.name_pl : link.name_en;
+              return (
+                <a 
+                  key={i}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-between group"
+                >
+                  <span className="text-gray-800 font-medium group-hover:text-red-600 transition-colors">{name}</span>
+                  <ExternalLink size={20} className="text-gray-400 group-hover:text-red-600 transition-colors flex-shrink-0 ml-3" />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">{t(language, 'constitution.questionsTitle')}</h2>
           <p className="text-gray-600 mb-8">{t(language, 'constitution.questionsDesc')}</p>
