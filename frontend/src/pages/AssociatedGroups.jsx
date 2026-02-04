@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Mail } from 'lucide-react';
 import axios from 'axios';
+import { useLanguage } from '../context/LanguageContext';
+import { t } from '../translations/translations';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const AssociatedGroups = () => {
+  const { language } = useLanguage();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +25,7 @@ export const AssociatedGroups = () => {
       setLoading(false);
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="bg-gradient-to-r from-red-700 to-red-800 text-white py-16">
@@ -29,9 +33,9 @@ export const AssociatedGroups = () => {
           <div className="flex items-center justify-center mb-4">
             <Users size={48} />
           </div>
-          <h1 className="text-5xl font-bold text-center mb-4">Associated Groups</h1>
+          <h1 className="text-5xl font-bold text-center mb-4">{t(language, 'groups.title')}</h1>
           <p className="text-xl text-center text-red-100 max-w-2xl mx-auto">
-            Connect with our vibrant community organizations
+            {t(language, 'groups.subtitle')}
           </p>
         </div>
       </section>
@@ -40,11 +44,11 @@ export const AssociatedGroups = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">Loading groups...</p>
+              <p className="text-gray-600 text-lg">{t(language, 'common.loading')}</p>
             </div>
           ) : (
             <div className="space-y-8">
-              {groups.map((group, idx) => (
+              {groups.map((group) => (
                 <div key={group.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                   <div className="grid md:grid-cols-2">
                     <img src={group.image} alt={group.name} className="w-full h-full object-cover min-h-[300px]" />
@@ -53,17 +57,17 @@ export const AssociatedGroups = () => {
                       <p className="text-gray-700 mb-6">{group.description}</p>
                       <div className="space-y-3 mb-6">
                         <div>
-                          <p className="font-semibold text-gray-900">Schedule</p>
+                          <p className="font-semibold text-gray-900">{t(language, 'groups.schedule')}</p>
                           <p className="text-gray-600">{group.schedule}</p>
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900">Contact</p>
+                          <p className="font-semibold text-gray-900">{t(language, 'groups.contact')}</p>
                           <a href={`mailto:${group.contact}`} className="text-red-600 hover:text-red-700">{group.contact}</a>
                         </div>
                       </div>
                       <a href={`mailto:${group.contact}`} className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 w-fit">
                         <Mail size={18} className="mr-2" />
-                        Get in Touch
+                        {t(language, 'groups.getInTouch')}
                       </a>
                     </div>
                   </div>
@@ -76,13 +80,13 @@ export const AssociatedGroups = () => {
 
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Want to Start Your Own Group?</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t(language, 'groups.startGroupTitle')}</h2>
           <p className="text-gray-600 mb-8">
-            We welcome new initiatives that promote Polish culture and community engagement.
+            {t(language, 'groups.startGroupDesc')}
           </p>
           <a href="mailto:info@polishassociation.com.au" className="inline-flex items-center px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
             <Mail size={20} className="mr-2" />
-            Contact Us
+            {t(language, 'groups.contactUs')}
           </a>
         </div>
       </section>
