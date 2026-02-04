@@ -209,6 +209,7 @@ export const translations = {
     nav: {
       home: 'Strona Główna',
       events: 'Wydarzenia',
+      news: 'Aktualności',
       weekly: 'Zajęcia Tygodniowe',
       hallHire: 'Wynajem Sali',
       committee: 'Zarząd',
