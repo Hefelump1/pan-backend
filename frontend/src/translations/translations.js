@@ -181,9 +181,21 @@ export const translations = {
       benefit3: 'Priority hall booking',
       benefit4: 'Member-only events',
       applyMembership: 'Apply for Membership',
+      usefulLinks: 'Useful Links',
+      usefulLinksDesc: 'Connect with Polish organisations and resources in Australia',
       questionsTitle: 'Questions About Governance?',
       questionsDesc: 'Contact our committee for any questions.',
       contactCommittee: 'Contact Committee'
+    },
+    
+    // News
+    news: {
+      title: 'Recent News',
+      subtitle: 'Stay updated with the latest news and events from our Polish community',
+      readMore: 'Read More',
+      stayConnected: 'Stay Connected',
+      stayConnectedDesc: 'Subscribe to our newsletter to receive the latest news and updates from the Polish Association of Newcastle.',
+      subscribe: 'Subscribe to Newsletter'
     },
     
     common: {
