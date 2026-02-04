@@ -298,7 +298,25 @@ export const translations = {
       messagePlaceholder: 'Opowiedz nam o swoim wydarzeniu...',
       submit: 'Wyślij Zapytanie',
       successToast: 'Zapytanie wysłane pomyślnie! Skontaktujemy się w ciągu 24 godzin.',
-      errorToast: 'Nie udało się wysłać zapytania. Spróbuj ponownie lub skontaktuj się bezpośrednio.'
+      errorToast: 'Nie udało się wysłać zapytania. Spróbuj ponownie lub skontaktuj się bezpośrednio.',
+      facilities: [
+        'Pełne zaplecze kuchenne',
+        'Stoły i krzesła w cenie',
+        'System nagłośnienia',
+        'Parkiet taneczny',
+        'Zaplecze barowe',
+        'Parking dostępny',
+        'Klimatyzacja/ogrzewanie',
+        'Dostęp dla niepełnosprawnych'
+      ],
+      suitableFor: [
+        'Wesela',
+        'Urodziny',
+        'Chrzciny',
+        'Imprezy firmowe',
+        'Spotkania społeczności',
+        'Uroczystości kulturalne'
+      ]
     },
     
     // Committee
