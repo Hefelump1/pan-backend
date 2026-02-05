@@ -224,3 +224,58 @@ async def delete_group(group_id: str):
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Group not found")
     return None
+
+# ==================== NEWS ====================
+@router.get("/news")
+async def get_news():
+    """Get all news articles"""
+    news = await news_collection.find({}, {"_id": 0}).sort("date", -1).to_list(1000)
+    return news
+
+@router.get("/news/published")
+async def get_published_news():
+    """Get only published news articles"""
+    news = await news_collection.find({"published": True}, {"_id": 0}).sort("date", -1).to_list(1000)
+    return news
+
+@router.post("/news", response_model=NewsArticle, status_code=status.HTTP_201_CREATED)
+async def create_news(news: NewsArticleCreate):
+    """Create news article (admin only)"""
+    news_dict = news.dict()
+    news_obj = NewsArticle(**news_dict)
+    await news_collection.insert_one(news_obj.dict())
+    return news_obj
+
+@router.get("/news/{news_id}")
+async def get_news_article(news_id: str):
+    """Get single news article by ID"""
+    article = await news_collection.find_one({"id": news_id}, {"_id": 0})
+    if not article:
+        raise HTTPException(status_code=404, detail="News article not found")
+    return article
+
+@router.put("/news/{news_id}", response_model=NewsArticle)
+async def update_news(news_id: str, news: NewsArticleCreate):
+    """Update news article (admin only)"""
+    existing = await news_collection.find_one({"id": news_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="News article not found")
+    
+    update_dict = news.dict()
+    update_dict["updated_at"] = datetime.utcnow()
+    
+    await news_collection.update_one(
+        {"id": news_id},
+        {"$set": update_dict}
+    )
+    
+    updated = await news_collection.find_one({"id": news_id}, {"_id": 0})
+    return NewsArticle(**updated)
+
+@router.delete("/news/{news_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_news(news_id: str):
+    """Delete news article (admin only)"""
+    result = await news_collection.delete_one({"id": news_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="News article not found")
+    return None
