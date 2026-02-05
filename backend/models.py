@@ -162,6 +162,33 @@ class NewsArticleCreate(BaseModel):
     date: str
     published: bool = True
 
+# Site Settings Model (for Home page customization)
+class SiteSettings(BaseModel):
+    id: str = "site_settings"
+    hero_image: Optional[str] = None
+    welcome_image: Optional[str] = None
+    hero_title_en: Optional[str] = None
+    hero_title_pl: Optional[str] = None
+    hero_subtitle_en: Optional[str] = None
+    hero_subtitle_pl: Optional[str] = None
+    welcome_text1_en: Optional[str] = None
+    welcome_text1_pl: Optional[str] = None
+    welcome_text2_en: Optional[str] = None
+    welcome_text2_pl: Optional[str] = None
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class SiteSettingsUpdate(BaseModel):
+    hero_image: Optional[str] = None
+    welcome_image: Optional[str] = None
+    hero_title_en: Optional[str] = None
+    hero_title_pl: Optional[str] = None
+    hero_subtitle_en: Optional[str] = None
+    hero_subtitle_pl: Optional[str] = None
+    welcome_text1_en: Optional[str] = None
+    welcome_text1_pl: Optional[str] = None
+    welcome_text2_en: Optional[str] = None
+    welcome_text2_pl: Optional[str] = None
+
 import uuid
 
 # Collections
@@ -172,3 +199,4 @@ committee_collection = db['committee']
 groups_collection = db['groups']
 admin_users_collection = db['admin_users']
 news_collection = db['news']
+settings_collection = db['settings']
