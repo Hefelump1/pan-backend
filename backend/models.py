@@ -34,19 +34,25 @@ class EventCreate(BaseModel):
 class Activity(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     day: str
-    name: str
+    name_en: str
+    name_pl: str
     time: str
-    description: str
+    description_en: str
+    description_pl: str
     contact: str
+    order: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class ActivityCreate(BaseModel):
     day: str
-    name: str
+    name_en: str
+    name_pl: str
     time: str
-    description: str
+    description_en: str
+    description_pl: str
     contact: str
+    order: int = 0
 
 class Booking(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
