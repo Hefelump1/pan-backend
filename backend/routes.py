@@ -64,11 +64,14 @@ async def delete_event(event_id: str):
     return None
 
 # ==================== ACTIVITIES ====================
-@router.get("/activities", response_model=List[Activity])
+@router.get("/activities")
 async def get_activities():
     """Get all weekly activities"""
-    activities = await activities_collection.find().to_list(1000)
-    return [Activity(**activity) for activity in activities]
+    day_order = {"Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 7}
+    activities = await activities_collection.find({}, {"_id": 0}).to_list(1000)
+    # Sort by day order then by order field
+    activities.sort(key=lambda x: (day_order.get(x.get("day", ""), 8), x.get("order", 0)))
+    return activities
 
 @router.post("/activities", response_model=Activity, status_code=status.HTTP_201_CREATED)
 async def create_activity(activity: ActivityCreate):
