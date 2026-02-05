@@ -136,6 +136,34 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
+# News Model (Bilingual)
+class NewsArticle(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title_en: str
+    title_pl: str
+    summary_en: str
+    summary_pl: str
+    content_en: Optional[str] = None
+    content_pl: Optional[str] = None
+    image: Optional[str] = None
+    date: str
+    published: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class NewsArticleCreate(BaseModel):
+    title_en: str
+    title_pl: str
+    summary_en: str
+    summary_pl: str
+    content_en: Optional[str] = None
+    content_pl: Optional[str] = None
+    image: Optional[str] = None
+    date: str
+    published: bool = True
+
+import uuid
+
 # Collections
 events_collection = db['events']
 activities_collection = db['activities']
@@ -143,5 +171,4 @@ bookings_collection = db['bookings']
 committee_collection = db['committee']
 groups_collection = db['groups']
 admin_users_collection = db['admin_users']
-
-import uuid
+news_collection = db['news']
