@@ -280,3 +280,41 @@ async def delete_news(news_id: str):
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="News article not found")
     return None
+
+# ==================== SITE SETTINGS ====================
+@router.get("/settings")
+async def get_site_settings():
+    """Get site settings for home page"""
+    settings = await settings_collection.find_one({"id": "site_settings"}, {"_id": 0})
+    if not settings:
+        # Return default settings
+        return {
+            "id": "site_settings",
+            "hero_image": "https://images.unsplash.com/photo-1768333377265-cb6c3ca2885a",
+            "welcome_image": "https://images.unsplash.com/photo-1763733593826-d51c270cc8b4",
+            "hero_title_en": None,
+            "hero_title_pl": None,
+            "hero_subtitle_en": None,
+            "hero_subtitle_pl": None,
+            "welcome_text1_en": None,
+            "welcome_text1_pl": None,
+            "welcome_text2_en": None,
+            "welcome_text2_pl": None
+        }
+    return settings
+
+@router.put("/settings")
+async def update_site_settings(settings: SiteSettingsUpdate):
+    """Update site settings (admin only)"""
+    update_dict = {k: v for k, v in settings.dict().items() if v is not None}
+    update_dict["updated_at"] = datetime.utcnow()
+    update_dict["id"] = "site_settings"
+    
+    await settings_collection.update_one(
+        {"id": "site_settings"},
+        {"$set": update_dict},
+        upsert=True
+    )
+    
+    updated = await settings_collection.find_one({"id": "site_settings"}, {"_id": 0})
+    return updated
