@@ -5,7 +5,8 @@ from models import (
     Activity, ActivityCreate, activities_collection,
     Booking, BookingCreate, bookings_collection,
     CommitteeMember, CommitteeMemberCreate, committee_collection,
-    AssociatedGroup, AssociatedGroupCreate, groups_collection
+    AssociatedGroup, AssociatedGroupCreate, groups_collection,
+    NewsArticle, NewsArticleCreate, news_collection
 )
 from datetime import datetime
 import uuid
