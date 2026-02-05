@@ -10,28 +10,58 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const Home = () => {
   const { language } = useLanguage();
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [settings, setSettings] = useState({
+    hero_image: 'https://images.unsplash.com/photo-1768333377265-cb6c3ca2885a',
+    welcome_image: 'https://images.unsplash.com/photo-1763733593826-d51c270cc8b4'
+  });
 
   useEffect(() => {
-    fetchEvents();
+    fetchData();
   }, []);
 
-  const fetchEvents = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/events`);
-      const sorted = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const [eventsRes, settingsRes] = await Promise.all([
+        axios.get(`${BACKEND_URL}/api/events`),
+        axios.get(`${BACKEND_URL}/api/settings`)
+      ]);
+      
+      const sorted = eventsRes.data.sort((a, b) => new Date(a.date) - new Date(b.date));
       setUpcomingEvents(sorted.slice(0, 3));
+      
+      if (settingsRes.data) {
+        setSettings(prev => ({
+          ...prev,
+          ...settingsRes.data
+        }));
+      }
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error('Error fetching data:', error);
     }
   };
 
+  // Helper to get custom text or fallback to translation
+  const getText = (settingKey, translationKey) => {
+    const enKey = `${settingKey}_en`;
+    const plKey = `${settingKey}_pl`;
+    
+    if (language === 'pl' && settings[plKey]) {
+      return settings[plKey];
+    }
+    if (language === 'en' && settings[enKey]) {
+      return settings[enKey];
+    }
+    // Fallback to translations
+    return t(language, translationKey);
+  };
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" data-testid="home-page">
       {/* Hero Section */}
       <section className="relative h-[600px] bg-gray-900">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1768333377265-cb6c3ca2885a"
+            src={settings.hero_image || 'https://images.unsplash.com/photo-1768333377265-cb6c3ca2885a'}
             alt="Polish Community"
             className="w-full h-full object-cover opacity-50"
           />
@@ -40,10 +70,10 @@ export const Home = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              {t(language, 'home.title')}
+              {getText('hero_title', 'home.title')}
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed">
-              {t(language, 'home.subtitle')}
+              {getText('hero_subtitle', 'home.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -74,7 +104,7 @@ export const Home = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <img
-                src="https://images.unsplash.com/photo-1763733593826-d51c270cc8b4"
+                src={settings.welcome_image || 'https://images.unsplash.com/photo-1763733593826-d51c270cc8b4'}
                 alt="Polish Community"
                 className="rounded-lg shadow-xl w-full h-[400px] object-cover"
               />
@@ -82,10 +112,10 @@ export const Home = () => {
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">{t(language, 'home.ourHeritage')}</h3>
               <p className="text-gray-700 mb-4 leading-relaxed">
-                {t(language, 'home.heritage1')}
+                {getText('welcome_text1', 'home.heritage1')}
               </p>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                {t(language, 'home.heritage2')}
+                {getText('welcome_text2', 'home.heritage2')}
               </p>
               <Link
                 to="/committee"
@@ -224,4 +254,3 @@ export const Home = () => {
     </div>
   );
 };
-
