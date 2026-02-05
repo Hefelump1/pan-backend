@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   Calendar, Users, Building2, BookOpen, LogOut, Plus, 
-  CheckCircle, XCircle, Clock, TrendingUp, Newspaper, UsersRound
+  CheckCircle, XCircle, Clock, TrendingUp, Newspaper, UsersRound, Home, ClipboardList
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -11,7 +11,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [stats, setStats] = useState({ events: 0, bookings: 0, pendingBookings: 0, committee: 0, groups: 0, news: 0 });
+  const [stats, setStats] = useState({ events: 0, bookings: 0, pendingBookings: 0, committee: 0, groups: 0, news: 0, activities: 0 });
   const [recentBookings, setRecentBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,12 +32,13 @@ export const AdminDashboard = () => {
       const token = localStorage.getItem('adminToken');
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
-      const [eventsRes, bookingsRes, committeeRes, groupsRes, newsRes] = await Promise.all([
+      const [eventsRes, bookingsRes, committeeRes, groupsRes, newsRes, activitiesRes] = await Promise.all([
         axios.get(`${BACKEND_URL}/api/events`),
         axios.get(`${BACKEND_URL}/api/bookings`, config),
         axios.get(`${BACKEND_URL}/api/committee`),
         axios.get(`${BACKEND_URL}/api/groups`),
-        axios.get(`${BACKEND_URL}/api/news`)
+        axios.get(`${BACKEND_URL}/api/news`),
+        axios.get(`${BACKEND_URL}/api/activities`)
       ]);
 
       const pendingCount = bookingsRes.data.filter(b => b.status === 'pending').length;
@@ -48,7 +49,8 @@ export const AdminDashboard = () => {
         pendingBookings: pendingCount,
         committee: committeeRes.data.length,
         groups: groupsRes.data.length,
-        news: newsRes.data.length
+        news: newsRes.data.length,
+        activities: activitiesRes.data.length
       });
 
       setRecentBookings(bookingsRes.data.slice(0, 5));
@@ -140,18 +142,46 @@ export const AdminDashboard = () => {
 
           <div className="bg-white p-6 rounded-lg shadow-md">
             <div className="flex items-center justify-between mb-2">
-              <Users size={24} className="text-green-600" />
-              <span className="text-sm font-medium text-gray-500">Active</span>
+              <ClipboardList size={24} className="text-orange-600" />
+              <span className="text-sm font-medium text-gray-500">Weekly</span>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{stats.committee + stats.groups}</p>
-            <p className="text-gray-600 text-sm mt-1">Committee & Groups</p>
+            <p className="text-3xl font-bold text-gray-900">{stats.activities}</p>
+            <p className="text-gray-600 text-sm mt-1">Activities</p>
           </div>
         </div>
 
         {/* Content Management Section */}
         <div className="mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Content Management</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link
+              to="/admin/homepage"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
+              data-testid="manage-homepage-link"
+            >
+              <div className="flex items-center mb-3">
+                <div className="p-3 bg-indigo-100 rounded-lg group-hover:bg-indigo-200 transition-colors">
+                  <Home size={24} className="text-indigo-600" />
+                </div>
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Home Page</h3>
+              <p className="text-sm text-gray-600">Edit hero & welcome content</p>
+            </Link>
+
+            <Link
+              to="/admin/activities"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
+              data-testid="manage-activities-link"
+            >
+              <div className="flex items-center mb-3">
+                <div className="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors">
+                  <ClipboardList size={24} className="text-orange-600" />
+                </div>
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Weekly Activities</h3>
+              <p className="text-sm text-gray-600">{stats.activities} activities</p>
+            </Link>
+
             <Link
               to="/admin/news"
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
