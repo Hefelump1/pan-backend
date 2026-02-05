@@ -14,6 +14,10 @@ import { Constitution } from "./pages/Constitution";
 import { AdminLogin } from "./pages/AdminLogin";
 import { AdminDashboard } from "./pages/AdminDashboard";
 import { AdminBookings } from "./pages/AdminBookings";
+import { AdminNews } from "./pages/AdminNews";
+import { AdminEvents } from "./pages/AdminEvents";
+import { AdminCommittee } from "./pages/AdminCommittee";
+import { AdminGroups } from "./pages/AdminGroups";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
@@ -42,6 +46,10 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/bookings" element={<AdminBookings />} />
+            <Route path="/admin/news" element={<AdminNews />} />
+            <Route path="/admin/events" element={<AdminEvents />} />
+            <Route path="/admin/committee" element={<AdminCommittee />} />
+            <Route path="/admin/groups" element={<AdminGroups />} />
           </Routes>
           <Toaster />
         </BrowserRouter>
