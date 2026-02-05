@@ -18,6 +18,8 @@ import { AdminNews } from "./pages/AdminNews";
 import { AdminEvents } from "./pages/AdminEvents";
 import { AdminCommittee } from "./pages/AdminCommittee";
 import { AdminGroups } from "./pages/AdminGroups";
+import { AdminActivities } from "./pages/AdminActivities";
+import { AdminHomePage } from "./pages/AdminHomePage";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
             <Route path="/admin/events" element={<AdminEvents />} />
             <Route path="/admin/committee" element={<AdminCommittee />} />
             <Route path="/admin/groups" element={<AdminGroups />} />
+            <Route path="/admin/activities" element={<AdminActivities />} />
+            <Route path="/admin/homepage" element={<AdminHomePage />} />
           </Routes>
           <Toaster />
         </BrowserRouter>
