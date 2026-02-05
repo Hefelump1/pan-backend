@@ -6,7 +6,8 @@ from models import (
     Booking, BookingCreate, bookings_collection,
     CommitteeMember, CommitteeMemberCreate, committee_collection,
     AssociatedGroup, AssociatedGroupCreate, groups_collection,
-    NewsArticle, NewsArticleCreate, news_collection
+    NewsArticle, NewsArticleCreate, news_collection,
+    SiteSettings, SiteSettingsUpdate, settings_collection
 )
 from datetime import datetime
 import uuid
