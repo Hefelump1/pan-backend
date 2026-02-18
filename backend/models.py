@@ -196,8 +196,6 @@ class SiteSettingsUpdate(BaseModel):
     welcome_text2_en: Optional[str] = None
     welcome_text2_pl: Optional[str] = None
 
-import uuid
-
 # Collections
 events_collection = db['events']
 activities_collection = db['activities']
