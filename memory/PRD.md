@@ -14,77 +14,60 @@ Build a modern website for the Polish Association of Newcastle with:
 - Admin panel for content management
 - Full bilingual support (English/Polish)
 
-## User Personas
-1. **Committee Members (Admins)** - Need to manage events, approve bookings, update content via CMS
-2. **Community Members** - Want to view events, book hall, learn about activities
-3. **Prospective Members** - Looking to join Polish community, learn about association
-
 ## Architecture
 
 ### Frontend (React)
 - `/src/pages/` - Public: Home, Events, News, WeeklyActivities, HallHire, Committee, AssociatedGroups, Constitution
-- `/src/pages/` - Admin: AdminLogin, AdminDashboard, AdminNews, AdminEvents, AdminCommittee, AdminGroups, AdminBookings
+- `/src/pages/` - Admin: AdminLogin, AdminDashboard, AdminHomePage, AdminActivities, AdminNews, AdminEvents, AdminCommittee, AdminGroups, AdminBookings
 - `/src/components/` - Navbar, Footer, UI components (shadcn)
 - `/src/context/LanguageContext.jsx` - Language state management (EN/PL)
 - `/src/translations/translations.js` - All static text in both languages
 
 ### Backend (FastAPI)
-- `/api/news` - CRUD operations for news articles (bilingual)
-- `/api/events` - CRUD operations for events
-- `/api/activities` - Weekly activities management
+- `/api/settings` - Home page settings (images, text)
+- `/api/activities` - Weekly activities CRUD (bilingual)
+- `/api/news` - News articles CRUD (bilingual)
+- `/api/events` - Events CRUD
 - `/api/bookings` - Hall hire booking system
-- `/api/committee` - Committee member information
-- `/api/groups` - Associated groups data (bilingual)
+- `/api/committee` - Committee members
+- `/api/groups` - Associated groups (bilingual)
 - `/api/auth` - Admin authentication (JWT)
 
 ### Database (MongoDB)
 Collections:
-- news (NEW - bilingual: title_en/pl, summary_en/pl, content_en/pl)
-- events
-- activities
-- bookings
-- committee_members
-- associated_groups (bilingual: name_en/pl, description_en/pl, schedule_en/pl)
-- admin_users
+- settings (hero_image, welcome_image, hero_title_en/pl, hero_subtitle_en/pl, welcome_text1_en/pl, welcome_text2_en/pl)
+- activities (day, name_en/pl, time, description_en/pl, contact, order)
+- news (title_en/pl, summary_en/pl, content_en/pl, image, date, published)
+- events (title, date, time, location, description, category, image)
+- bookings (name, email, phone, event_type, date, guests, status)
+- committee_members (name, position, bio, image, order)
+- associated_groups (name_en/pl, description_en/pl, schedule_en/pl, contact, website, image)
+- admin_users (username, email, hashed_password)
 
 ## Implementation Status (Updated: February 2026)
 
 ### ✅ COMPLETED - All Core Features
 
 #### Public Website
-- [x] Frontend setup with React, Tailwind, shadcn/ui
-- [x] Navigation with responsive mobile menu + language toggle
-- [x] Footer with contact information
-- [x] Home page with hero, welcome section, quick links, upcoming events
-- [x] Events calendar page (API-driven)
-- [x] Recent News page (API-driven, bilingual)
-- [x] Committee page with 10 member profiles (API-driven)
-- [x] Weekly Activities page with full schedule
-- [x] Hall Hire page with booking form and calendar
-- [x] Associated Groups page (API-driven, bilingual)
-- [x] Constitution/Governance page with Useful Links section
+- [x] All pages built and functional (Home, Events, News, Weekly Activities, Hall Hire, Committee, Groups, Constitution)
+- [x] Full bilingual support (English/Polish) with language toggle
 - [x] Traditional Polish red/white design theme
-- [x] Full Internationalization (i18n) - English/Polish toggle
+- [x] Mobile-responsive design
 
-#### Admin Panel (CMS) - COMPLETED February 2026
-- [x] Admin Authentication with JWT
-- [x] Admin Dashboard with stats and quick actions
-- [x] **News Management** - Full CRUD (Create, Read, Update, Delete)
-  - Bilingual fields: title_en/pl, summary_en/pl, content_en/pl
-  - Published/Draft status
-  - Image URL support
-- [x] **Events Management** - Full CRUD
-  - Title, date, time, location, description
-  - Categories (cultural, educational, social, religious, other)
-  - Image URL support
-- [x] **Committee Management** - Full CRUD
-  - Name, position, bio, photo
-  - Display ordering
-- [x] **Groups Management** - Full CRUD
-  - Bilingual fields: name_en/pl, description_en/pl, schedule_en/pl
-  - Contact info and website links
-- [x] **Bookings Management** - Review, Approve/Reject
-- [x] Testing: 100% pass rate (20/20 backend tests, all frontend features verified)
+#### Admin Panel (CMS) - FULLY COMPLETE
+- [x] **Admin Authentication** - JWT-based login
+- [x] **Admin Dashboard** - Stats overview with quick actions
+- [x] **Home Page Settings** - Edit hero images, welcome images, hero title/subtitle (EN/PL), welcome text (EN/PL)
+- [x] **Weekly Activities Management** - Full CRUD grouped by day, bilingual fields
+- [x] **News Management** - Full CRUD with published/draft status, bilingual
+- [x] **Events Management** - Full CRUD with categories and images
+- [x] **Committee Management** - Full CRUD with display ordering
+- [x] **Groups Management** - Full CRUD, bilingual fields
+- [x] **Bookings Management** - Review, Approve/Reject hall hire requests
+
+### Testing Status
+- Backend: 100% (19/19 API tests passed)
+- Frontend: 100% (All CMS features verified)
 
 ### 📋 Backlog
 
@@ -93,9 +76,9 @@ Collections:
 - [ ] Email notifications for new booking enquiries
 
 #### P2 (Medium Priority)
-- [ ] File upload for documents (Constitution, AGM notices, PDFs)
-- [ ] Image upload for events and groups (cloud storage)
-- [ ] Interactive events calendar enhancements (calendar widget)
+- [ ] File upload for images (cloud storage integration)
+- [ ] Rich text editor for news/event descriptions
+- [ ] Interactive events calendar widget
 
 #### P3 (Nice to Have)
 - [ ] Member portal with login/registration
@@ -104,60 +87,30 @@ Collections:
 - [ ] Photo gallery
 - [ ] Contact form with captcha
 
-## API Contracts
-
-### News API (NEW)
-```
-GET /api/news - List all news articles
-GET /api/news/published - List only published articles (for public)
-POST /api/news - Create article (admin only)
-GET /api/news/{id} - Get single article
-PUT /api/news/{id} - Update article (admin only)
-DELETE /api/news/{id} - Delete article (admin only)
-```
-
-### Events API
-```
-GET /api/events - List all events
-POST /api/events - Create event (admin only)
-GET /api/events/{id} - Get single event
-PUT /api/events/{id} - Update event (admin only)
-DELETE /api/events/{id} - Delete event (admin only)
-```
-
-### Bookings API
-```
-GET /api/bookings - List bookings (admin only)
-POST /api/bookings - Create booking enquiry
-GET /api/bookings/{id} - Get booking details
-PUT /api/bookings/{id}/status - Update booking status (admin only)
-```
-
-### Committee API
-```
-GET /api/committee - List committee members
-POST /api/committee - Add member (admin only)
-PUT /api/committee/{id} - Update member (admin only)
-DELETE /api/committee/{id} - Remove member (admin only)
-```
-
-### Groups API
-```
-GET /api/groups - List associated groups
-POST /api/groups - Create group (admin only)
-PUT /api/groups/{id} - Update group (admin only)
-DELETE /api/groups/{id} - Delete group (admin only)
-```
-
-## Admin Credentials
+## Admin Access
 - **URL**: `/admin/login`
 - **Username**: `admin`
 - **Password**: `admin123`
 
+## API Endpoints Summary
+
+| Endpoint | Methods | Description |
+|----------|---------|-------------|
+| `/api/settings` | GET, PUT | Home page settings |
+| `/api/activities` | GET, POST, PUT, DELETE | Weekly activities |
+| `/api/news` | GET, POST, PUT, DELETE | News articles |
+| `/api/news/published` | GET | Published news only |
+| `/api/events` | GET, POST, PUT, DELETE | Events |
+| `/api/committee` | GET, POST, PUT, DELETE | Committee members |
+| `/api/groups` | GET, POST, PUT, DELETE | Associated groups |
+| `/api/bookings` | GET, POST, PUT | Hall bookings |
+| `/api/auth/login` | POST | Admin login |
+| `/api/auth/me` | GET | Verify token |
+
 ## Technical Notes
-- Bilingual content uses `_en` and `_pl` field suffixes in database
+- Bilingual content uses `_en` and `_pl` field suffixes
 - Language context determines which fields to display
-- JWT authentication for admin routes (24-hour token expiration)
-- Use sonner for toast notifications
-- Traditional design: red (#dc2626) primary, clean layout, generous whitespace
-- Mobile-first responsive approach
+- JWT authentication with 24-hour token expiration
+- Settings API uses upsert - creates if not exists
+- Activities sorted by day order then by display order
+- Default translations used when custom text is null
