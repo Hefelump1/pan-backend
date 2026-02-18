@@ -4,11 +4,14 @@ from starlette.middleware.cors import CORSMiddleware
 import os
 import logging
 from pathlib import Path
-from routes import router
-from auth_routes import auth_router
 
+# Load environment variables FIRST, before importing other modules
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+# Now import routes that depend on environment variables
+from routes import router
+from auth_routes import auth_router
 
 # Create the main app
 app = FastAPI(title="Polish Association of Newcastle API", version="1.0.0")
