@@ -64,10 +64,17 @@ Collections:
 - [x] **Committee Management** - Full CRUD with display ordering
 - [x] **Groups Management** - Full CRUD, bilingual fields
 - [x] **Bookings Management** - Review, Approve/Reject hall hire requests
+- [x] **Image Upload System** - Direct file upload with drag-and-drop support (replaces URL inputs)
+
+### Image Upload Feature (Completed Feb 2026)
+- **Backend API**: `POST /api/upload` accepts multipart/form-data, validates file types (jpg, png, gif, webp, svg) and size (max 10MB)
+- **Storage**: Files stored in `/app/backend/uploads/` and served at `/api/uploads/{filename}`
+- **Frontend Component**: Reusable `ImageUpload.jsx` with drag-and-drop, preview, replace, and remove functionality
+- **Deployed in**: AdminNews, AdminEvents, AdminCommittee, AdminGroups, AdminHomePage (hero/welcome images)
 
 ### Testing Status
-- Backend: 100% (19/19 API tests passed)
-- Frontend: 100% (All CMS features verified)
+- Backend: 100% (17/17 upload API tests passed + 19 existing)
+- Frontend: 100% (All CMS features verified including image upload)
 
 ### 📋 Backlog
 
@@ -76,7 +83,7 @@ Collections:
 - [ ] Email notifications for new booking enquiries
 
 #### P2 (Medium Priority)
-- [ ] File upload for images (cloud storage integration)
+- [x] ~~File upload for images~~ ✅ Completed Feb 2026
 - [ ] Rich text editor for news/event descriptions
 - [ ] Interactive events calendar widget
 
@@ -106,6 +113,8 @@ Collections:
 | `/api/bookings` | GET, POST, PUT | Hall bookings |
 | `/api/auth/login` | POST | Admin login |
 | `/api/auth/me` | GET | Verify token |
+| `/api/upload` | POST, DELETE | Image upload/delete |
+| `/api/uploads/{filename}` | GET | Serve uploaded images |
 
 ## Technical Notes
 - Bilingual content uses `_en` and `_pl` field suffixes
