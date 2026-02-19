@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
@@ -36,6 +36,7 @@ function App() {
                 <Footer />
               </>
             } />
+            <Route path="/index.html" element={<Navigate to="/" replace />} />
             <Route path="/events" element={<><Navbar /><Events /><Footer /></>} />
             <Route path="/news" element={<><Navbar /><News /><Footer /></>} />
             <Route path="/weekly" element={<><Navbar /><WeeklyActivities /><Footer /></>} />
@@ -54,6 +55,9 @@ function App() {
             <Route path="/admin/groups" element={<AdminGroups />} />
             <Route path="/admin/activities" element={<AdminActivities />} />
             <Route path="/admin/homepage" element={<AdminHomePage />} />
+            
+            {/* Catch-all redirect to home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <Toaster />
         </BrowserRouter>
