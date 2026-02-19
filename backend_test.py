@@ -4,7 +4,7 @@ import json
 from datetime import datetime, timedelta
 
 class PolishAssociationAPITester:
-    def __init__(self, base_url="https://newcastle-poland.preview.emergentagent.com"):
+    def __init__(self, base_url="https://newcastle-cms.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

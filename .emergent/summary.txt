@@ -2,150 +2,145 @@
 
 **PRODUCT REQUIREMENTS:**
 - A full-stack website with a React frontend and FastAPI backend.
-- **Pages:** Home, Events (with calendar), Weekly Activities, Hall Hire (with booking form), Committee, Associated Groups, Constitution/Governance, and a new Recent News page.
-- **Admin Panel:** A secure area for administrators to manage website content. Currently, it only supports managing hall booking requests (approve/reject). The next phase is to build full content management capabilities.
-- **Data Management:** The site should display 10 committee members, various associated groups (including Polish Radio), and a list of useful external links on the governance page.
-- **Internationalization (i18n):** The entire site must be bilingual (English and Polish), with a language toggle (flag icon). English should be the default language. All content, including menus, dynamic data, and footers, must be translated.
+- **Pages:** Home, Events (with calendar), Weekly Activities, Hall Hire (with booking form), Committee, Associated Groups, Constitution/Governance, and a Recent News page.
+- **Admin Panel:** A secure area for administrators to manage all website content, including Hall Bookings, News, Events, Committee, Associated Groups, Weekly Activities, and Home Page content.
+- **Data Management:** The site should display dynamic data for all sections, managed through the admin panel.
+- **Internationalization (i18n):** The entire site must be bilingual (English and Polish), with a language toggle.
 
 **User's preferred language**: English
 
 **what currently exists?**
-A full-stack application with a React frontend, FastAPI backend, and MongoDB database. All requested pages and the initial admin panel have been built. The site is fully bilingual, with a language toggle that switches content between English and Polish. The database is seeded with initial data for all sections. The Associated Groups and Hall Hire pages have been refactored to support dynamic and static translations correctly. A Recent News page and a Useful Links section on the governance page have been added. The committee has been updated to 10 members.
+A full-stack application with a React frontend, FastAPI backend, and MongoDB. All requested pages are functional. A comprehensive CMS has been built within the admin panel, allowing for full CRUD management of News, Events, Committee members, Associated Groups, Weekly Activities, and key Home Page content (hero images, welcome text). The site is fully bilingual. The agent also implemented several fixes to allow the React application to be deployed on external hosting providers like Vodien by addressing SPA routing and asset path issues.
 
 **Last working item**:
-- **Last item agent was working**: The user asked how to edit the website's content. The agent explained that the current admin panel only manages hall bookings and does not have full Content Management System (CMS) capabilities. The agent then proposed building out the admin panel to allow editing of News, Events, Committee, and Groups, and asked the user to prioritize which section to build first.
-- **Status**: USER VERIFICATION PENDING
-- **Agent Testing Done**: N/A
-- **Which testing method agent to use?**: N/A (Awaiting user's decision on the next feature).
+- **Last item agent was working**: The user requested a significant enhancement: to replace image URL inputs in the CMS with a direct file upload system. The agent acknowledged the request and was about to begin implementation.
+- **Status**: NOT STARTED
+- **Agent Testing Done**: N
+- **Which testing method agent to use?**: both
 - **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-There are no pending technical issues. The primary pending item is waiting for the user's decision on which CMS module to build next for the admin panel.
-
-**Issues Detail**:
-*   N/A
+There are no pending bugs or technical issues. The current work is focused on implementing new features as requested by the user.
 
 **In progress Task List**:
-*   N/A
+*   None.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **P0: Build Full Content Management System (CMS) in Admin Panel:** Based on user's priority, implement full CRUD (Create, Read, Update, Delete) functionality for one or more of the following:
-        *   News Management
-        *   Events Management
-        *   Committee Management
-        *   Groups Management
+    *   **P0: Implement Image Upload Functionality:** Modify the backend and frontend to support direct image uploads instead of URL inputs for CMS-managed content (e.g., Events, News, Home Page). This involves creating file upload endpoints, storage logic, and new frontend components.
 
 *   **Future Tasks:**
-    *   **P1: Enhance Admin Panel:** Add a feature for the admin to change their password.
-    *   **P1: Add Email Notifications:** Implement email notifications for new hall booking enquiries.
-    *   **P2: Enhance User Experience:** Make the events calendar more interactive.
-    *   **P3: Member Registration:** Consider adding a user/member registration system.
+    *   **P1: CMS Preview Mode:** Add a feature allowing admins to preview content changes on a draft version of the public-facing site before publishing.
+    *   **P1: Bulk Data Management:** Implement bulk import/export functionality for content like Weekly Activities.
+    *   **P1: Admin Password Change:** Add a feature in the admin panel for administrators to change their own password.
+    *   **P1: Email Notifications:** Integrate an email service to send notifications for new hall booking enquiries.
+    *   **P2: Interactive Calendar:** Enhance the user experience on the Events page with a more interactive calendar component.
+    *   **P3: Member Registration:** Implement a user registration and login system for community members.
 
 **Completed work in this session**
-- **Data Update:** Added a 10th member (Agnieszka Krawczyk) to the committee via a new script ().
-- **Translation Fix (Associated Groups):**
-    - Updated the  schema in MongoDB to be bilingual (, , etc.).
-    - Created a script () to migrate existing data.
-    - Updated the backend model () and API route () to handle the new schema.
-    - Updated the frontend () to display content based on the selected language.
-- **Translation Fix (Hall Hire):**
-    - Moved hardcoded English arrays for facilities and suitableFor from  into the central  file.
-    - Updated  to use the  hook for these lists.
-- **New Feature: Recent News Page:**
-    - Created a new page component .
-    - Added a route for it in  and a link in .
-    - Added corresponding English and Polish translations.
-- **New Feature: Useful Links:**
-    - Added a Useful Links section to the  page with 7 external links.
-    - Added translations for the section title.
-- **New Feature: Polish Radio Group:**
-    - Added Polish Radio on 2NUR FM to the associated groups via a script ().
-- **Documentation:** Updated  to reflect the latest completed work.
+- **Full CMS Implementation:** Built a comprehensive admin panel with full CRUD capabilities for:
+    - News ()
+    - Events ()
+    - Committee ()
+    - Associated Groups ()
+    - Weekly Activities ()
+    - Home Page Content ()
+- **Dynamic Content Integration:** Refactored the public-facing , , and  pages to fetch their content from the new backend APIs instead of using hardcoded data.
+- **Deployment Readiness & Support:**
+    - Resolved critical deployment blockers identified by the deployment agent (hardcoded JWT secret, redundant imports).
+    - Fixed issues preventing deployment on external hosts by adding  to , creating server rewrite configurations (), and cleaning  of development-specific scripts.
+    - Removed  from  files to ensure the production build is included in code downloads for the user.
+    - Provided a detailed deployment guide () with specific instructions for the user's hosting provider (Vodien).
+- **Testing:** Successfully ran the testing agent twice to validate the new CMS modules, with all tests passing.
 
 **Earlier issues found/mentioned but not fixed**
 *   None.
 
 **Known issue recurrence from previous fork**
-*   N/A
+*   None.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-*   **Frontend:** React, React Router, Tailwind CSS, shadcn/ui.
-*   **Backend:** FastAPI, Python.
-*   **Database:** MongoDB with  async driver.
-*   **State Management:** React Context API for language state.
-*   **Authentication:** JWT with  and  for password hashing.
-*   **Process Management:** .
+*   **Frontend:** React, React Router, Tailwind CSS, shadcn/ui
+*   **Backend:** FastAPI, Python
+*   **Database:** MongoDB with  async driver
+*   **Authentication:** JWT with  and 
+*   **Deployment:** Knowledge of deploying React SPAs to Apache/cPanel servers, including  pathing and  rewrite rules.
 
 **key DB schema**
 *   ****: 
 *   ****: 
-*   ****: 
-*   ****: 
-*   ****: 
+*   ****: A singleton document with  storing 
+*   Other schemas (, , , ) remain largely the same but are now managed via the CMS.
 
 **changes in tech stack**
 *   None.
 
 **All files of reference**
-*   : Manages the bilingual state (English/Polish).
-*   : A central file storing all text strings for both languages.
-*   : Pydantic models, updated for bilingual .
-*   : API routes, updated to correctly fetch bilingual group data.
-*   : Updated to render bilingual content.
-*   : Updated to use translations for static lists.
-*   : New page for recent news.
-*   : Updated with the Useful Links section.
-*   : Contains all application routes, including the new  route.
+*   **/app/backend/routes.py**: Contains all API endpoints, including the newly added CRUD endpoints for all CMS modules.
+*   **/app/backend/models.py**: Contains all Pydantic models, including new ones for , , and the updated bilingual .
+*   **/app/frontend/src/App.js**: Contains all frontend routes, including protected routes for the new admin pages.
+*   **/app/frontend/src/pages/AdminDashboard.jsx**: The main hub for the CMS, with links to all management pages.
+*   **/app/frontend/package.json**: Updated with  to enable relative paths for deployment.
+*   **/app/frontend/public/index.html**: Cleaned version for production builds, with external scripts removed.
+*   **/app/frontend/public/.htaccess**: New file to handle routing on Apache servers.
+*   **/app/DEPLOYMENT_GUIDE.md**: A new comprehensive guide for deploying the application.
+*   **/app/.gitignore** & **/app/frontend/.gitignore**: Updated to no longer ignore the  directory.
 
 **Areas that need refactoring**:
-*   The  file is becoming large. For future scalability, it could be beneficial to split translations into page-specific or feature-specific JSON files and load them dynamically.
+*   The  file has become very large. It should be split into smaller, more focused router files (e.g., , ) to improve maintainability.
+*   The  file is also growing and could be split into smaller, feature-specific JSON files.
 
 **key api endpoints**
-*   : Get all events.
-*   : Get all committee members.
-*   : Get all associated groups (response now contains bilingual fields).
-*   : Create a new hall booking enquiry.
-*   : [Admin] Get all bookings.
-*   : [Admin] Update booking status.
-*   : Log in and receive a JWT.
-*   : [Admin] Verify token and get user info.
+*   **Admin CRUD Endpoints (all require auth):**
+    *   , 
+    *   , 
+    *   , 
+    *   , 
+    *   , 
+    *    (manages a single document for site-wide settings)
+*   **Public Data Endpoints:**
+    *   , , etc.
 
 **Critical Info for New Agent**
-*   **Translation Fix Pattern:** When content isn't translating, first check if it's static or dynamic.
-    *   **Static text:** Move hardcoded strings from JSX files into  and use the  hook.
-    *   **Dynamic text from DB:** This requires a more involved fix: update the backend model (), update the database data (often with a script), update the API route () to handle the new schema, and finally update the frontend component to render the  or  field based on the current language context.
-*   **Admin Access:** The admin panel is at . Credentials are  / . It is currently very basic and only handles booking requests. The user's next priority is likely to expand this into a full CMS.
+*   **Priority Task is Image Upload:** The immediate next step is to implement a file upload system to replace the image URL fields in the CMS. This will involve creating backend endpoints for handling , storing files on the server's filesystem (e.g., in an  directory), and serving them statically. The frontend admin forms will need to be updated from text inputs to file inputs.
+*   **Deployment Context:** The user has been working through deployment issues on an external cPanel host (Vodien). Be aware that the project is now configured for this type of deployment (, ). The  folder is intentionally not in  to help the user.
+*   **Extensive CMS:** The admin panel is the core of content management. Any new content-related features should be integrated into the existing structure in .
 
 **documents and test reports created in this job**
-*    (updated multiple times)
+*   
+*   
+*   
+*   
+*   
+*   
+*   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** how do I edit the content? Can you put into edit mode (PENDING - agent has responded and is awaiting user decision)
-2.  **User:** Requested new features: Useful Links on the governance page, a new Recent News page, and adding Polish Radio to the groups page. (COMPLETED)
-3.  **User:** Pointed out that lists on the Hall Hire page (facilities, perfect for) were not translating. (COMPLETED)
-4.  **Agent:** Fixed the Hall Hire translations.
-5.  **User:** Pointed out that the Associated Groups page content was not translating. (COMPLETED)
-6.  **Agent:** Fixed the Associated Groups translation by migrating the database and updating the full stack.
-7.  **Agent:** Added the 10th committee member.
-8.  **User:** Could you please add one more committee member to make it 10? (COMPLETED)
-9.  **Agent:** Sent initial plan for verification.
-10. **User:** Responded to initial plan. (COMPLETED)
+1.  **User:** Can you enable image upload in the backend rather than pointing to a url? (PENDING - This is the next task)
+2.  **User:** We have an error in the Vodien console saying no routes matched location... (RESOLVED - Agent identified it as a caching issue and provided a clean build)
+3.  **User:** Could you check the main.8bc527fa.js file? I cant download it as it says its got a virus (RESOLVED - Agent identified a false positive and provided a cleaner build)
+4.  **User:** The build folder is missing (RESOLVED - Agent removed the build folder from  and rebuilt)
+5.  **User:** Is there anything written in the index.html file that would prevent content from showing up on Vodien? (RESOLVED - Agent cleaned the  of external scripts)
+6.  **User:** There is no asset-manifest.json or static folder in the frontend build folder as per your instructions (RESOLVED - Agent rebuilt the project)
+7.  **User:** Vodien (RESOLVED - Agent provided specific deployment instructions for the cPanel host)
+8.  **User:** I have a question, when uploading this website onto another host server, the website shows up blank... (RESOLVED - Agent began the process of diagnosing and fixing deployment issues)
+9.  **User:** Call Deployer Agent and Run Health Check to Check for Readiness for Deployment (RESOLVED - Agent ran the check and fixed blockers)
+10. **User:** We need a way to change the content on the front page and also for the weekly activities (RESOLVED - Agent built the CMS for Home Page and Weekly Activities)
 
 **Project Health Check:**
 *   **Broken:** None.
-*   **Mocked:** None. The application is fully integrated with the backend API.
+*   **Mocked:** None. The application is fully functional and integrated.
 
 **3rd Party Integrations**
 *   None.
 
 **Testing status**
-*   **Testing agent used after significant changes:** No. Agent self-tested via screenshots.
+*   **Testing agent used after significant changes:** YES. Used to validate the full CMS implementation.
 *   **Troubleshoot agent used after agent stuck in loop:** No.
-*   **Test files created:** None in this session.
+*   **Test files created:** None.
 *   **Known regressions:** None.
 
 **Credentials to test flow:**
@@ -154,4 +149,4 @@ There are no pending technical issues. The primary pending item is waiting for t
 *   **Password:** 
 
 **What agent forgot to execute**
-*   Nothing has been forgotten. The agent has addressed all user requests and bug reports from this session. The next step is dependent on the user's response.</analysis>
+*   The agent has been diligent in following user requests. Nothing appears to have been missed or forgotten.</analysis>
