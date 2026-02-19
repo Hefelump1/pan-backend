@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Image, Type, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Save, Type, RefreshCw } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { ImageUpload } from '../components/ImageUpload';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -120,42 +121,28 @@ export const AdminHomePage = () => {
           {/* Images Section */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center mb-6">
-              <Image size={24} className="text-red-600 mr-3" />
+              <div className="w-6 h-6 mr-3 text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+              </div>
               <h2 className="text-xl font-bold text-gray-900">Images</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Hero Background Image URL
-                </label>
-                <input
-                  type="url"
-                  value={settings.hero_image}
-                  onChange={(e) => setSettings({ ...settings, hero_image: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  data-testid="hero-image-input"
-                />
-                {settings.hero_image && (
-                  <img src={settings.hero_image} alt="Hero preview" className="mt-3 w-full h-32 object-cover rounded-lg" />
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Welcome Section Image URL
-                </label>
-                <input
-                  type="url"
-                  value={settings.welcome_image}
-                  onChange={(e) => setSettings({ ...settings, welcome_image: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  data-testid="welcome-image-input"
-                />
-                {settings.welcome_image && (
-                  <img src={settings.welcome_image} alt="Welcome preview" className="mt-3 w-full h-32 object-cover rounded-lg" />
-                )}
-              </div>
+              <ImageUpload
+                value={settings.hero_image}
+                onChange={(url) => setSettings({ ...settings, hero_image: url })}
+                label="Hero Background Image"
+                testId="hero-image"
+                previewClassName="h-40"
+              />
+              <ImageUpload
+                value={settings.welcome_image}
+                onChange={(url) => setSettings({ ...settings, welcome_image: url })}
+                label="Welcome Section Image"
+                testId="welcome-image"
+                previewClassName="h-40"
+              />
             </div>
           </div>
 
