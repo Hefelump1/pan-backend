@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Pencil, Trash2, Calendar, MapPin, X } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { ImageUpload } from '../components/ImageUpload';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -331,19 +332,12 @@ export const AdminEvents = () => {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Image URL
-                </label>
-                <input
-                  type="url"
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="https://example.com/image.jpg"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  data-testid="event-image"
-                />
-              </div>
+              <ImageUpload
+                value={formData.image}
+                onChange={(url) => setFormData({ ...formData, image: url })}
+                label="Event Image"
+                testId="event-image"
+              />
 
               <div className="flex gap-3 pt-4 border-t border-gray-200">
                 <button
