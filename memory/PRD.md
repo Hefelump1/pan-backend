@@ -65,6 +65,7 @@ Collections:
 - [x] **Groups Management** - Full CRUD, bilingual fields
 - [x] **Bookings Management** - Review, Approve/Reject hall hire requests
 - [x] **Image Upload System** - Direct file upload with drag-and-drop support (replaces URL inputs)
+- [x] **Password Change** - Admins can change their password from Settings menu
 
 ### Image Upload Feature (Completed Feb 2026)
 - **Backend API**: `POST /api/upload` accepts multipart/form-data, validates file types (jpg, png, gif, webp, svg) and size (max 10MB)
@@ -79,7 +80,7 @@ Collections:
 ### 📋 Backlog
 
 #### P1 (High Priority)
-- [ ] Admin password change feature
+- [x] ~~Admin password change feature~~ ✅ Completed Feb 2026
 - [ ] Email notifications for new booking enquiries
 
 #### P2 (Medium Priority)
@@ -115,6 +116,7 @@ Collections:
 | `/api/auth/me` | GET | Verify token |
 | `/api/upload` | POST, DELETE | Image upload/delete |
 | `/api/uploads/{filename}` | GET | Serve uploaded images |
+| `/api/auth/change-password` | POST | Change admin password |
 
 ## Technical Notes
 - Bilingual content uses `_en` and `_pl` field suffixes
