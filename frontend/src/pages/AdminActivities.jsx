@@ -146,6 +146,17 @@ export const AdminActivities = () => {
     }
   };
 
+  const handleToggleVisibility = async (activity) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      await axios.patch(`${BACKEND_URL}/api/activities/${activity.id}/visibility`, {}, { headers: { Authorization: `Bearer ${token}` } });
+      toast.success(activity.is_visible === false ? 'Activity is now visible' : 'Activity is now hidden');
+      fetchActivities();
+    } catch (error) {
+      toast.error('Failed to toggle visibility');
+    }
+  };
+
   const groupedActivities = DAYS.reduce((acc, day) => {
     acc[day] = activities.filter(a => a.day === day);
     return acc;
