@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Building2, Users, Check, Send } from 'lucide-react';
 import { Calendar } from '../components/ui/calendar';
 import { toast } from 'sonner';
@@ -8,7 +8,8 @@ import { t } from '../translations/translations';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const hallImages = [
+// Default fallback images
+const defaultHallImages = [
   'https://images.unsplash.com/photo-1747296252929-ca8fbe6d238c',
   'https://images.pexels.com/photos/12909650/pexels-photo-12909650.jpeg',
   'https://images.pexels.com/photos/35723946/pexels-photo-35723946.jpeg'
@@ -18,6 +19,36 @@ export const HallHire = () => {
   const { language } = useLanguage();
   const [selectedDate, setSelectedDate] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', eventType: '', guests: '', message: '' });
+  const [hallImages, setHallImages] = useState(defaultHallImages);
+
+  useEffect(() => {
+    fetchHallImages();
+  }, []);
+
+  const fetchHallImages = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/settings`);
+      const settings = response.data;
+      
+      // Collect all non-empty hall images
+      const images = [
+        settings.hall_image_1,
+        settings.hall_image_2,
+        settings.hall_image_3,
+        settings.hall_image_4,
+        settings.hall_image_5,
+        settings.hall_image_6
+      ].filter(img => img && img.length > 0);
+      
+      // Use fetched images if available, otherwise use defaults
+      if (images.length > 0) {
+        setHallImages(images);
+      }
+    } catch (error) {
+      console.error('Error fetching hall images:', error);
+      // Keep default images on error
+    }
+  };
 
   const facilities = t(language, 'hallHire.facilities');
   const suitableFor = t(language, 'hallHire.suitableFor');
