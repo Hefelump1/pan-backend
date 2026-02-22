@@ -1,13 +1,10 @@
-import React from 'react';
-import { FileText, Download, Calendar as CalendarIcon, Scale, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileText, Download, Calendar as CalendarIcon, Scale, ExternalLink, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { t } from '../translations/translations';
+import axios from 'axios';
 
-const documents = [
-  { name: 'Constitution 2025', type: 'PDF' },
-  { name: 'AGM Notice 2025', type: 'PDF' },
-  { name: 'Annual Report 2024', type: 'PDF' }
-];
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const usefulLinks = [
   { name_en: 'Federation of Polish Organisations in NSW', name_pl: 'Federacja Polskich Organizacji w NSW', url: 'https://www.polishfederation.org.au/' },
