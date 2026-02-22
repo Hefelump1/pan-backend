@@ -72,16 +72,29 @@ export const Constitution = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-red-700 to-red-800 rounded-xl p-12 text-center">
             <CalendarIcon size={48} className="text-white mx-auto mb-6" />
-            <h2 className="text-4xl font-bold text-white mb-4">{t(language, 'constitution.agmTitle')}</h2>
-            <p className="text-2xl text-red-100 mb-2">{t(language, 'constitution.agmDate')}</p>
-            <p className="text-xl text-red-100 mb-8">{t(language, 'constitution.agmTime')}</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{getAgmField('title')}</h2>
+            <p className="text-2xl text-red-100 mb-2">{getAgmField('date')}</p>
+            <p className="text-xl text-red-100 mb-8">{getAgmField('time')}</p>
             <p className="text-red-100 mb-8">
-              {t(language, 'constitution.agmDesc')}
+              {getAgmField('description')}
             </p>
-            <button className="px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300">
-              <Download size={20} className="inline mr-2" />
-              {t(language, 'constitution.downloadNotice')}
-            </button>
+            {settings?.agm_document_url ? (
+              <a 
+                href={settings.agm_document_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300"
+                data-testid="download-agm-notice"
+              >
+                <Download size={20} className="inline mr-2" />
+                {t(language, 'constitution.downloadNotice')}
+              </a>
+            ) : (
+              <button className="px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300">
+                <Download size={20} className="inline mr-2" />
+                {t(language, 'constitution.downloadNotice')}
+              </button>
+            )}
           </div>
         </div>
       </section>
