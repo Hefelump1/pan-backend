@@ -189,7 +189,7 @@ export const AdminDocuments = () => {
       const token = localStorage.getItem('adminToken');
       const documentIds = documents.map(doc => doc.id);
       
-      await axios.put(`${BACKEND_URL}/api/documents/reorder`, documentIds, {
+      await axios.put(`${BACKEND_URL}/api/documents/reorder`, { document_ids: documentIds }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
