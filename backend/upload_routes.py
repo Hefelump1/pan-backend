@@ -26,15 +26,11 @@ async def upload_image(file: UploadFile = File(...)):
     
     # Validate file extension
     ext = get_file_extension(file.filename)
-    if ext not in ALLOWED_EXTENSIONS:
+    if ext not in ALLOWED_IMAGE_EXTENSIONS:
         raise HTTPException(
             status_code=400,
-            detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_EXTENSIONS)}"
+            detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_IMAGE_EXTENSIONS)}"
         )
-    
-    # Check file size (read in chunks to avoid memory issues)
-    file_size = 0
-    chunk_size = 1024 * 1024  # 1MB chunks
     
     # Reset file position
     await file.seek(0)
@@ -63,6 +59,53 @@ async def upload_image(file: UploadFile = File(...)):
     # Return the URL path (will be served by static files)
     return {
         "filename": unique_filename,
+        "url": f"/api/uploads/{unique_filename}",
+        "size": file_size,
+        "content_type": file.content_type
+    }
+
+
+@upload_router.post("/upload/document")
+async def upload_document(file: UploadFile = File(...)):
+    """Upload a document file (PDF, DOC, DOCX) and return its URL"""
+    
+    # Validate file extension
+    ext = get_file_extension(file.filename)
+    if ext not in ALLOWED_DOCUMENT_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_DOCUMENT_EXTENSIONS)}"
+        )
+    
+    # Reset file position
+    await file.seek(0)
+    
+    # Read file content
+    content = await file.read()
+    file_size = len(content)
+    
+    if file_size > MAX_DOCUMENT_SIZE:
+        raise HTTPException(
+            status_code=400,
+            detail=f"File too large. Maximum size is {MAX_DOCUMENT_SIZE // (1024*1024)}MB"
+        )
+    
+    # Generate unique filename preserving original name for reference
+    original_name = Path(file.filename).stem
+    unique_filename = f"{uuid.uuid4()}_{original_name}{ext}"
+    file_path = UPLOAD_DIR / unique_filename
+    
+    # Save file
+    try:
+        with open(file_path, "wb") as buffer:
+            buffer.write(content)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save file: {str(e)}")
+    
+    # Return the URL path (will be served by static files)
+    return {
+        "filename": unique_filename,
+        "original_name": file.filename,
         "url": f"/api/uploads/{unique_filename}",
         "size": file_size,
         "content_type": file.content_type
