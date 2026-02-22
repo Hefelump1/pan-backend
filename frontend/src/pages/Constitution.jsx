@@ -18,6 +18,26 @@ const usefulLinks = [
 
 export const Constitution = () => {
   const { language } = useLanguage();
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/documents`);
+        setDocuments(response.data);
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDocuments();
+  }, []);
+
+  const getFileIcon = (fileType) => {
+    return fileType?.toLowerCase() === 'pdf' ? 'PDF' : fileType?.toUpperCase() || 'DOC';
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
