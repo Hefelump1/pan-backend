@@ -273,6 +273,20 @@ export const AdminDashboard = () => {
             </Link>
 
             <Link
+              to="/admin/agm"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
+              data-testid="manage-agm-link"
+            >
+              <div className="flex items-center mb-3">
+                <div className="p-3 bg-rose-100 rounded-lg group-hover:bg-rose-200 transition-colors">
+                  <Calendar size={24} className="text-rose-600" />
+                </div>
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">AGM Notice</h3>
+              <p className="text-sm text-gray-600">Edit AGM announcement</p>
+            </Link>
+
+            <Link
               to="/admin/activities"
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
               data-testid="manage-activities-link"
