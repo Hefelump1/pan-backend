@@ -12,8 +12,10 @@ UPLOAD_DIR = Path(__file__).parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 # Allowed file extensions
-ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'}
+ALLOWED_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'}
+ALLOWED_DOCUMENT_EXTENSIONS = {'.pdf', '.doc', '.docx'}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+MAX_DOCUMENT_SIZE = 50 * 1024 * 1024  # 50MB for documents
 
 def get_file_extension(filename: str) -> str:
     return Path(filename).suffix.lower()
