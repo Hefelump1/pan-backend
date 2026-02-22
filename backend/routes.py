@@ -7,7 +7,8 @@ from models import (
     CommitteeMember, CommitteeMemberCreate, committee_collection,
     AssociatedGroup, AssociatedGroupCreate, groups_collection,
     NewsArticle, NewsArticleCreate, news_collection,
-    SiteSettings, SiteSettingsUpdate, settings_collection
+    SiteSettings, SiteSettingsUpdate, settings_collection,
+    GovernanceDocument, GovernanceDocumentCreate, documents_collection
 )
 from datetime import datetime
 import uuid
