@@ -19,24 +19,39 @@ const usefulLinks = [
 export const Constitution = () => {
   const { language } = useLanguage();
   const [documents, setDocuments] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDocuments = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}/api/documents`);
-        setDocuments(response.data);
+        const [docsResponse, settingsResponse] = await Promise.all([
+          axios.get(`${BACKEND_URL}/api/documents`),
+          axios.get(`${BACKEND_URL}/api/settings`)
+        ]);
+        setDocuments(docsResponse.data);
+        setSettings(settingsResponse.data);
       } catch (error) {
-        console.error('Error fetching documents:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
-    fetchDocuments();
+    fetchData();
   }, []);
 
   const getFileIcon = (fileType) => {
     return fileType?.toLowerCase() === 'pdf' ? 'PDF' : fileType?.toUpperCase() || 'DOC';
+  };
+
+  // Helper to get AGM field with fallback to default translation
+  const getAgmField = (fieldName) => {
+    const key = `agm_${fieldName}_${language}`;
+    if (settings && settings[key]) {
+      return settings[key];
+    }
+    // Fallback to translation
+    return t(language, `constitution.agm${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`);
   };
 
   return (
