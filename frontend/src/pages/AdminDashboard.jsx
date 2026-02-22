@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   Calendar, Users, Building2, BookOpen, LogOut, Plus, 
-  CheckCircle, XCircle, Clock, TrendingUp, Newspaper, UsersRound, Home, ClipboardList
+  CheckCircle, XCircle, Clock, TrendingUp, Newspaper, UsersRound, Home, ClipboardList,
+  Settings, Key, X, Eye, EyeOff
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
