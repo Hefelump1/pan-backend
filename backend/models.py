@@ -182,6 +182,13 @@ class SiteSettings(BaseModel):
     welcome_text1_pl: Optional[str] = None
     welcome_text2_en: Optional[str] = None
     welcome_text2_pl: Optional[str] = None
+    # Hall Hire images (up to 6 images)
+    hall_image_1: Optional[str] = None
+    hall_image_2: Optional[str] = None
+    hall_image_3: Optional[str] = None
+    hall_image_4: Optional[str] = None
+    hall_image_5: Optional[str] = None
+    hall_image_6: Optional[str] = None
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class SiteSettingsUpdate(BaseModel):
@@ -195,6 +202,13 @@ class SiteSettingsUpdate(BaseModel):
     welcome_text1_pl: Optional[str] = None
     welcome_text2_en: Optional[str] = None
     welcome_text2_pl: Optional[str] = None
+    # Hall Hire images
+    hall_image_1: Optional[str] = None
+    hall_image_2: Optional[str] = None
+    hall_image_3: Optional[str] = None
+    hall_image_4: Optional[str] = None
+    hall_image_5: Optional[str] = None
+    hall_image_6: Optional[str] = None
 
 # Collections
 events_collection = db['events']
