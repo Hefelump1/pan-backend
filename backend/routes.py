@@ -375,6 +375,11 @@ async def update_site_settings(settings: SiteSettingsUpdate):
 
 
 # ==================== GOVERNANCE DOCUMENTS ====================
+from pydantic import BaseModel as PydanticBaseModel
+
+class DocumentReorderRequest(PydanticBaseModel):
+    document_ids: List[str]
+
 @router.get("/documents")
 async def get_documents():
     """Get all governance documents ordered by order field"""
@@ -393,6 +398,19 @@ async def create_document(document: GovernanceDocumentCreate):
     document_obj = GovernanceDocument(**document_dict)
     await documents_collection.insert_one(document_obj.dict())
     return document_obj
+
+@router.put("/documents/reorder")
+async def reorder_documents(request: DocumentReorderRequest):
+    """Reorder documents by providing array of document IDs in desired order"""
+    for index, doc_id in enumerate(request.document_ids):
+        await documents_collection.update_one(
+            {"id": doc_id},
+            {"$set": {"order": index, "updated_at": datetime.utcnow()}}
+        )
+    
+    # Return updated documents
+    documents = await documents_collection.find({}, {"_id": 0}).sort("order", 1).to_list(1000)
+    return documents
 
 @router.put("/documents/{document_id}", response_model=GovernanceDocument)
 async def update_document(document_id: str, document: GovernanceDocumentCreate):
@@ -419,20 +437,3 @@ async def delete_document(document_id: str):
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Document not found")
     return None
-
-from pydantic import BaseModel as PydanticBaseModel
-class DocumentReorderRequest(PydanticBaseModel):
-    document_ids: List[str]
-
-@router.put("/documents/reorder")
-async def reorder_documents(request: DocumentReorderRequest):
-    """Reorder documents by providing array of document IDs in desired order"""
-    for index, doc_id in enumerate(request.document_ids):
-        await documents_collection.update_one(
-            {"id": doc_id},
-            {"$set": {"order": index, "updated_at": datetime.utcnow()}}
-        )
-    
-    # Return updated documents
-    documents = await documents_collection.find({}, {"_id": 0}).sort("order", 1).to_list(1000)
-    return documents
