@@ -371,3 +371,64 @@ async def update_site_settings(settings: SiteSettingsUpdate):
     
     updated = await settings_collection.find_one({"id": "site_settings"}, {"_id": 0})
     return updated
+
+
+
+# ==================== GOVERNANCE DOCUMENTS ====================
+@router.get("/documents")
+async def get_documents():
+    """Get all governance documents ordered by order field"""
+    documents = await documents_collection.find({}, {"_id": 0}).sort("order", 1).to_list(1000)
+    return documents
+
+@router.post("/documents", response_model=GovernanceDocument, status_code=status.HTTP_201_CREATED)
+async def create_document(document: GovernanceDocumentCreate):
+    """Create governance document (admin only)"""
+    # Get current max order
+    max_order_doc = await documents_collection.find_one(sort=[("order", -1)])
+    next_order = (max_order_doc.get("order", 0) + 1) if max_order_doc else 0
+    
+    document_dict = document.dict()
+    document_dict["order"] = next_order
+    document_obj = GovernanceDocument(**document_dict)
+    await documents_collection.insert_one(document_obj.dict())
+    return document_obj
+
+@router.put("/documents/{document_id}", response_model=GovernanceDocument)
+async def update_document(document_id: str, document: GovernanceDocumentCreate):
+    """Update governance document (admin only)"""
+    existing = await documents_collection.find_one({"id": document_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Document not found")
+    
+    update_dict = document.dict()
+    update_dict["updated_at"] = datetime.utcnow()
+    
+    await documents_collection.update_one(
+        {"id": document_id},
+        {"$set": update_dict}
+    )
+    
+    updated = await documents_collection.find_one({"id": document_id}, {"_id": 0})
+    return GovernanceDocument(**updated)
+
+@router.delete("/documents/{document_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_document(document_id: str):
+    """Delete governance document (admin only)"""
+    result = await documents_collection.delete_one({"id": document_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Document not found")
+    return None
+
+@router.put("/documents/reorder")
+async def reorder_documents(document_ids: List[str]):
+    """Reorder documents by providing array of document IDs in desired order"""
+    for index, doc_id in enumerate(document_ids):
+        await documents_collection.update_one(
+            {"id": doc_id},
+            {"$set": {"order": index, "updated_at": datetime.utcnow()}}
+        )
+    
+    # Return updated documents
+    documents = await documents_collection.find({}, {"_id": 0}).sort("order", 1).to_list(1000)
+    return documents
