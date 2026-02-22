@@ -58,6 +58,7 @@ function App() {
             <Route path="/admin/activities" element={<AdminActivities />} />
             <Route path="/admin/homepage" element={<AdminHomePage />} />
             <Route path="/admin/hallhire" element={<AdminHallHire />} />
+            <Route path="/admin/documents" element={<AdminDocuments />} />
             
             {/* Catch-all redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
