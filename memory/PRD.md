@@ -73,6 +73,7 @@ Collections:
 - [x] **Password Change** - Admins can change their password from Settings menu
 - [x] **Hall Hire Images** - Upload and manage gallery photos for the Hall Hire page (up to 6 images)
 - [x] **Governance Documents** - Upload and manage PDF/Word documents with drag-and-drop reordering
+- [x] **AGM Notice Editor** - Edit AGM announcement text (bilingual) and upload AGM notice document
 
 ### Document Upload Feature (Completed Feb 2026)
 - **Backend API**: `POST /api/upload/document` accepts multipart/form-data, validates file types (pdf, doc, docx) and size (max 50MB)
