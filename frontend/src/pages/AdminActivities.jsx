@@ -96,7 +96,7 @@ export const AdminActivities = () => {
   };
 
   const resetForm = () => {
-    setFormData({ day: 'Monday', name_en: '', name_pl: '', time: '', description_en: '', description_pl: '', contact: '', order: 0 });
+    setFormData({ day: 'Monday', name_en: '', name_pl: '', time: '', description_en: '', description_pl: '', contact: '', order: 0, is_visible: true });
     setEditingActivity(null);
   };
 
@@ -110,7 +110,8 @@ export const AdminActivities = () => {
       description_en: activity.description_en || activity.description || '',
       description_pl: activity.description_pl || '',
       contact: activity.contact || '',
-      order: activity.order || 0
+      order: activity.order || 0,
+      is_visible: activity.is_visible !== false  // Default to true for backwards compatibility
     });
     setShowModal(true);
   };
