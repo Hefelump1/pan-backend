@@ -79,21 +79,38 @@ export const Constitution = () => {
             <p className="text-gray-600 text-lg">{t(language, 'constitution.docsDesc')}</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {documents.map((doc, i) => (
-              <div key={i} className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-6">
-                  <FileText size={32} className="text-red-600" />
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 size={32} className="animate-spin text-red-600" />
+            </div>
+          ) : documents.length === 0 ? (
+            <div className="text-center py-12">
+              <FileText size={48} className="text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-600">{language === 'pl' ? 'Brak dostępnych dokumentów' : 'No documents available'}</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {documents.map((doc) => (
+                <div key={doc.id} className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300" data-testid={`document-card-${doc.id}`}>
+                  <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-6">
+                    <FileText size={32} className="text-red-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">{doc.title}</h3>
+                  <p className="text-gray-600 text-center mb-6">{getFileIcon(doc.file_type)} Document</p>
+                  <a 
+                    href={doc.file_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 flex items-center justify-center"
+                    data-testid={`download-document-${doc.id}`}
+                  >
+                    <Download size={18} className="mr-2" />
+                    {t(language, 'constitution.download')} {getFileIcon(doc.file_type)}
+                  </a>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">{doc.name}</h3>
-                <p className="text-gray-600 text-center mb-6">PDF Document</p>
-                <button className="w-full px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
-                  <Download size={18} className="inline mr-2" />
-                  {t(language, 'constitution.download')} {doc.type}
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
