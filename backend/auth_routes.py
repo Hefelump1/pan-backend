@@ -92,3 +92,47 @@ async def get_current_user_info(current_user: dict = Depends(get_current_user)):
 async def logout(current_user: dict = Depends(get_current_user)):
     """Logout current user (client-side token removal)"""
     return {"message": "Successfully logged out"}
+
+
+from pydantic import BaseModel
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
+
+@auth_router.post("/change-password")
+async def change_password(password_data: PasswordChange, current_user: dict = Depends(get_current_user)):
+    """Change password for current authenticated user"""
+    # Get user from database
+    user = await admin_users_collection.find_one({"username": current_user["username"]})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Verify current password
+    if not verify_password(password_data.current_password, user["hashed_password"]):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Current password is incorrect"
+        )
+    
+    # Validate new password
+    if len(password_data.new_password) < 6:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be at least 6 characters long"
+        )
+    
+    if password_data.current_password == password_data.new_password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be different from current password"
+        )
+    
+    # Update password
+    new_hashed_password = get_password_hash(password_data.new_password)
+    await admin_users_collection.update_one(
+        {"username": current_user["username"]},
+        {"$set": {"hashed_password": new_hashed_password}}
+    )
+    
+    return {"message": "Password changed successfully"}
