@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Pencil, Trash2, Clock, X } from 'lucide-react';
+import { ArrowLeft, Plus, Pencil, Trash2, Clock, X, Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-const ActivityCard = ({ activity, onEdit, onDelete }) => (
-  <div className="border border-gray-200 rounded-lg p-4">
+const ActivityCard = ({ activity, onEdit, onDelete, onToggleVisibility }) => (
+  <div className={`border rounded-lg p-4 ${activity.is_visible === false ? 'border-gray-300 bg-gray-50 opacity-60' : 'border-gray-200'}`}>
     <div className="flex justify-between items-start">
       <div className="flex-1">
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex items-center gap-3 mb-2 flex-wrap">
           <h3 className="text-lg font-bold text-gray-900">{activity.name_en || activity.name}</h3>
           <span className="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
             <Clock size={14} className="mr-1" />
             {activity.time}
           </span>
+          {activity.is_visible === false && (
+            <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+              <EyeOff size={12} className="mr-1" />
+              Hidden
+            </span>
+          )}
         </div>
         {activity.name_pl && <p className="text-gray-500 text-sm mb-2">{activity.name_pl}</p>}
         <p className="text-gray-600 mb-2">{activity.description_en || activity.description}</p>
         <p className="text-red-600 text-sm">{activity.contact}</p>
       </div>
-      <div className="flex gap-2 ml-4">
+      <div className="flex gap-1 ml-4">
+        <button 
+          onClick={() => onToggleVisibility(activity)} 
+          className={`p-2 rounded-lg ${activity.is_visible === false ? 'text-yellow-600 hover:bg-yellow-50' : 'text-green-600 hover:bg-green-50'}`}
+          title={activity.is_visible === false ? 'Show activity' : 'Hide activity'}
+        >
+          {activity.is_visible === false ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
         <button onClick={() => onEdit(activity)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
           <Pencil size={18} />
         </button>
@@ -34,17 +47,20 @@ const ActivityCard = ({ activity, onEdit, onDelete }) => (
   </div>
 );
 
-const DaySection = ({ day, activities, onEdit, onDelete }) => (
+const DaySection = ({ day, activities, onEdit, onDelete, onToggleVisibility }) => (
   <div className="bg-white rounded-lg shadow-md overflow-hidden">
-    <div className="bg-red-600 px-6 py-3">
+    <div className="bg-red-600 px-6 py-3 flex justify-between items-center">
       <h2 className="text-xl font-bold text-white">{day}</h2>
+      {activities.some(a => a.is_visible === false) && (
+        <span className="text-red-200 text-sm">{activities.filter(a => a.is_visible === false).length} hidden</span>
+      )}
     </div>
     <div className="p-4">
       {activities.length === 0 ? (
         <p className="text-gray-500 text-center py-4">No activities scheduled</p>
       ) : (
         <div className="space-y-4">
-          {activities.map(a => <ActivityCard key={a.id} activity={a} onEdit={onEdit} onDelete={onDelete} />)}
+          {activities.map(a => <ActivityCard key={a.id} activity={a} onEdit={onEdit} onDelete={onDelete} onToggleVisibility={onToggleVisibility} />)}
         </div>
       )}
     </div>
