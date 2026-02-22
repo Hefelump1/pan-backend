@@ -212,6 +212,24 @@ class SiteSettingsUpdate(BaseModel):
     hall_image_5: Optional[str] = None
     hall_image_6: Optional[str] = None
 
+# Governance Document Model
+class GovernanceDocument(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    file_url: str
+    file_type: str  # pdf, doc, docx
+    file_size: int = 0
+    order: int = 0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class GovernanceDocumentCreate(BaseModel):
+    title: str
+    file_url: str
+    file_type: str
+    file_size: int = 0
+    order: int = 0
+
 # Collections
 events_collection = db['events']
 activities_collection = db['activities']
