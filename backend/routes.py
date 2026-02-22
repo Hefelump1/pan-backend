@@ -66,9 +66,22 @@ async def delete_event(event_id: str):
 # ==================== ACTIVITIES ====================
 @router.get("/activities")
 async def get_activities():
-    """Get all weekly activities"""
+    """Get all weekly activities (for admin - includes hidden)"""
     day_order = {"Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 7}
     activities = await activities_collection.find({}, {"_id": 0}).to_list(1000)
+    # Sort by day order then by order field
+    activities.sort(key=lambda x: (day_order.get(x.get("day", ""), 8), x.get("order", 0)))
+    return activities
+
+@router.get("/activities/visible")
+async def get_visible_activities():
+    """Get only visible weekly activities (for public page)"""
+    day_order = {"Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 7}
+    # Only get activities where is_visible is True or not set (for backwards compatibility)
+    activities = await activities_collection.find(
+        {"$or": [{"is_visible": True}, {"is_visible": {"$exists": False}}]}, 
+        {"_id": 0}
+    ).to_list(1000)
     # Sort by day order then by order field
     activities.sort(key=lambda x: (day_order.get(x.get("day", ""), 8), x.get("order", 0)))
     return activities
@@ -98,6 +111,25 @@ async def update_activity(activity_id: str, activity: ActivityCreate):
     
     updated = await activities_collection.find_one({"id": activity_id})
     return Activity(**updated)
+
+@router.patch("/activities/{activity_id}/visibility")
+async def toggle_activity_visibility(activity_id: str):
+    """Toggle activity visibility (admin only)"""
+    existing = await activities_collection.find_one({"id": activity_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    
+    # Toggle the visibility
+    current_visibility = existing.get("is_visible", True)
+    new_visibility = not current_visibility
+    
+    await activities_collection.update_one(
+        {"id": activity_id},
+        {"$set": {"is_visible": new_visibility, "updated_at": datetime.utcnow()}}
+    )
+    
+    updated = await activities_collection.find_one({"id": activity_id}, {"_id": 0})
+    return updated
 
 @router.delete("/activities/{activity_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_activity(activity_id: str):
