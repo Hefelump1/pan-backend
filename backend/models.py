@@ -42,6 +42,7 @@ class Activity(BaseModel):
     description_pl: str
     contact: str
     order: int = 0
+    is_visible: bool = True  # Can be hidden when not needed for a week
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -54,6 +55,7 @@ class ActivityCreate(BaseModel):
     description_pl: str
     contact: str
     order: int = 0
+    is_visible: bool = True
 
 class Booking(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
