@@ -140,14 +140,48 @@ export const AdminDashboard = () => {
               <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
               <p className="text-gray-600">Polish Association of Newcastle - Content Management</p>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
-              data-testid="logout-btn"
-            >
-              <LogOut size={18} className="mr-2" />
-              Logout
-            </button>
+            <div className="flex items-center gap-3">
+              {/* Settings Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowSettingsMenu(!showSettingsMenu)}
+                  className="flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200"
+                  data-testid="settings-btn"
+                >
+                  <Settings size={18} className="mr-2" />
+                  Settings
+                </button>
+                {showSettingsMenu && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-10" 
+                      onClick={() => setShowSettingsMenu(false)}
+                    />
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
+                      <button
+                        onClick={() => {
+                          setShowSettingsMenu(false);
+                          setShowPasswordModal(true);
+                        }}
+                        className="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
+                        data-testid="change-password-btn"
+                      >
+                        <Key size={16} className="mr-3 text-gray-500" />
+                        Change Password
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
+                data-testid="logout-btn"
+              >
+                <LogOut size={18} className="mr-2" />
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </header>
