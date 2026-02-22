@@ -75,7 +75,7 @@ export const AdminActivities = () => {
   const [editingActivity, setEditingActivity] = useState(null);
   const [formData, setFormData] = useState({
     day: 'Monday', name_en: '', name_pl: '', time: '',
-    description_en: '', description_pl: '', contact: '', order: 0
+    description_en: '', description_pl: '', contact: '', order: 0, is_visible: true
   });
 
   useEffect(() => {
