@@ -28,7 +28,8 @@ export const WeeklyActivities = () => {
 
   const fetchActivities = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/activities`);
+      // Use /visible endpoint to only get activities that are not hidden
+      const response = await axios.get(`${BACKEND_URL}/api/activities/visible`);
       setActivities(response.data);
     } catch (error) {
       console.error('Error fetching activities:', error);
