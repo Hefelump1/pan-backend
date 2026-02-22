@@ -66,6 +66,7 @@ Collections:
 - [x] **Bookings Management** - Review, Approve/Reject hall hire requests
 - [x] **Image Upload System** - Direct file upload with drag-and-drop support (replaces URL inputs)
 - [x] **Password Change** - Admins can change their password from Settings menu
+- [x] **Hall Hire Images** - Upload and manage gallery photos for the Hall Hire page (up to 6 images)
 
 ### Image Upload Feature (Completed Feb 2026)
 - **Backend API**: `POST /api/upload` accepts multipart/form-data, validates file types (jpg, png, gif, webp, svg) and size (max 10MB)
