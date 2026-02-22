@@ -97,7 +97,7 @@ Collections:
 ## Admin Access
 - **URL**: `/admin/login`
 - **Username**: `admin`
-- **Password**: `admin123`
+- **Password**: `#ZwiazekPolski1`
 
 ## API Endpoints Summary
 

@@ -73,7 +73,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={18} className="text-red-400 flex-shrink-0" />
-                <span className="text-sm">info@polishassociation.com.au</span>
+                <span className="text-sm">admin@polishassociationnewcastle.org.au</span>
               </li>
             </ul>
           </div>

@@ -90,7 +90,7 @@ export const AssociatedGroups = () => {
           <p className="text-gray-600 mb-8">
             {t(language, 'groups.startGroupDesc')}
           </p>
-          <a href="mailto:info@polishassociation.com.au" className="inline-flex items-center px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
+          <a href="mailto:admin@polishassociationnewcastle.org.au" className="inline-flex items-center px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
             <Mail size={20} className="mr-2" />
             {t(language, 'groups.contactUs')}
           </a>

@@ -13,7 +13,7 @@
   },
   
   "passed_tests": [
-    "Admin login with credentials admin/admin123 - SUCCESS",
+    "Admin login with credentials admin/#ZwiazekPolski1 - SUCCESS",
     "Admin Dashboard displays correct stats (News: 5, Events: 8, Committee: 10, Groups: 6)",
     "News Management - List all news articles with bilingual titles",
     "News Management - Create new article with EN/PL fields",
@@ -58,7 +58,7 @@
   
   "test_credentials": {
     "admin_username": "admin",
-    "admin_password": "admin123",
+    "admin_password": "#ZwiazekPolski1",
     "admin_panel_url": "/admin/login"
   },
   
@@ -67,7 +67,7 @@
   "retest_needed": false,
   "should_main_agent_self_test": true,
   
-  "context_for_next_testing_agent": "CMS fully functional. Admin panel at /admin/login with credentials admin/admin123. All CRUD operations for News, Events, Committee, Groups working. Bilingual support (EN/PL) verified on public News page. Backend tests in /app/backend/tests/test_cms_api.py cover all API endpoints.",
+  "context_for_next_testing_agent": "CMS fully functional. Admin panel at /admin/login with credentials admin/#ZwiazekPolski1. All CRUD operations for News, Events, Committee, Groups working. Bilingual support (EN/PL) verified on public News page. Backend tests in /app/backend/tests/test_cms_api.py cover all API endpoints.",
   
   "features_verified": {
     "admin_authentication": "Working - JWT token based auth",

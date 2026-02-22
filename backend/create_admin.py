@@ -32,8 +32,8 @@ async def create_admin():
         admin_user = {
             "id": "admin-001",
             "username": "admin",
-            "email": "admin@polishassociation.com.au",
-            "hashed_password": get_password_hash("admin123"),
+            "email": "admin@polishassociationnewcastle.org.au",
+            "hashed_password": get_password_hash("#ZwiazekPolski1"),
             "full_name": "Administrator",
             "is_active": True,
             "is_superuser": True
@@ -42,8 +42,8 @@ async def create_admin():
         await db.admin_users.insert_one(admin_user)
         print("✅ Admin user created successfully!")
         print(f"  Username: admin")
-        print(f"  Password: admin123")
-        print(f"  Email: admin@polishassociation.com.au")
+        print(f"  Password: #ZwiazekPolski1")
+        print(f"  Email: admin@polishassociationnewcastle.org.au")
         print("\n⚠️  Please change the password after first login!")
         
     except Exception as e:

@@ -76,7 +76,7 @@ export const Committee = () => {
               {t(language, 'committee.joinDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:committee@polishassociation.com.au" className="inline-flex items-center justify-center px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+              <a href="mailto:admin@polishassociationnewcastle.org.au" className="inline-flex items-center justify-center px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
                 <Mail size={20} className="mr-2" />
                 {t(language, 'committee.contactCommittee')}
               </a>

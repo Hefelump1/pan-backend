@@ -132,8 +132,8 @@ export const translations = {
     committee: {
       title: 'Our Committee',
       subtitle: 'Meet the dedicated team leading the Polish Association of Newcastle',
-      joinTitle: 'Interested in Joining Our Committee?',
-      joinDesc: 'We\'re always looking for passionate individuals who want to contribute to preserving Polish culture and strengthening our community. Contact us to learn about volunteer opportunities and committee positions.',
+      joinTitle: 'Interested in becoming a Volunteer?',
+      joinDesc: 'We\'re always looking for passionate individuals who want to contribute to preserving Polish culture and strengthening our community. Contact us to learn about volunteer opportunities.',
       contactCommittee: 'Contact Committee',
       commitmentTitle: 'Our Commitment',
       generations: 'Generations',
@@ -147,7 +147,7 @@ export const translations = {
     // Associated Groups
     groups: {
       title: 'Associated Groups',
-      subtitle: 'Connect with our vibrant community organizations',
+      subtitle: 'Connect with our vibrant community organisations',
       schedule: 'Schedule',
       contact: 'Contact',
       getInTouch: 'Get in Touch',

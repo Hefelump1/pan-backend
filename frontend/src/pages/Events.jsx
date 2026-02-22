@@ -117,7 +117,7 @@ export const Events = () => {
             {t(language, 'events.stayDesc')}
           </p>
           <a
-            href="mailto:info@polishassociation.com.au"
+            href="mailto:admin@polishassociationnewcastle.org.au"
             className="inline-block px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             {t(language, 'events.subscribe')}

@@ -11,7 +11,7 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 # Test credentials
 ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123"
+ADMIN_PASSWORD = "#ZwiazekPolski1"
 
 
 @pytest.fixture(scope="module")
@@ -20,7 +20,7 @@ def auth_token():
     # First ensure admin exists
     requests.post(f"{BASE_URL}/api/auth/register", json={
         "username": ADMIN_USERNAME,
-        "email": "admin@polishassociation.com",
+        "email": "admin@polishassociationnewcastle.org.au",
         "password": ADMIN_PASSWORD,
         "full_name": "Admin User"
     })

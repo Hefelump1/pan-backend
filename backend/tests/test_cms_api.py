@@ -11,7 +11,7 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 # Test credentials
 ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123"
+ADMIN_PASSWORD = "#ZwiazekPolski1"
 
 
 class TestHealthAndBasicEndpoints:
@@ -95,7 +95,7 @@ class TestAdminAuthentication:
         # Try to register
         register_response = requests.post(f"{BASE_URL}/api/auth/register", json={
             "username": ADMIN_USERNAME,
-            "email": "admin@polishassociation.com",
+            "email": "admin@polishassociationnewcastle.org.au",
             "password": ADMIN_PASSWORD,
             "full_name": "Admin User"
         })
@@ -117,7 +117,7 @@ class TestNewsCRUD:
         # First ensure admin exists
         requests.post(f"{BASE_URL}/api/auth/register", json={
             "username": ADMIN_USERNAME,
-            "email": "admin@polishassociation.com",
+            "email": "admin@polishassociationnewcastle.org.au",
             "password": ADMIN_PASSWORD,
             "full_name": "Admin User"
         })
@@ -258,7 +258,7 @@ class TestEventsCRUD:
         """Get authentication token"""
         requests.post(f"{BASE_URL}/api/auth/register", json={
             "username": ADMIN_USERNAME,
-            "email": "admin@polishassociation.com",
+            "email": "admin@polishassociationnewcastle.org.au",
             "password": ADMIN_PASSWORD,
             "full_name": "Admin User"
         })
@@ -368,7 +368,7 @@ class TestCommitteeCRUD:
         """Get authentication token"""
         requests.post(f"{BASE_URL}/api/auth/register", json={
             "username": ADMIN_USERNAME,
-            "email": "admin@polishassociation.com",
+            "email": "admin@polishassociationnewcastle.org.au",
             "password": ADMIN_PASSWORD,
             "full_name": "Admin User"
         })
@@ -459,7 +459,7 @@ class TestGroupsCRUD:
         """Get authentication token"""
         requests.post(f"{BASE_URL}/api/auth/register", json={
             "username": ADMIN_USERNAME,
-            "email": "admin@polishassociation.com",
+            "email": "admin@polishassociationnewcastle.org.au",
             "password": ADMIN_PASSWORD,
             "full_name": "Admin User"
         })
@@ -559,7 +559,7 @@ class TestBilingualSupport:
         """Get authentication token"""
         requests.post(f"{BASE_URL}/api/auth/register", json={
             "username": ADMIN_USERNAME,
-            "email": "admin@polishassociation.com",
+            "email": "admin@polishassociationnewcastle.org.au",
             "password": ADMIN_PASSWORD,
             "full_name": "Admin User"
         })

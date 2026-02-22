@@ -110,7 +110,7 @@ export const Constitution = () => {
                   </ul>
                 </div>
                 <div className="pt-4">
-                  <a href="mailto:membership@polishassociation.com.au" className="inline-block px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
+                  <a href="mailto:admin@polishassociationnewcastle.org.au" className="inline-block px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
                     {t(language, 'constitution.applyMembership')}
                   </a>
                 </div>
@@ -152,7 +152,7 @@ export const Constitution = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">{t(language, 'constitution.questionsTitle')}</h2>
           <p className="text-gray-600 mb-8">{t(language, 'constitution.questionsDesc')}</p>
-          <a href="mailto:committee@polishassociation.com.au" className="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 inline-block">
+          <a href="mailto:admin@polishassociationnewcastle.org.au" className="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 inline-block">
             {t(language, 'constitution.contactCommittee')}
           </a>
         </div>

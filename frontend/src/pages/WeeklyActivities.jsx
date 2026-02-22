@@ -122,7 +122,7 @@ export const WeeklyActivities = () => {
             {t(language, 'weekly.joinDesc')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:info@polishassociation.com.au" className="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
+            <a href="mailto:admin@polishassociationnewcastle.org.au" className="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
               {t(language, 'weekly.contactUs')}
             </a>
             <a href="tel:0249201234" className="px-8 py-4 bg-white text-red-600 font-semibold rounded-lg border-2 border-red-600 hover:bg-red-50 transition-all duration-300">

@@ -105,7 +105,7 @@ export const News = () => {
             {t(language, 'news.stayConnectedDesc')}
           </p>
           <a 
-            href="mailto:info@polishassociation.com.au" 
+            href="mailto:admin@polishassociationnewcastle.org.au" 
             className="inline-flex items-center px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300"
           >
             {t(language, 'news.subscribe')}

@@ -22,7 +22,7 @@ polish_radio = {
     "description_pl": "Słuchaj Polskiego Radia na 2NUR FM 103.7 co drugą niedzielę od 18:00. Ciesz się polską muzyką, wiadomościami z Polski, ogłoszeniami społeczności i programami kulturalnymi.",
     "schedule_en": "Every second Sunday from 6:00 PM",
     "schedule_pl": "Co drugą niedzielę od 18:00",
-    "contact": "radio@polishassociation.com.au",
+    "contact": "audycja@hotmail.com",
     "website": "https://2nurfm.com/",
     "image": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&h=400&fit=crop"
 }
