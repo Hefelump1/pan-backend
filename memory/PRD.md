@@ -134,6 +134,7 @@ Collections:
 | `/api/documents` | GET, POST | Governance documents |
 | `/api/documents/reorder` | PUT | Reorder documents |
 | `/api/documents/{id}` | PUT, DELETE | Update/delete document |
+| `/api/settings` | GET, PUT | Site settings including AGM notice |
 | `/api/auth/login` | POST | Admin login |
 | `/api/auth/me` | GET | Verify token |
 | `/api/auth/change-password` | POST | Change admin password |
