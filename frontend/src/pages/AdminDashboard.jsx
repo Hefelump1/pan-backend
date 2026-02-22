@@ -78,6 +78,41 @@ export const AdminDashboard = () => {
     navigate('/admin/login');
   };
 
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    
+    if (passwordForm.new_password !== passwordForm.confirm_password) {
+      toast.error('New passwords do not match');
+      return;
+    }
+    
+    if (passwordForm.new_password.length < 6) {
+      toast.error('New password must be at least 6 characters');
+      return;
+    }
+    
+    setChangingPassword(true);
+    
+    try {
+      const token = localStorage.getItem('adminToken');
+      await axios.post(`${BACKEND_URL}/api/auth/change-password`, {
+        current_password: passwordForm.current_password,
+        new_password: passwordForm.new_password
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      toast.success('Password changed successfully');
+      setShowPasswordModal(false);
+      setPasswordForm({ current_password: '', new_password: '', confirm_password: '' });
+    } catch (error) {
+      console.error('Error changing password:', error);
+      toast.error(error.response?.data?.detail || 'Failed to change password');
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+
   const getStatusBadge = (status) => {
     const styles = {
       pending: 'bg-yellow-100 text-yellow-800',
