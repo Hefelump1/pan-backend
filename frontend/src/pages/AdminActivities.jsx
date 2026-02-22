@@ -193,7 +193,7 @@ export const AdminActivities = () => {
           </div>
         ) : (
           <div className="space-y-6">
-            {DAYS.map(day => <DaySection key={day} day={day} activities={groupedActivities[day]} onEdit={handleEdit} onDelete={handleDelete} />)}
+            {DAYS.map(day => <DaySection key={day} day={day} activities={groupedActivities[day]} onEdit={handleEdit} onDelete={handleDelete} onToggleVisibility={handleToggleVisibility} />)}
           </div>
         )}
       </div>
