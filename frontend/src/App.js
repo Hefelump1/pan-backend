@@ -21,6 +21,7 @@ import { AdminGroups } from "./pages/AdminGroups";
 import { AdminActivities } from "./pages/AdminActivities";
 import { AdminHomePage } from "./pages/AdminHomePage";
 import { AdminHallHire } from "./pages/AdminHallHire";
+import { AdminDocuments } from "./pages/AdminDocuments";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
