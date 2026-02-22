@@ -58,7 +58,7 @@ Collections:
 - [x] **Admin Authentication** - JWT-based login
 - [x] **Admin Dashboard** - Stats overview with quick actions
 - [x] **Home Page Settings** - Edit hero images, welcome images, hero title/subtitle (EN/PL), welcome text (EN/PL)
-- [x] **Weekly Activities Management** - Full CRUD grouped by day, bilingual fields
+- [x] **Weekly Activities Management** - Full CRUD grouped by day, bilingual fields, visibility toggle to hide activities temporarily
 - [x] **News Management** - Full CRUD with published/draft status, bilingual
 - [x] **Events Management** - Full CRUD with categories and images
 - [x] **Committee Management** - Full CRUD with display ordering
@@ -106,7 +106,9 @@ Collections:
 | Endpoint | Methods | Description |
 |----------|---------|-------------|
 | `/api/settings` | GET, PUT | Home page settings |
-| `/api/activities` | GET, POST, PUT, DELETE | Weekly activities |
+| `/api/activities` | GET, POST, PUT, DELETE | Weekly activities (admin - all) |
+| `/api/activities/visible` | GET | Visible activities only (public) |
+| `/api/activities/{id}/visibility` | PATCH | Toggle activity visibility |
 | `/api/news` | GET, POST, PUT, DELETE | News articles |
 | `/api/news/published` | GET | Published news only |
 | `/api/events` | GET, POST, PUT, DELETE | Events |
