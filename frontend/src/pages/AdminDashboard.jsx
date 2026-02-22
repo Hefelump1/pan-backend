@@ -390,6 +390,116 @@ export const AdminDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Password Change Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-900">Change Password</h2>
+              <button
+                onClick={() => {
+                  setShowPasswordModal(false);
+                  setPasswordForm({ current_password: '', new_password: '', confirm_password: '' });
+                }}
+                className="p-2 hover:bg-gray-100 rounded-lg"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleChangePassword} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Current Password *
+                </label>
+                <div className="relative">
+                  <input
+                    type={showCurrentPassword ? "text" : "password"}
+                    required
+                    value={passwordForm.current_password}
+                    onChange={(e) => setPasswordForm({ ...passwordForm, current_password: e.target.value })}
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    placeholder="Enter current password"
+                    data-testid="current-password-input"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  New Password *
+                </label>
+                <div className="relative">
+                  <input
+                    type={showNewPassword ? "text" : "password"}
+                    required
+                    value={passwordForm.new_password}
+                    onChange={(e) => setPasswordForm({ ...passwordForm, new_password: e.target.value })}
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    placeholder="Enter new password (min 6 characters)"
+                    data-testid="new-password-input"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Confirm New Password *
+                </label>
+                <input
+                  type={showNewPassword ? "text" : "password"}
+                  required
+                  value={passwordForm.confirm_password}
+                  onChange={(e) => setPasswordForm({ ...passwordForm, confirm_password: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="Confirm new password"
+                  data-testid="confirm-password-input"
+                />
+              </div>
+
+              {passwordForm.new_password && passwordForm.confirm_password && 
+               passwordForm.new_password !== passwordForm.confirm_password && (
+                <p className="text-sm text-red-600">Passwords do not match</p>
+              )}
+
+              <div className="flex gap-3 pt-4 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPasswordModal(false);
+                    setPasswordForm({ current_password: '', new_password: '', confirm_password: '' });
+                  }}
+                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={changingPassword || passwordForm.new_password !== passwordForm.confirm_password}
+                  className="flex-1 px-4 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  data-testid="submit-password-change"
+                >
+                  {changingPassword ? 'Changing...' : 'Change Password'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
