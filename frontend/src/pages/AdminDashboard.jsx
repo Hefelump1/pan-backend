@@ -245,6 +245,20 @@ export const AdminDashboard = () => {
             </Link>
 
             <Link
+              to="/admin/hallhire"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
+              data-testid="manage-hallhire-link"
+            >
+              <div className="flex items-center mb-3">
+                <div className="p-3 bg-cyan-100 rounded-lg group-hover:bg-cyan-200 transition-colors">
+                  <Building2 size={24} className="text-cyan-600" />
+                </div>
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Hall Hire Images</h3>
+              <p className="text-sm text-gray-600">Manage hall gallery photos</p>
+            </Link>
+
+            <Link
               to="/admin/activities"
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
               data-testid="manage-activities-link"
