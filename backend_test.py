@@ -106,7 +106,7 @@ class PolishAssociationAPITester:
             "title": "Test Event",
             "date": (datetime.now() + timedelta(days=15)).strftime("%Y-%m-%d"),
             "time": "18:00",
-            "location": "Polish Community Hall",
+            "location": "Polish Cultural Centre",
             "description": "Test event for API testing",
             "category": "cultural",
             "image": "https://images.unsplash.com/photo-1768333377265-cb6c3ca2885a"

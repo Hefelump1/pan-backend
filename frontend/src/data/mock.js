@@ -6,7 +6,7 @@ export const events = [
     title: "Polish Independence Day Celebration",
     date: "2025-11-11",
     time: "18:00",
-    location: "Polish Community Hall",
+    location: "Polish Cultural Centre",
     description: "Join us for a special celebration of Polish Independence Day with traditional music, dance performances, and Polish cuisine.",
     category: "cultural",
     image: "https://images.pexels.com/photos/34337833/pexels-photo-34337833.jpeg"
@@ -16,7 +16,7 @@ export const events = [
     title: "Easter Monday Celebration (Śmigus-Dyngus)",
     date: "2025-04-21",
     time: "12:00",
-    location: "Polish Community Hall",
+    location: "Polish Cultural Centre",
     description: "Traditional Easter Monday celebration with water games, Polish food, and family activities.",
     category: "cultural",
     image: "https://images.unsplash.com/photo-1768333377265-cb6c3ca2885a"
@@ -26,7 +26,7 @@ export const events = [
     title: "AGM 2025",
     date: "2025-03-15",
     time: "15:00",
-    location: "Polish Community Hall",
+    location: "Polish Cultural Centre",
     description: "Annual General Meeting of the Polish Association of Newcastle. All members are encouraged to attend.",
     category: "meeting",
     image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b"
@@ -36,7 +36,7 @@ export const events = [
     title: "Polish Language Workshop",
     date: "2025-02-20",
     time: "10:00",
-    location: "Polish Community Hall",
+    location: "Polish Cultural Centre",
     description: "Interactive Polish language workshop for beginners. Learn basic phrases and conversational skills.",
     category: "education",
     image: "https://images.unsplash.com/photo-1515168833906-d2a3b82b302a"
@@ -46,7 +46,7 @@ export const events = [
     title: "Traditional Polish Cooking Class",
     date: "2025-03-08",
     time: "14:00",
-    location: "Polish Community Hall Kitchen",
+    location: "Polish Cultural Centre Kitchen",
     description: "Learn to make traditional Polish pierogi and other classic dishes with our experienced chefs.",
     category: "cultural",
     image: "https://images.unsplash.com/photo-1763842092319-56e717355ab8"
@@ -56,7 +56,7 @@ export const events = [
     title: "Rzeszowiacy Dance Group Performance",
     date: "2025-04-05",
     time: "19:00",
-    location: "Polish Community Hall",
+    location: "Polish Cultural Centre",
     description: "Beautiful performance of traditional Polish folk dances by our talented Rzeszowiacy dance group.",
     category: "performance",
     image: "https://images.pexels.com/photos/34073252/pexels-photo-34073252.jpeg"

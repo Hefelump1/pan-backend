@@ -278,7 +278,7 @@ class TestEventsCRUD:
             "title": f"TEST_Event {test_id}",
             "date": "2025-02-15",
             "time": "18:00",
-            "location": "Polish Community Hall",
+            "location": "Polish Cultural Centre",
             "description": "Test event description",
             "category": "cultural"
         }

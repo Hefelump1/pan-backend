@@ -293,7 +293,7 @@ export const AdminEvents = () => {
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  placeholder="e.g., Polish Community Hall"
+                  placeholder="e.g., Polish Cultural Centre"
                   data-testid="event-location"
                 />
               </div>

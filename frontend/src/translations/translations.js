@@ -71,9 +71,9 @@ export const translations = {
     // Weekly Activities
     weekly: {
       title: 'Weekly Activities',
-      subtitle: 'Regular programs and activities at the Polish Community Hall',
+      subtitle: 'Regular programs and activities at the Polish Cultural Centre',
       joinTitle: 'Join Our Activities',
-      joinDesc: 'All activities are held at the Polish Community Hall. New members are always welcome!',
+      joinDesc: 'All activities are held at the Polish Cultural Centre. New members are always welcome!',
       contactUs: 'Contact Us',
       call: 'Call'
     },
@@ -81,7 +81,7 @@ export const translations = {
     // Hall Hire
     hallHire: {
       title: 'Hall Hire',
-      subtitle: 'Book our beautiful Polish Community Hall for your special event',
+      subtitle: 'Book our beautiful Polish Cultural Centre for your special event',
       ourVenue: 'Our Venue',
       facilitiesTitle: 'Facilities Included',
       capacity: 'Capacity: Up to 200 people',
@@ -163,7 +163,7 @@ export const translations = {
       subtitle: 'Official documents and governance information',
       agmTitle: 'Annual General Meeting 2025',
       agmDate: 'Saturday, 15 March 2025',
-      agmTime: 'Polish Community Hall, 3:00 PM',
+      agmTime: 'Polish Cultural Centre, 3:00 PM',
       agmDesc: 'All members are encouraged to attend our AGM. We\'ll review achievements and hold committee elections.',
       downloadNotice: 'Download AGM Notice',
       officialDocs: 'Official Documents',

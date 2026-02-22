@@ -25,7 +25,7 @@ async def seed_news():
             "date": "2025-01-28",
             "title_en": "Polish Independence Day Celebration a Great Success",
             "title_pl": "Obchody Święta Niepodległości wielkim sukcesem",
-            "summary_en": "Over 200 community members gathered at the Polish Community Hall to celebrate Polish Independence Day with traditional music, dance, and cuisine.",
+            "summary_en": "Over 200 community members gathered at the Polish Cultural Centre to celebrate Polish Independence Day with traditional music, dance, and cuisine.",
             "summary_pl": "Ponad 200 członków społeczności zebrało się w Polskiej Sali Społeczności, aby uczcić Święto Niepodległości tradycyjną muzyką, tańcem i kuchnią.",
             "content_en": "The Polish Association of Newcastle hosted a memorable Independence Day celebration that brought together over 200 community members.",
             "content_pl": "Polskie Stowarzyszenie w Newcastle zorganizowało niezapomniane obchody Święta Niepodległości, które zgromadziły ponad 200 członków społeczności.",

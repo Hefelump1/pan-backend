@@ -65,11 +65,11 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <MapPin size={18} className="text-red-400 mt-1 flex-shrink-0" />
-                <span className="text-sm">Polish Community Hall<br />123 Polonia Street<br />Newcastle NSW 2300</span>
+                <span className="text-sm">Polish Cultural Centre<br />122 Chatham Street<br />Broadmeadow NSW 2292</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={18} className="text-red-400 flex-shrink-0" />
-                <span className="text-sm">(02) 4920 1234</span>
+                <span className="text-sm">0452 398 532</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={18} className="text-red-400 flex-shrink-0" />
