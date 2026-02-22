@@ -20,6 +20,7 @@ import { AdminCommittee } from "./pages/AdminCommittee";
 import { AdminGroups } from "./pages/AdminGroups";
 import { AdminActivities } from "./pages/AdminActivities";
 import { AdminHomePage } from "./pages/AdminHomePage";
+import { AdminHallHire } from "./pages/AdminHallHire";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
             <Route path="/admin/groups" element={<AdminGroups />} />
             <Route path="/admin/activities" element={<AdminActivities />} />
             <Route path="/admin/homepage" element={<AdminHomePage />} />
+            <Route path="/admin/hallhire" element={<AdminHallHire />} />
             
             {/* Catch-all redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
