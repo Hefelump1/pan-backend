@@ -82,7 +82,7 @@ Collections:
 
 #### P1 (High Priority)
 - [x] ~~Admin password change feature~~ ✅ Completed Feb 2026
-- [ ] Email notifications for new booking enquiries
+- [x] ~~Email notifications for new booking enquiries~~ ✅ Completed Feb 2026 (SMTP to hallhire@polishassociationnewcastle.org.au)
 
 #### P2 (Medium Priority)
 - [x] ~~File upload for images~~ ✅ Completed Feb 2026
