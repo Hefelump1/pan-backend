@@ -191,6 +191,16 @@ class SiteSettings(BaseModel):
     hall_image_4: Optional[str] = None
     hall_image_5: Optional[str] = None
     hall_image_6: Optional[str] = None
+    # AGM Notice settings
+    agm_title_en: Optional[str] = None
+    agm_title_pl: Optional[str] = None
+    agm_date_en: Optional[str] = None
+    agm_date_pl: Optional[str] = None
+    agm_time_en: Optional[str] = None
+    agm_time_pl: Optional[str] = None
+    agm_description_en: Optional[str] = None
+    agm_description_pl: Optional[str] = None
+    agm_document_url: Optional[str] = None
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class SiteSettingsUpdate(BaseModel):
@@ -211,6 +221,16 @@ class SiteSettingsUpdate(BaseModel):
     hall_image_4: Optional[str] = None
     hall_image_5: Optional[str] = None
     hall_image_6: Optional[str] = None
+    # AGM Notice settings
+    agm_title_en: Optional[str] = None
+    agm_title_pl: Optional[str] = None
+    agm_date_en: Optional[str] = None
+    agm_date_pl: Optional[str] = None
+    agm_time_en: Optional[str] = None
+    agm_time_pl: Optional[str] = None
+    agm_description_en: Optional[str] = None
+    agm_description_pl: Optional[str] = None
+    agm_document_url: Optional[str] = None
 
 # Governance Document Model
 class GovernanceDocument(BaseModel):
