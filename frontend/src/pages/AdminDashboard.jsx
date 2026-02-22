@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { 
   Calendar, Users, Building2, BookOpen, LogOut, Plus, 
   CheckCircle, XCircle, Clock, TrendingUp, Newspaper, UsersRound, Home, ClipboardList,
-  Settings, Key, X, Eye, EyeOff
+  Settings, Key, X, Eye, EyeOff, FileText
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
