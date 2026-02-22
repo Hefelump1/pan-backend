@@ -287,7 +287,7 @@ async def delete_news(news_id: str):
 # ==================== SITE SETTINGS ====================
 @router.get("/settings")
 async def get_site_settings():
-    """Get site settings for home page"""
+    """Get site settings for home page and hall hire"""
     settings = await settings_collection.find_one({"id": "site_settings"}, {"_id": 0})
     if not settings:
         # Return default settings
@@ -302,7 +302,13 @@ async def get_site_settings():
             "welcome_text1_en": None,
             "welcome_text1_pl": None,
             "welcome_text2_en": None,
-            "welcome_text2_pl": None
+            "welcome_text2_pl": None,
+            "hall_image_1": None,
+            "hall_image_2": None,
+            "hall_image_3": None,
+            "hall_image_4": None,
+            "hall_image_5": None,
+            "hall_image_6": None
         }
     return settings
 
