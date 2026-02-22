@@ -259,6 +259,20 @@ export const AdminDashboard = () => {
             </Link>
 
             <Link
+              to="/admin/documents"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
+              data-testid="manage-documents-link"
+            >
+              <div className="flex items-center mb-3">
+                <div className="p-3 bg-amber-100 rounded-lg group-hover:bg-amber-200 transition-colors">
+                  <FileText size={24} className="text-amber-600" />
+                </div>
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Governance Documents</h3>
+              <p className="text-sm text-gray-600">Manage PDF & Word documents</p>
+            </Link>
+
+            <Link
               to="/admin/activities"
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
               data-testid="manage-activities-link"
