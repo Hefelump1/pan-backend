@@ -420,10 +420,14 @@ async def delete_document(document_id: str):
         raise HTTPException(status_code=404, detail="Document not found")
     return None
 
+from pydantic import BaseModel as PydanticBaseModel
+class DocumentReorderRequest(PydanticBaseModel):
+    document_ids: List[str]
+
 @router.put("/documents/reorder")
-async def reorder_documents(document_ids: List[str]):
+async def reorder_documents(request: DocumentReorderRequest):
     """Reorder documents by providing array of document IDs in desired order"""
-    for index, doc_id in enumerate(document_ids):
+    for index, doc_id in enumerate(request.document_ids):
         await documents_collection.update_one(
             {"id": doc_id},
             {"$set": {"order": index, "updated_at": datetime.utcnow()}}
