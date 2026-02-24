@@ -74,17 +74,61 @@ export const Committee = () => {
       </section>
 
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-red-700 to-red-800 rounded-xl p-12 text-center shadow-xl">
-            <h2 className="text-3xl font-bold text-white mb-4">{t(language, 'committee.joinTitle')}</h2>
-            <p className="text-red-100 mb-8 leading-relaxed">
-              {t(language, 'committee.joinDesc')}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:admin@polishassociationnewcastle.org.au" className="inline-flex items-center justify-center px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Volunteer Box */}
+            <div className="bg-gradient-to-r from-red-700 to-red-800 rounded-xl p-10 text-center shadow-xl">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users size={32} className="text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-4">{t(language, 'committee.joinTitle')}</h2>
+              <p className="text-red-100 mb-8 leading-relaxed">
+                {t(language, 'committee.joinDesc')}
+              </p>
+              <a 
+                href="mailto:admin@polishassociationnewcastle.org.au" 
+                className="inline-flex items-center justify-center px-6 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
+                data-testid="contact-volunteer-btn"
+              >
                 <Mail size={20} className="mr-2" />
                 {t(language, 'committee.contactCommittee')}
               </a>
+            </div>
+
+            {/* Membership Box */}
+            <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-xl p-10 text-center shadow-xl">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <UserPlus size={32} className="text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-4">
+                {language === 'pl' ? 'Chcesz zostać członkiem?' : 'Interested in becoming a Member?'}
+              </h2>
+              <p className="text-red-100 mb-8 leading-relaxed">
+                {language === 'pl' 
+                  ? 'Dołącz do naszej społeczności i pomagaj w zachowaniu polskiej kultury w Newcastle. Pobierz formularz zgłoszeniowy i wyślij go do nas.'
+                  : 'Join our community and help preserve Polish culture in Newcastle. Download the membership form and submit it to us.'}
+              </p>
+              {settings?.membership_form_url ? (
+                <a 
+                  href={settings.membership_form_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  data-testid="download-membership-form-btn"
+                >
+                  <Download size={20} className="mr-2" />
+                  {language === 'pl' ? 'Pobierz formularz członkowski' : 'Download Membership Form'}
+                </a>
+              ) : (
+                <a 
+                  href="mailto:admin@polishassociationnewcastle.org.au?subject=Membership%20Enquiry" 
+                  className="inline-flex items-center justify-center px-6 py-3 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  data-testid="contact-membership-btn"
+                >
+                  <Mail size={20} className="mr-2" />
+                  {language === 'pl' ? 'Zapytaj o członkostwo' : 'Enquire About Membership'}
+                </a>
+              )}
             </div>
           </div>
         </div>
