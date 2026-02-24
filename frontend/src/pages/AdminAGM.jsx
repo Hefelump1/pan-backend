@@ -134,6 +134,58 @@ export const AdminAGM = () => {
     }
   };
 
+  const handleMembershipFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Invalid file type. Please upload PDF, DOC, or DOCX files.');
+      return;
+    }
+
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error('File too large. Maximum size is 50MB.');
+      return;
+    }
+
+    setUploadingMembership(true);
+
+    try {
+      const uploadData = new FormData();
+      uploadData.append('file', file);
+
+      const token = localStorage.getItem('adminToken');
+      const response = await axios.post(`${BACKEND_URL}/api/upload/document`, uploadData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const fileUrl = `${BACKEND_URL}${response.data.url}`;
+      setFormData(prev => ({ ...prev, membership_form_url: fileUrl }));
+      toast.success('Membership form uploaded successfully');
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error(error.response?.data?.detail || 'Failed to upload document');
+    } finally {
+      setUploadingMembership(false);
+    }
+  };
+
+  const handleRemoveMembershipForm = () => {
+    setFormData(prev => ({ ...prev, membership_form_url: '' }));
+    if (membershipFileInputRef.current) {
+      membershipFileInputRef.current.value = '';
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
