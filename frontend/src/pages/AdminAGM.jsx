@@ -454,10 +454,103 @@ export const AdminAGM = () => {
             )}
           </div>
 
+          {/* Membership Form Upload */}
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+              <UserPlus size={20} className="mr-2 text-red-600" />
+              Membership Form
+            </h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Upload the membership application form (PDF, DOC, or DOCX) that visitors can download from the Committee page.
+            </p>
+            
+            <input
+              ref={membershipFileInputRef}
+              type="file"
+              accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              onChange={handleMembershipFileUpload}
+              className="hidden"
+              data-testid="membership-form-input"
+            />
+
+            {formData.membership_form_url ? (
+              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                      <FileText size={20} className="text-red-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">Membership Form</p>
+                      <a 
+                        href={formData.membership_form_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm text-red-600 hover:underline"
+                      >
+                        View Document
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => membershipFileInputRef.current?.click()}
+                      disabled={uploadingMembership}
+                      className="px-3 py-2 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                      Replace
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleRemoveMembershipForm}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <label 
+                className={`
+                  border-2 border-dashed rounded-lg p-8 cursor-pointer transition-all duration-200
+                  flex flex-col items-center justify-center
+                  ${uploadingMembership ? 'pointer-events-none opacity-60' : 'border-gray-300 hover:border-red-400 hover:bg-gray-50'}
+                `}
+              >
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={handleMembershipFileUpload}
+                  className="hidden"
+                />
+                {uploadingMembership ? (
+                  <>
+                    <Loader2 size={32} className="text-red-600 animate-spin mb-2" />
+                    <p className="text-sm text-gray-600">Uploading...</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-3">
+                      <Upload size={24} className="text-red-600" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-700 mb-1">
+                      Click to upload membership form
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      PDF, DOC, or DOCX (max 50MB)
+                    </p>
+                  </>
+                )}
+              </label>
+            )}
+          </div>
+
           {/* Preview Info */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <p className="text-sm text-yellow-800">
-              <strong>Tip:</strong> Leave fields empty to use the default translations. The AGM notice will be displayed on the Governance page with a download button for the uploaded document.
+              <strong>Tip:</strong> Leave fields empty to use the default translations. The AGM notice will be displayed on the Governance page and the membership form download button will appear on the Committee page.
             </p>
           </div>
         </form>
