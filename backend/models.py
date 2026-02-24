@@ -233,6 +233,8 @@ class SiteSettingsUpdate(BaseModel):
     agm_description_en: Optional[str] = None
     agm_description_pl: Optional[str] = None
     agm_document_url: Optional[str] = None
+    # Membership form
+    membership_form_url: Optional[str] = None
 
 # Governance Document Model
 class GovernanceDocument(BaseModel):
