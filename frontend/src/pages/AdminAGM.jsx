@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Save, Loader2, Upload, FileText, X } from 'lucide-react';
+import { ArrowLeft, Calendar, Save, Loader2, Upload, FileText, X, UserPlus } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -11,7 +11,9 @@ export const AdminAGM = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingMembership, setUploadingMembership] = useState(false);
   const fileInputRef = useRef(null);
+  const membershipFileInputRef = useRef(null);
   
   const [formData, setFormData] = useState({
     agm_title_en: '',
@@ -22,7 +24,8 @@ export const AdminAGM = () => {
     agm_time_pl: '',
     agm_description_en: '',
     agm_description_pl: '',
-    agm_document_url: ''
+    agm_document_url: '',
+    membership_form_url: ''
   });
 
   useEffect(() => {
