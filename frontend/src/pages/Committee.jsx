@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Users, Mail, Download, UserPlus } from 'lucide-react';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,6 +9,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Committee = () => {
   const { language } = useLanguage();
+  const location = useLocation();
   const [members, setMembers] = useState([]);
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,6 +17,18 @@ export const Committee = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Handle hash navigation for scrolling to sections
+  useEffect(() => {
+    if (location.hash && !loading) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [location.hash, loading]);
 
   const fetchData = async () => {
     try {
