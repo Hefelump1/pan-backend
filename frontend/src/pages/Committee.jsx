@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Mail } from 'lucide-react';
+import { Users, Mail, Download, UserPlus } from 'lucide-react';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 import { t } from '../translations/translations';
@@ -9,18 +9,23 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const Committee = () => {
   const { language } = useLanguage();
   const [members, setMembers] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchCommittee();
+    fetchData();
   }, []);
 
-  const fetchCommittee = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/committee`);
-      setMembers(response.data);
+      const [committeeRes, settingsRes] = await Promise.all([
+        axios.get(`${BACKEND_URL}/api/committee`),
+        axios.get(`${BACKEND_URL}/api/settings`)
+      ]);
+      setMembers(committeeRes.data);
+      setSettings(settingsRes.data);
     } catch (error) {
-      console.error('Error fetching committee:', error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
