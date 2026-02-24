@@ -53,7 +53,8 @@ export const AdminAGM = () => {
         agm_time_pl: data.agm_time_pl || '',
         agm_description_en: data.agm_description_en || '',
         agm_description_pl: data.agm_description_pl || '',
-        agm_document_url: data.agm_document_url || ''
+        agm_document_url: data.agm_document_url || '',
+        membership_form_url: data.membership_form_url || ''
       });
     } catch (error) {
       console.error('Error fetching settings:', error);
