@@ -361,7 +361,8 @@ async def get_site_settings():
             "agm_time_pl": None,
             "agm_description_en": None,
             "agm_description_pl": None,
-            "agm_document_url": None
+            "agm_document_url": None,
+            "membership_form_url": None
         }
     return settings
 
