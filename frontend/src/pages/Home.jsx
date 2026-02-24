@@ -243,7 +243,7 @@ export const Home = () => {
             {t(language, 'home.joinDesc')}
           </p>
           <Link
-            to="/committee"
+            to="/committee#get-involved"
             className="inline-flex items-center px-8 py-4 bg-white text-red-600 font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             {t(language, 'home.getInvolved')}
