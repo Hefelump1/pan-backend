@@ -4,11 +4,39 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 import os
 import uuid
+import logging
 
-# MongoDB connection
-mongo_url = os.environ.get('MONGO_URL')
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ.get('DB_NAME', 'test_database')]
+logger = logging.getLogger(__name__)
+
+# MongoDB connection - lazy initialization
+_client = None
+_db = None
+
+def get_database():
+    global _client, _db
+    if _db is None:
+        mongo_url = os.environ.get('MONGO_URL')
+        db_name = os.environ.get('DB_NAME', 'pan_database')
+        
+        if not mongo_url:
+            logger.error("MONGO_URL environment variable not set!")
+            raise RuntimeError("MONGO_URL environment variable is required")
+        
+        logger.info(f"Connecting to MongoDB database: {db_name}")
+        _client = AsyncIOMotorClient(mongo_url)
+        _db = _client[db_name]
+    
+    return _db
+
+# Lazy database accessor
+class LazyDB:
+    def __getattr__(self, name):
+        return getattr(get_database(), name)
+    
+    def __getitem__(self, name):
+        return get_database()[name]
+
+db = LazyDB()
 
 # Pydantic Models
 class Event(BaseModel):
@@ -38,11 +66,11 @@ class Activity(BaseModel):
     name_en: str
     name_pl: str
     time: str
-    description_en: str
-    description_pl: str
-    contact: str
+    description_en: Optional[str] = None
+    description_pl: Optional[str] = None
+    contact: Optional[str] = None
     order: int = 0
-    is_visible: bool = True  # Can be hidden when not needed for a week
+    is_visible: bool = True
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -51,9 +79,9 @@ class ActivityCreate(BaseModel):
     name_en: str
     name_pl: str
     time: str
-    description_en: str
-    description_pl: str
-    contact: str
+    description_en: Optional[str] = None
+    description_pl: Optional[str] = None
+    contact: Optional[str] = None
     order: int = 0
     is_visible: bool = True
 
@@ -63,27 +91,26 @@ class Booking(BaseModel):
     email: str
     phone: str
     event_type: str
+    date: str
     guests: int
-    date: Optional[str] = None
     message: Optional[str] = None
-    status: str = "pending"  # pending, approved, rejected
+    status: str = "pending"
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class BookingCreate(BaseModel):
     name: str
     email: str
     phone: str
     event_type: str
+    date: str
     guests: int
-    date: Optional[str] = None
     message: Optional[str] = None
 
 class CommitteeMember(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     position: str
-    bio: str
+    bio: Optional[str] = None
     image: Optional[str] = None
     order: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -92,7 +119,7 @@ class CommitteeMember(BaseModel):
 class CommitteeMemberCreate(BaseModel):
     name: str
     position: str
-    bio: str
+    bio: Optional[str] = None
     image: Optional[str] = None
     order: int = 0
 
@@ -100,11 +127,11 @@ class AssociatedGroup(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name_en: str
     name_pl: str
-    description_en: str
-    description_pl: str
-    schedule_en: str
-    schedule_pl: str
-    contact: str
+    description_en: Optional[str] = None
+    description_pl: Optional[str] = None
+    schedule_en: Optional[str] = None
+    schedule_pl: Optional[str] = None
+    contact: Optional[str] = None
     website: Optional[str] = None
     image: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -113,63 +140,38 @@ class AssociatedGroup(BaseModel):
 class AssociatedGroupCreate(BaseModel):
     name_en: str
     name_pl: str
-    description_en: str
-    description_pl: str
-    schedule_en: str
-    schedule_pl: str
-    contact: str
+    description_en: Optional[str] = None
+    description_pl: Optional[str] = None
+    schedule_en: Optional[str] = None
+    schedule_pl: Optional[str] = None
+    contact: Optional[str] = None
     website: Optional[str] = None
     image: Optional[str] = None
 
-class AdminUser(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    username: str
-    email: str
-    hashed_password: str
-    full_name: Optional[str] = None
-    is_active: bool = True
-    is_superuser: bool = False
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-
-class AdminUserCreate(BaseModel):
-    username: str
-    email: str
-    password: str
-    full_name: Optional[str] = None
-
-class AdminUserLogin(BaseModel):
-    username: str
-    password: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-# News Model (Bilingual)
 class NewsArticle(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title_en: str
     title_pl: str
-    summary_en: str
-    summary_pl: str
+    summary_en: Optional[str] = None
+    summary_pl: Optional[str] = None
     content_en: Optional[str] = None
     content_pl: Optional[str] = None
     image: Optional[str] = None
     date: str
-    published: bool = True
+    published: bool = False
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class NewsArticleCreate(BaseModel):
     title_en: str
     title_pl: str
-    summary_en: str
-    summary_pl: str
+    summary_en: Optional[str] = None
+    summary_pl: Optional[str] = None
     content_en: Optional[str] = None
     content_pl: Optional[str] = None
     image: Optional[str] = None
     date: str
-    published: bool = True
+    published: bool = False
 
 # Site Settings Model (for Home page customization)
 class SiteSettings(BaseModel):
@@ -254,7 +256,7 @@ class GovernanceDocumentCreate(BaseModel):
     file_size: int = 0
     order: int = 0
 
-# Collections
+# Collections - these now use lazy loading
 events_collection = db['events']
 activities_collection = db['activities']
 bookings_collection = db['bookings']
