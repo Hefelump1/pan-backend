@@ -148,6 +148,30 @@ class AssociatedGroupCreate(BaseModel):
     website: Optional[str] = None
     image: Optional[str] = None
 
+class AdminUser(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    username: str
+    email: str
+    hashed_password: str
+    full_name: Optional[str] = None
+    is_active: bool = True
+    is_superuser: bool = False
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class AdminUserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+    full_name: Optional[str] = None
+
+class AdminUserLogin(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
 class NewsArticle(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title_en: str
