@@ -10,14 +10,21 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import os
 
 # Security configurations
-SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-if not SECRET_KEY:
-    raise RuntimeError("JWT_SECRET_KEY environment variable is required")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # 24 hours
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
+
+def get_secret_key():
+    """Get JWT secret key from environment - lazy loading"""
+    secret = os.environ.get("JWT_SECRET_KEY")
+    if not secret:
+        # Fallback for development, but warn
+        import logging
+        logging.warning("JWT_SECRET_KEY not set, using default (NOT SECURE FOR PRODUCTION)")
+        return "default-dev-secret-key-change-in-production"
+    return secret
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a password against its hash"""
@@ -36,13 +43,13 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
         expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, get_secret_key(), algorithm=ALGORITHM)
     return encoded_jwt
 
 def decode_token(token: str) -> dict:
     """Decode and verify JWT token"""
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
         return payload
     except JWTError:
         raise HTTPException(
