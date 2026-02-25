@@ -49,3 +49,7 @@ logger = logging.getLogger(__name__)
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "service": "Polish Association API"}
+
+@app.get("/api/health")
+async def api_health_check():
+    return {"status": "healthy", "service": "Polish Association API"}
