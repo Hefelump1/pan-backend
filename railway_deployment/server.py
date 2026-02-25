@@ -46,6 +46,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Health check endpoints - BOTH paths to ensure Railway finds it
+@app.get("/")
+async def root():
+    return {"status": "ok", "service": "Polish Association API"}
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "service": "Polish Association API"}
