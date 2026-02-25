@@ -1,0 +1,10 @@
+PassengerEnabled On
+PassengerAppRoot /home/%USER%/public_html/api
+PassengerBaseURI /api
+PassengerPython /home/%USER%/virtualenv/public_html/api/3.10/bin/python
+
+# Serve uploaded files
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/api/uploads/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^uploads/(.*)$ /home/%USER%/public_html/api/uploads/$1 [L]
