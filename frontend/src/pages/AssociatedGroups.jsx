@@ -65,15 +65,33 @@ export const AssociatedGroups = () => {
                             <p className="font-semibold text-gray-900">{t(language, 'groups.schedule')}</p>
                             <p className="text-gray-600">{schedule}</p>
                           </div>
-                          <div>
-                            <p className="font-semibold text-gray-900">{t(language, 'groups.contact')}</p>
-                            <a href={`mailto:${group.contact}`} className="text-red-600 hover:text-red-700">{group.contact}</a>
-                          </div>
+                          {group.contact && (
+                            <div>
+                              <p className="font-semibold text-gray-900">{t(language, 'groups.contact')}</p>
+                              <a href={`mailto:${group.contact}`} className="text-red-600 hover:text-red-700">{group.contact}</a>
+                            </div>
+                          )}
+                          {group.website && (
+                            <div>
+                              <p className="font-semibold text-gray-900">{language === 'pl' ? 'Strona internetowa' : 'Website'}</p>
+                              <a href={group.website} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-700">{group.website}</a>
+                            </div>
+                          )}
                         </div>
-                        <a href={`mailto:${group.contact}`} className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300 w-fit">
-                          <Mail size={18} className="mr-2" />
-                          {t(language, 'groups.getInTouch')}
-                        </a>
+                        <div className="flex flex-wrap gap-3">
+                          {group.website && (
+                            <a href={group.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
+                              <Globe size={18} className="mr-2" />
+                              {language === 'pl' ? 'Odwiedź stronę' : 'Visit Website'}
+                            </a>
+                          )}
+                          {group.contact && (
+                            <a href={`mailto:${group.contact}`} className="inline-flex items-center justify-center px-6 py-3 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-all duration-300">
+                              <Mail size={18} className="mr-2" />
+                              {t(language, 'groups.getInTouch')}
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
