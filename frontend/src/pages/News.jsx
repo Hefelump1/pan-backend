@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Newspaper, Calendar, ArrowRight } from 'lucide-react';
+import { Newspaper, Calendar, ArrowRight, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { t } from '../translations/translations';
 import axios from 'axios';
@@ -10,6 +10,7 @@ export const News = () => {
   const { language } = useLanguage();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   useEffect(() => {
     fetchNews();
