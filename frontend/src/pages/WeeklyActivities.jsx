@@ -118,18 +118,17 @@ export const WeeklyActivities = () => {
 
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t(language, 'weekly.joinTitle')}</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            {language === 'pl' ? 'Dołącz do naszych zajęć' : 'Join Our Activities'}
+          </h2>
           <p className="text-gray-600 mb-8">
-            {t(language, 'weekly.joinDesc')}
+            {language === 'pl' 
+              ? 'Wszystkie zajęcia odbywają się w Polskim Domu Kultury. Chcesz prowadzić własne cotygodniowe zajęcia? Skontaktuj się z naszym koordynatorem sali.'
+              : 'All activities are held at the Polish Cultural Centre. Are you looking to host your own weekly activity? Get in touch with our hall coordinator.'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:admin@polishassociationnewcastle.org.au" className="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
-              {t(language, 'weekly.contactUs')}
-            </a>
-            <a href="tel:0249201234" className="px-8 py-4 bg-white text-red-600 font-semibold rounded-lg border-2 border-red-600 hover:bg-red-50 transition-all duration-300">
-              {t(language, 'weekly.call')} (02) 4920 1234
-            </a>
-          </div>
+          <a href="mailto:hallhire@polishassociationnewcastle.org.au" className="px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-300">
+            {t(language, 'weekly.contactUs')}
+          </a>
         </div>
       </section>
     </div>
