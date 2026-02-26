@@ -85,7 +85,10 @@ export const News = () => {
                         </div>
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">{title}</h2>
                         <p className="text-gray-600 mb-6">{summary}</p>
-                        <button className="inline-flex items-center text-red-600 font-semibold hover:text-red-700 transition-colors w-fit">
+                        <button 
+                          onClick={() => setSelectedArticle(item)}
+                          className="inline-flex items-center text-red-600 font-semibold hover:text-red-700 transition-colors w-fit"
+                        >
                           {t(language, 'news.readMore')}
                           <ArrowRight size={18} className="ml-2" />
                         </button>
@@ -98,6 +101,43 @@ export const News = () => {
           )}
         </div>
       </section>
+
+      {/* Article Modal */}
+      {selectedArticle && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={() => setSelectedArticle(null)}>
+          <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-900">
+                {language === 'pl' ? selectedArticle.title_pl : selectedArticle.title_en}
+              </h2>
+              <button 
+                onClick={() => setSelectedArticle(null)}
+                className="p-2 hover:bg-gray-100 rounded-full"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            {selectedArticle.image && (
+              <img 
+                src={selectedArticle.image} 
+                alt={language === 'pl' ? selectedArticle.title_pl : selectedArticle.title_en}
+                className="w-full h-64 object-cover"
+              />
+            )}
+            <div className="p-6">
+              <div className="flex items-center text-red-600 mb-4">
+                <Calendar size={16} className="mr-2" />
+                <span className="text-sm font-medium">{formatDate(selectedArticle.date)}</span>
+              </div>
+              <div className="prose max-w-none">
+                <p className="text-gray-700 whitespace-pre-wrap">
+                  {language === 'pl' ? (selectedArticle.content_pl || selectedArticle.summary_pl) : (selectedArticle.content_en || selectedArticle.summary_en)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
