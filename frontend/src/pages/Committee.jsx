@@ -74,11 +74,15 @@ export const Committee = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <h3 className="text-2xl font-bold text-white mb-1">{member.name}</h3>
-                      <p className="text-red-300 font-semibold">{member.position}</p>
+                      <p className="text-red-300 font-semibold">
+                        {language === 'pl' && member.position_pl ? member.position_pl : member.position}
+                      </p>
                     </div>
                   </div>
                   <div className="p-6">
-                    <p className="text-gray-700 leading-relaxed">{member.bio}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                      {language === 'pl' && member.bio_pl ? member.bio_pl : member.bio}
+                    </p>
                   </div>
                 </div>
               ))}
