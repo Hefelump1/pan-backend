@@ -72,8 +72,9 @@ export const translations = {
     weekly: {
       title: 'Weekly Activities',
       subtitle: 'Regular programs and activities at the Polish Cultural Centre',
+      noActivities: 'No activities scheduled at this time.',
       joinTitle: 'Join Our Activities',
-      joinDesc: 'All activities are held at the Polish Cultural Centre. New members are always welcome!',
+      joinDesc: 'All activities are held at the Polish Cultural Centre. Are you looking to host your own weekly activity? Get in touch with our hall coordinator.',
       contactUs: 'Contact Us',
       call: 'Call'
     },
