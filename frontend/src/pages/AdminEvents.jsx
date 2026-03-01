@@ -342,6 +342,21 @@ export const AdminEvents = () => {
                 testId="event-image"
               />
 
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Website / Ticket Link
+                </label>
+                <input
+                  type="url"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="e.g., https://www.eventbrite.com/..."
+                  data-testid="event-website"
+                />
+                <p className="text-xs text-gray-500 mt-1">Optional: Add a link to tickets or more information</p>
+              </div>
+
               <div className="flex gap-3 pt-4 border-t border-gray-200">
                 <button
                   type="button"
