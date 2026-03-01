@@ -21,7 +21,10 @@ export const AdminEvents = () => {
     description: '',
     category: 'cultural',
     image: '',
-    website: ''
+    website: '',
+    title_pl: '',
+    location_pl: '',
+    description_pl: ''
   });
 
   useEffect(() => {
