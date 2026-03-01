@@ -48,6 +48,7 @@ class Event(BaseModel):
     description: str
     category: str
     image: Optional[str] = None
+    website: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -59,6 +60,7 @@ class EventCreate(BaseModel):
     description: str
     category: str
     image: Optional[str] = None
+    website: Optional[str] = None
 
 class Activity(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -110,7 +112,9 @@ class CommitteeMember(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     position: str
+    position_pl: Optional[str] = None
     bio: Optional[str] = None
+    bio_pl: Optional[str] = None
     image: Optional[str] = None
     order: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -119,7 +123,9 @@ class CommitteeMember(BaseModel):
 class CommitteeMemberCreate(BaseModel):
     name: str
     position: str
+    position_pl: Optional[str] = None
     bio: Optional[str] = None
+    bio_pl: Optional[str] = None
     image: Optional[str] = None
     order: int = 0
 
