@@ -60,7 +60,10 @@ export const AdminEvents = () => {
       description: '',
       category: 'cultural',
       image: '',
-      website: ''
+      website: '',
+      title_pl: '',
+      location_pl: '',
+      description_pl: ''
     });
     setEditingEvent(null);
   };
@@ -75,7 +78,10 @@ export const AdminEvents = () => {
       description: event.description || '',
       category: event.category || 'cultural',
       image: event.image || '',
-      website: event.website || ''
+      website: event.website || '',
+      title_pl: event.title_pl || '',
+      location_pl: event.location_pl || '',
+      description_pl: event.description_pl || ''
     });
     setShowModal(true);
   };
