@@ -281,9 +281,10 @@ export const translations = {
     // Weekly Activities
     weekly: {
       title: 'Zajęcia Tygodniowe',
-      subtitle: 'Regularne programy i zajęcia w Polskiej Sali Społeczności',
+      subtitle: 'Regularne programy i zajęcia w Polskim Domu Kultury',
+      noActivities: 'Brak zaplanowanych zajęć w tym czasie.',
       joinTitle: 'Dołącz do Naszych Zajęć',
-      joinDesc: 'Wszystkie zajęcia odbywają się w Polskiej Sali Społeczności. Nowi członkowie są zawsze mile widziani!',
+      joinDesc: 'Wszystkie zajęcia odbywają się w Polskim Domu Kultury. Chcesz prowadzić własne cotygodniowe zajęcia? Skontaktuj się z naszym koordynatorem sali.',
       contactUs: 'Skontaktuj Się',
       call: 'Zadzwoń'
     },
