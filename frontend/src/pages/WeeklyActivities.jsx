@@ -80,7 +80,7 @@ export const WeeklyActivities = () => {
             </div>
           ) : activities.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-lg shadow-lg">
-              <p className="text-gray-600">No activities scheduled at this time.</p>
+              <p className="text-gray-600">{t(language, 'weekly.noActivities')}</p>
             </div>
           ) : (
             DAYS.map((day) => {
