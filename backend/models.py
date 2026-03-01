@@ -20,6 +20,7 @@ class Event(BaseModel):
     description: str
     category: str
     image: Optional[str] = None
+    website: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -31,6 +32,7 @@ class EventCreate(BaseModel):
     description: str
     category: str
     image: Optional[str] = None
+    website: Optional[str] = None
 
 class Activity(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
