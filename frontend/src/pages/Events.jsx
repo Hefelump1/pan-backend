@@ -37,6 +37,14 @@ export const Events = () => {
     return colors[category] || 'bg-gray-100 text-gray-700';
   };
 
+  const getCategoryLabel = (category) => {
+    if (language === 'pl') {
+      const labels = { cultural: 'Kulturalne', meeting: 'Spotkanie', education: 'Edukacyjne', performance: 'Występ', educational: 'Edukacyjne', social: 'Towarzyskie', religious: 'Religijne', other: 'Inne' };
+      return labels[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    }
+    return category.charAt(0).toUpperCase() + category.slice(1);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
