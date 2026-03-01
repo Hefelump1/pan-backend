@@ -91,16 +91,20 @@ export const Events = () => {
                         })}
                       </span>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">{event.title}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                      {language === 'pl' && event.title_pl ? event.title_pl : event.title}
+                    </h3>
                     <div className="flex items-start text-gray-600 mb-2">
                       <Clock size={18} className="mr-2 mt-1 flex-shrink-0" />
                       <span>{event.time}</span>
                     </div>
                     <div className="flex items-start text-gray-600 mb-4">
                       <MapPin size={18} className="mr-2 mt-1 flex-shrink-0" />
-                      <span>{event.location}</span>
+                      <span>{language === 'pl' && event.location_pl ? event.location_pl : event.location}</span>
                     </div>
-                    <p className="text-gray-700 leading-relaxed mb-4">{event.description}</p>
+                    <p className="text-gray-700 leading-relaxed mb-4">
+                      {language === 'pl' && event.description_pl ? event.description_pl : event.description}
+                    </p>
                     {event.website && (
                       <a 
                         href={event.website} 
