@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-OLD_DOMAIN = "https://pani-cms.preview.emergentagent.com"
+OLD_DOMAIN = "https://pan-staging-build.preview.emergentagent.com"
 NEW_DOMAIN = "https://polishassociationnewcastle.org.au"
 
 async def migrate_urls():

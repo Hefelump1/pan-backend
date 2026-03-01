@@ -10,7 +10,7 @@ import os
 from motor.motor_asyncio import AsyncIOMotorClient
 
 # Configuration - UPDATE THESE
-OLD_DOMAIN = "https://pani-cms.preview.emergentagent.com"
+OLD_DOMAIN = "https://pan-staging-build.preview.emergentagent.com"
 NEW_DOMAIN = "https://pan-api.fly.dev"  # Change to your Fly.io URL or custom domain
 
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb+srv://pan_admin:Capricorn1987!@pan-cluster.q8ekax8.mongodb.net/pan_database?retryWrites=true&w=majority&appName=PAN-cluster')
