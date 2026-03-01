@@ -16,7 +16,9 @@ export const AdminCommittee = () => {
   const [formData, setFormData] = useState({
     name: '',
     position: '',
+    position_pl: '',
     bio: '',
+    bio_pl: '',
     image: '',
     order: 0
   });
