@@ -85,7 +85,9 @@ class CommitteeMember(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     position: str
+    position_pl: Optional[str] = None
     bio: str
+    bio_pl: Optional[str] = None
     image: Optional[str] = None
     order: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -94,7 +96,9 @@ class CommitteeMember(BaseModel):
 class CommitteeMemberCreate(BaseModel):
     name: str
     position: str
+    position_pl: Optional[str] = None
     bio: str
+    bio_pl: Optional[str] = None
     image: Optional[str] = None
     order: int = 0
 
