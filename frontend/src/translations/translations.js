@@ -174,7 +174,7 @@ export const translations = {
       constitutionDesc2: 'Ensures transparent democratic governance while maintaining our commitment to Polish culture and heritage.',
       membershipTitle: 'Membership Information',
       whoCanJoin: 'Who Can Join?',
-      whoDesc: 'Open to all interested in Polish culture and heritage.',
+      whoDesc: 'Open to all interested in Polish culture and heritage. Just download a membership form from this page and send us the completed form using the link below.',
       benefits: 'Benefits',
       benefit1: 'Voting rights at AGM',
       benefit2: 'Discounted event tickets',
