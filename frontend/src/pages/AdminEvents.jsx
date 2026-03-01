@@ -311,7 +311,7 @@ export const AdminEvents = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Location *
+                  Location (English) *
                 </label>
                 <input
                   type="text"
@@ -321,6 +321,20 @@ export const AdminEvents = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   placeholder="e.g., Polish Cultural Centre"
                   data-testid="event-location"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Location (Polish)
+                </label>
+                <input
+                  type="text"
+                  value={formData.location_pl}
+                  onChange={(e) => setFormData({ ...formData, location_pl: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="e.g., Polski Dom Kultury"
+                  data-testid="event-location-pl"
                 />
               </div>
 
