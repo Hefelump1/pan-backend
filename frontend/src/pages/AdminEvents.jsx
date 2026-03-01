@@ -56,7 +56,8 @@ export const AdminEvents = () => {
       location: '',
       description: '',
       category: 'cultural',
-      image: ''
+      image: '',
+      website: ''
     });
     setEditingEvent(null);
   };
