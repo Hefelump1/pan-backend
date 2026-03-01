@@ -24,6 +24,7 @@ Build a modern, elegant, and traditional website for the Polish Association of N
 
 ## Completed (March 2026)
 - [x] P0 Fix batch: ScrollToTop, Events website field, Polish translations (Weekly Activities + Committee), News Read More modal, Associated Groups website links
+- [x] Committee page full Polish translation: Added `position_pl` and `bio_pl` fields to backend model, updated admin form, seeded Polish data for all 10 members
 - [x] Backend models updated with website field for Events
 - [x] Frontend deployment build created
 - [x] Railway deployment package created
