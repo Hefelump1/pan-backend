@@ -83,7 +83,7 @@ export const Events = () => {
                     />
                     <div className="absolute top-4 right-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getCategoryColor(event.category)}`}>
-                        {event.category.charAt(0).toUpperCase() + event.category.slice(1)}
+                        {getCategoryLabel(event.category)}
                       </span>
                     </div>
                   </div>
