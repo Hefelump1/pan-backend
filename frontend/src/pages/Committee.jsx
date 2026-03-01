@@ -115,12 +115,10 @@ export const Committee = () => {
                 <UserPlus size={32} className="text-white" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-4">
-                {language === 'pl' ? 'Chcesz zostać członkiem?' : 'Interested in becoming a Member?'}
+                {t(language, 'committee.memberTitle')}
               </h2>
               <p className="text-red-100 mb-8 leading-relaxed">
-                {language === 'pl' 
-                  ? 'Dołącz do naszej społeczności i pomagaj w zachowaniu polskiej kultury w Newcastle. Pobierz formularz zgłoszeniowy i wyślij go do nas.'
-                  : 'Join our community and help preserve Polish culture in Newcastle. Download the membership form and submit it to us.'}
+                {t(language, 'committee.memberDesc')}
               </p>
               {settings?.membership_form_url ? (
                 <a 
@@ -131,7 +129,7 @@ export const Committee = () => {
                   data-testid="download-membership-form-btn"
                 >
                   <Download size={20} className="mr-2" />
-                  {language === 'pl' ? 'Pobierz formularz członkowski' : 'Download Membership Form'}
+                  {t(language, 'committee.downloadForm')}
                 </a>
               ) : (
                 <a 
@@ -140,7 +138,7 @@ export const Committee = () => {
                   data-testid="contact-membership-btn"
                 >
                   <Mail size={20} className="mr-2" />
-                  {language === 'pl' ? 'Zapytaj o członkostwo' : 'Enquire About Membership'}
+                  {t(language, 'committee.enquireMembership')}
                 </a>
               )}
             </div>
