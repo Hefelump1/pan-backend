@@ -100,7 +100,18 @@ export const Events = () => {
                       <MapPin size={18} className="mr-2 mt-1 flex-shrink-0" />
                       <span>{event.location}</span>
                     </div>
-                    <p className="text-gray-700 leading-relaxed">{event.description}</p>
+                    <p className="text-gray-700 leading-relaxed mb-4">{event.description}</p>
+                    {event.website && (
+                      <a 
+                        href={event.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors"
+                      >
+                        <ExternalLink size={16} className="mr-2" />
+                        {language === 'pl' ? 'Więcej informacji' : 'More Info / Tickets'}
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}
