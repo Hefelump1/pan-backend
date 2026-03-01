@@ -14,10 +14,13 @@ db = client[os.environ.get('DB_NAME', 'test_database')]
 class Event(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
+    title_pl: Optional[str] = None
     date: str
     time: str
     location: str
+    location_pl: Optional[str] = None
     description: str
+    description_pl: Optional[str] = None
     category: str
     image: Optional[str] = None
     website: Optional[str] = None
@@ -26,10 +29,13 @@ class Event(BaseModel):
 
 class EventCreate(BaseModel):
     title: str
+    title_pl: Optional[str] = None
     date: str
     time: str
     location: str
+    location_pl: Optional[str] = None
     description: str
+    description_pl: Optional[str] = None
     category: str
     image: Optional[str] = None
     website: Optional[str] = None
