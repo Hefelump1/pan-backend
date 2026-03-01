@@ -31,6 +31,7 @@ function App() {
     <div className="App">
       <LanguageProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={
