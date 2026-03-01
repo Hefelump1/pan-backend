@@ -359,7 +359,7 @@ export const AdminEvents = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Description *
+                  Description (English) *
                 </label>
                 <textarea
                   required
@@ -367,8 +367,22 @@ export const AdminEvents = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  placeholder="Describe the event..."
+                  placeholder="Describe the event in English..."
                   data-testid="event-description"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Description (Polish)
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.description_pl}
+                  onChange={(e) => setFormData({ ...formData, description_pl: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="Opisz wydarzenie po polsku..."
+                  data-testid="event-description-pl"
                 />
               </div>
 
