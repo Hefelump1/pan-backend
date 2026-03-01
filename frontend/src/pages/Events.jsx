@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar as CalendarIcon, MapPin, Clock } from 'lucide-react';
+import { Calendar as CalendarIcon, MapPin, Clock, ExternalLink } from 'lucide-react';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 import { t } from '../translations/translations';
