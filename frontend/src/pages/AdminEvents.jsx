@@ -71,7 +71,8 @@ export const AdminEvents = () => {
       location: event.location || '',
       description: event.description || '',
       category: event.category || 'cultural',
-      image: event.image || ''
+      image: event.image || '',
+      website: event.website || ''
     });
     setShowModal(true);
   };
