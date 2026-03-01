@@ -236,7 +236,7 @@ export const AdminCommittee = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Position *
+                  Position (English) *
                 </label>
                 <input
                   type="text"
@@ -244,14 +244,28 @@ export const AdminCommittee = () => {
                   value={formData.position}
                   onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  placeholder="e.g., President / Prezes"
+                  placeholder="e.g., President"
                   data-testid="member-position"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Biography *
+                  Position (Polish)
+                </label>
+                <input
+                  type="text"
+                  value={formData.position_pl}
+                  onChange={(e) => setFormData({ ...formData, position_pl: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="e.g., Prezes"
+                  data-testid="member-position-pl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Biography (English) *
                 </label>
                 <textarea
                   required
@@ -259,8 +273,22 @@ export const AdminCommittee = () => {
                   value={formData.bio}
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  placeholder="Brief biography of the committee member..."
+                  placeholder="Brief biography in English..."
                   data-testid="member-bio"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Biography (Polish)
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.bio_pl}
+                  onChange={(e) => setFormData({ ...formData, bio_pl: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder="Krótka biografia po polsku..."
+                  data-testid="member-bio-pl"
                 />
               </div>
 
