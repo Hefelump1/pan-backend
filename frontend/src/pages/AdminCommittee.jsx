@@ -51,7 +51,9 @@ export const AdminCommittee = () => {
     setFormData({
       name: '',
       position: '',
+      position_pl: '',
       bio: '',
+      bio_pl: '',
       image: '',
       order: members.length
     });
@@ -63,7 +65,9 @@ export const AdminCommittee = () => {
     setFormData({
       name: member.name || '',
       position: member.position || '',
+      position_pl: member.position_pl || '',
       bio: member.bio || '',
+      bio_pl: member.bio_pl || '',
       image: member.image || '',
       order: member.order || 0
     });
