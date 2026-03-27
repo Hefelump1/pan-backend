@@ -26,6 +26,9 @@ Build a modern, elegant, and traditional website for the Polish Association of N
 - [x] P0 Fix batch: ScrollToTop, Events website field, Polish translations (Weekly Activities + Committee), News Read More modal, Associated Groups website links
 - [x] Committee page full Polish translation: Added `position_pl` and `bio_pl` fields to backend model, updated admin form, seeded Polish data for all 10 members
 - [x] Backend models updated with website field for Events
+- [x] Image storage migrated from Railway filesystem to MongoDB Atlas
+- [x] Email delivery migrated from SMTP to HTTP PHP relay (email_relay.php on Vodien)
+- [x] Admin Useful Links page: Full CRUD for managing links on Governance page (backend + frontend, tested 100%)
 - [x] Frontend deployment build created
 - [x] Railway deployment package created
 
@@ -38,7 +41,7 @@ Build a modern, elegant, and traditional website for the Polish Association of N
 - **Frontend**: Run `yarn build` → package `frontend/build/` → user uploads to `public_html` via cPanel
 
 ## P1 Issues (Next Priority)
-- Weekly Activities footer text/contact info may need user-specific updates
+- Hall Hire email delivery via HTTP relay: User to verify emails arriving at webadmin@polishassociationnewcastle.org.au
 - Verify all deployment packages work on production
 
 ## Upcoming Tasks
