@@ -151,7 +151,6 @@ async def get_bookings():
 async def create_booking(booking: BookingCreate):
     """Create hall booking enquiry and send email notification"""
     import threading
-    from email_service import send_booking_notification
     
     booking_dict = booking.dict()
     booking_obj = Booking(**booking_dict)
