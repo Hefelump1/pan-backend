@@ -157,8 +157,35 @@ async def create_booking(booking: BookingCreate):
     booking_obj = Booking(**booking_dict)
     await bookings_collection.insert_one(booking_obj.dict())
     
-    # Send email in background thread so the response returns instantly
-    threading.Thread(target=send_booking_notification, args=(booking_obj.dict(),), daemon=True).start()
+    # Send email via HTTP relay (bypasses Railway SMTP block)
+    def send_booking_email(data):
+        try:
+            import requests as req
+            relay_url = os.environ.get('EMAIL_RELAY_URL', '')
+            relay_key = os.environ.get('EMAIL_RELAY_KEY', 'PAN_EMAIL_RELAY_2026_SECRET')
+            notification_email = os.environ.get('NOTIFICATION_EMAIL', '')
+            if not relay_url or not notification_email:
+                logging.warning("EMAIL_RELAY_URL or NOTIFICATION_EMAIL not configured")
+                return
+            subject = f"New Hall Hire Enquiry from {data.get('name', 'Unknown')}"
+            html = f"""<h2>New Hall Hire Enquiry</h2>
+            <p><strong>Name:</strong> {data.get('name','')}</p>
+            <p><strong>Email:</strong> {data.get('email','')}</p>
+            <p><strong>Phone:</strong> {data.get('phone','')}</p>
+            <p><strong>Event Type:</strong> {data.get('event_type','')}</p>
+            <p><strong>Date:</strong> {data.get('date','Not specified')}</p>
+            <p><strong>Guests:</strong> {data.get('guests','')}</p>
+            <p><strong>Message:</strong> {data.get('message','')}</p>"""
+            resp = req.post(relay_url, json={
+                "to": notification_email,
+                "subject": subject,
+                "html_body": html
+            }, headers={"X-API-Key": relay_key}, timeout=15)
+            logging.info(f"Email relay response: {resp.status_code}")
+        except Exception as e:
+            logging.error(f"Email relay failed: {e}")
+    
+    threading.Thread(target=send_booking_email, args=(booking_obj.dict(),), daemon=True).start()
     
     return booking_obj
 
