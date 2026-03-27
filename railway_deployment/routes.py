@@ -19,7 +19,7 @@ router = APIRouter(prefix="/api", tags=["main"])
 @router.get("/events", response_model=List[Event])
 async def get_events():
     """Get all events"""
-    events = await events_collection.find().sort("date", 1).to_list(1000)
+    events = await events_collection.find({}, {"_id": 0}).sort("date", 1).to_list(1000)
     return [Event(**event) for event in events]
 
 @router.post("/events", response_model=Event, status_code=status.HTTP_201_CREATED)
@@ -33,7 +33,7 @@ async def create_event(event: EventCreate):
 @router.get("/events/{event_id}", response_model=Event)
 async def get_event(event_id: str):
     """Get single event by ID"""
-    event = await events_collection.find_one({"id": event_id})
+    event = await events_collection.find_one({"id": event_id}, {"_id": 0})
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
     return Event(**event)
@@ -41,7 +41,7 @@ async def get_event(event_id: str):
 @router.put("/events/{event_id}", response_model=Event)
 async def update_event(event_id: str, event: EventCreate):
     """Update event (admin only)"""
-    existing = await events_collection.find_one({"id": event_id})
+    existing = await events_collection.find_one({"id": event_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Event not found")
     
@@ -53,7 +53,7 @@ async def update_event(event_id: str, event: EventCreate):
         {"$set": update_dict}
     )
     
-    updated = await events_collection.find_one({"id": event_id})
+    updated = await events_collection.find_one({"id": event_id}, {"_id": 0})
     return Event(**updated)
 
 @router.delete("/events/{event_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -98,7 +98,7 @@ async def create_activity(activity: ActivityCreate):
 @router.put("/activities/{activity_id}", response_model=Activity)
 async def update_activity(activity_id: str, activity: ActivityCreate):
     """Update activity (admin only)"""
-    existing = await activities_collection.find_one({"id": activity_id})
+    existing = await activities_collection.find_one({"id": activity_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Activity not found")
     
@@ -110,13 +110,13 @@ async def update_activity(activity_id: str, activity: ActivityCreate):
         {"$set": update_dict}
     )
     
-    updated = await activities_collection.find_one({"id": activity_id})
+    updated = await activities_collection.find_one({"id": activity_id}, {"_id": 0})
     return Activity(**updated)
 
 @router.patch("/activities/{activity_id}/visibility")
 async def toggle_activity_visibility(activity_id: str):
     """Toggle activity visibility (admin only)"""
-    existing = await activities_collection.find_one({"id": activity_id})
+    existing = await activities_collection.find_one({"id": activity_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Activity not found")
     
@@ -144,7 +144,7 @@ async def delete_activity(activity_id: str):
 @router.get("/bookings", response_model=List[Booking])
 async def get_bookings():
     """Get all bookings (admin only)"""
-    bookings = await bookings_collection.find().sort("created_at", -1).to_list(1000)
+    bookings = await bookings_collection.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return [Booking(**booking) for booking in bookings]
 
 @router.post("/bookings", response_model=Booking, status_code=status.HTTP_201_CREATED)
@@ -165,7 +165,7 @@ async def create_booking(booking: BookingCreate):
 @router.get("/bookings/{booking_id}", response_model=Booking)
 async def get_booking(booking_id: str):
     """Get single booking"""
-    booking = await bookings_collection.find_one({"id": booking_id})
+    booking = await bookings_collection.find_one({"id": booking_id}, {"_id": 0})
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
     return Booking(**booking)
@@ -184,14 +184,14 @@ async def update_booking_status(booking_id: str, status: str):
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Booking not found")
     
-    updated = await bookings_collection.find_one({"id": booking_id})
+    updated = await bookings_collection.find_one({"id": booking_id}, {"_id": 0})
     return Booking(**updated)
 
 # ==================== COMMITTEE ====================
 @router.get("/committee", response_model=List[CommitteeMember])
 async def get_committee():
     """Get all committee members"""
-    members = await committee_collection.find().sort("order", 1).to_list(1000)
+    members = await committee_collection.find({}, {"_id": 0}).sort("order", 1).to_list(1000)
     return [CommitteeMember(**member) for member in members]
 
 @router.post("/committee", response_model=CommitteeMember, status_code=status.HTTP_201_CREATED)
@@ -205,7 +205,7 @@ async def create_committee_member(member: CommitteeMemberCreate):
 @router.put("/committee/{member_id}", response_model=CommitteeMember)
 async def update_committee_member(member_id: str, member: CommitteeMemberCreate):
     """Update committee member (admin only)"""
-    existing = await committee_collection.find_one({"id": member_id})
+    existing = await committee_collection.find_one({"id": member_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Member not found")
     
@@ -217,7 +217,7 @@ async def update_committee_member(member_id: str, member: CommitteeMemberCreate)
         {"$set": update_dict}
     )
     
-    updated = await committee_collection.find_one({"id": member_id})
+    updated = await committee_collection.find_one({"id": member_id}, {"_id": 0})
     return CommitteeMember(**updated)
 
 @router.delete("/committee/{member_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -246,7 +246,7 @@ async def create_group(group: AssociatedGroupCreate):
 @router.put("/groups/{group_id}", response_model=AssociatedGroup)
 async def update_group(group_id: str, group: AssociatedGroupCreate):
     """Update associated group (admin only)"""
-    existing = await groups_collection.find_one({"id": group_id})
+    existing = await groups_collection.find_one({"id": group_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Group not found")
     
@@ -258,7 +258,7 @@ async def update_group(group_id: str, group: AssociatedGroupCreate):
         {"$set": update_dict}
     )
     
-    updated = await groups_collection.find_one({"id": group_id})
+    updated = await groups_collection.find_one({"id": group_id}, {"_id": 0})
     return AssociatedGroup(**updated)
 
 @router.delete("/groups/{group_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -301,7 +301,7 @@ async def get_news_article(news_id: str):
 @router.put("/news/{news_id}", response_model=NewsArticle)
 async def update_news(news_id: str, news: NewsArticleCreate):
     """Update news article (admin only)"""
-    existing = await news_collection.find_one({"id": news_id})
+    existing = await news_collection.find_one({"id": news_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="News article not found")
     
@@ -396,7 +396,7 @@ async def get_documents():
 async def create_document(document: GovernanceDocumentCreate):
     """Create governance document (admin only)"""
     # Get current max order
-    max_order_doc = await documents_collection.find_one(sort=[("order", -1)])
+    max_order_doc = await documents_collection.find_one({}, {"_id": 0}, sort=[("order", -1)])
     next_order = (max_order_doc.get("order", 0) + 1) if max_order_doc else 0
     
     document_dict = document.dict()
@@ -421,7 +421,7 @@ async def reorder_documents(request: DocumentReorderRequest):
 @router.put("/documents/{document_id}", response_model=GovernanceDocument)
 async def update_document(document_id: str, document: GovernanceDocumentCreate):
     """Update governance document (admin only)"""
-    existing = await documents_collection.find_one({"id": document_id})
+    existing = await documents_collection.find_one({"id": document_id}, {"_id": 0})
     if not existing:
         raise HTTPException(status_code=404, detail="Document not found")
     
