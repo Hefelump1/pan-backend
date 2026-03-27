@@ -39,7 +39,7 @@ export const AdminDashboard = () => {
       const token = localStorage.getItem('adminToken');
       const config = { headers: { Authorization: `Bearer ${token}` } };
 
-      const [eventsRes, bookingsRes, committeeRes, groupsRes, newsRes, activitiesRes] = await Promise.all([
+      const [eventsRes, bookingsRes, committeeRes, groupsRes, newsRes, activitiesRes] = await Promise.allSettled([
         axios.get(`${BACKEND_URL}/api/events`),
         axios.get(`${BACKEND_URL}/api/bookings`, config),
         axios.get(`${BACKEND_URL}/api/committee`),
@@ -48,19 +48,21 @@ export const AdminDashboard = () => {
         axios.get(`${BACKEND_URL}/api/activities`)
       ]);
 
-      const pendingCount = bookingsRes.data.filter(b => b.status === 'pending').length;
+      const getData = (result) => result.status === 'fulfilled' ? result.value.data : [];
+      const bookingsData = getData(bookingsRes);
+      const pendingCount = Array.isArray(bookingsData) ? bookingsData.filter(b => b.status === 'pending').length : 0;
 
       setStats({
-        events: eventsRes.data.length,
-        bookings: bookingsRes.data.length,
+        events: getData(eventsRes).length || 0,
+        bookings: bookingsData.length || 0,
         pendingBookings: pendingCount,
-        committee: committeeRes.data.length,
-        groups: groupsRes.data.length,
-        news: newsRes.data.length,
-        activities: activitiesRes.data.length
+        committee: getData(committeeRes).length || 0,
+        groups: getData(groupsRes).length || 0,
+        news: getData(newsRes).length || 0,
+        activities: getData(activitiesRes).length || 0
       });
 
-      setRecentBookings(bookingsRes.data.slice(0, 5));
+      setRecentBookings(Array.isArray(bookingsData) ? bookingsData.slice(0, 5) : []);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
       if (error.response?.status === 401) {
