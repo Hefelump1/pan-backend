@@ -99,7 +99,7 @@ class Booking(BaseModel):
     email: str
     phone: str
     event_type: str
-    date: Optional[str] = None
+    date: str = "Not specified"
     guests: int
     message: Optional[str] = None
     status: str = "pending"
@@ -110,7 +110,7 @@ class BookingCreate(BaseModel):
     email: str
     phone: str
     event_type: str
-    date: Optional[str] = None
+    date: str = "Not specified"
     guests: int
     message: Optional[str] = None
 

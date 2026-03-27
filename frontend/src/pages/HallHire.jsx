@@ -64,7 +64,7 @@ export const HallHire = () => {
         phone: formData.phone,
         event_type: formData.eventType,
         guests: parseInt(formData.guests),
-        date: selectedDate ? selectedDate.toISOString().split('T')[0] : null,
+        date: selectedDate ? selectedDate.toISOString().split('T')[0] : 'Not specified',
         message: formData.message
       };
       
