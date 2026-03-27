@@ -1,17 +1,15 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import Response
-import os
 import uuid
 from pathlib import Path
 import base64
 
 upload_router = APIRouter(prefix="/api", tags=["uploads"])
 
-# Allowed file extensions
 ALLOWED_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'}
 ALLOWED_DOCUMENT_EXTENSIONS = {'.pdf', '.doc', '.docx'}
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
-MAX_DOCUMENT_SIZE = 50 * 1024 * 1024  # 50MB for documents
+MAX_FILE_SIZE = 10 * 1024 * 1024
+MAX_DOCUMENT_SIZE = 50 * 1024 * 1024
 
 CONTENT_TYPES = {
     '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
@@ -20,89 +18,69 @@ CONTENT_TYPES = {
     '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 }
 
-def get_db():
+def get_files_collection():
     from models import get_database
-    return get_database()
-
-def get_file_extension(filename: str) -> str:
-    return Path(filename).suffix.lower()
+    db = get_database()
+    return db['uploaded_files']
 
 @upload_router.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    """Upload an image file and store it in MongoDB"""
-    ext = get_file_extension(file.filename)
+    ext = Path(file.filename).suffix.lower()
     if ext not in ALLOWED_IMAGE_EXTENSIONS:
-        raise HTTPException(status_code=400, detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_IMAGE_EXTENSIONS)}")
+        raise HTTPException(status_code=400, detail=f"File type not allowed.")
 
     await file.seek(0)
     content = await file.read()
-    file_size = len(content)
-
-    if file_size > MAX_FILE_SIZE:
-        raise HTTPException(status_code=400, detail=f"File too large. Maximum size is {MAX_FILE_SIZE // (1024*1024)}MB")
+    if len(content) > MAX_FILE_SIZE:
+        raise HTTPException(status_code=400, detail="File too large.")
 
     unique_filename = f"{uuid.uuid4()}{ext}"
     content_type = CONTENT_TYPES.get(ext, file.content_type)
 
-    db = get_db()
-    db.uploaded_files.insert_one({
+    collection = get_files_collection()
+    await collection.insert_one({
         "filename": unique_filename,
         "content": base64.b64encode(content).decode('utf-8'),
         "content_type": content_type,
-        "size": file_size,
+        "size": len(content),
         "original_name": file.filename
     })
 
-    return {
-        "filename": unique_filename,
-        "url": f"/api/uploads/{unique_filename}",
-        "size": file_size,
-        "content_type": content_type
-    }
+    return {"filename": unique_filename, "url": f"/api/uploads/{unique_filename}", "size": len(content), "content_type": content_type}
 
 @upload_router.post("/upload/document")
 async def upload_document(file: UploadFile = File(...)):
-    """Upload a document file and store it in MongoDB"""
-    ext = get_file_extension(file.filename)
+    ext = Path(file.filename).suffix.lower()
     if ext not in ALLOWED_DOCUMENT_EXTENSIONS:
-        raise HTTPException(status_code=400, detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_DOCUMENT_EXTENSIONS)}")
+        raise HTTPException(status_code=400, detail="File type not allowed.")
 
     await file.seek(0)
     content = await file.read()
-    file_size = len(content)
-
-    if file_size > MAX_DOCUMENT_SIZE:
-        raise HTTPException(status_code=400, detail=f"File too large. Maximum size is {MAX_DOCUMENT_SIZE // (1024*1024)}MB")
+    if len(content) > MAX_DOCUMENT_SIZE:
+        raise HTTPException(status_code=400, detail="File too large.")
 
     original_name = Path(file.filename).stem
     unique_filename = f"{uuid.uuid4()}_{original_name}{ext}"
     content_type = CONTENT_TYPES.get(ext, file.content_type)
 
-    db = get_db()
-    db.uploaded_files.insert_one({
+    collection = get_files_collection()
+    await collection.insert_one({
         "filename": unique_filename,
         "content": base64.b64encode(content).decode('utf-8'),
         "content_type": content_type,
-        "size": file_size,
+        "size": len(content),
         "original_name": file.filename
     })
 
-    return {
-        "filename": unique_filename,
-        "original_name": file.filename,
-        "url": f"/api/uploads/{unique_filename}",
-        "size": file_size,
-        "content_type": content_type
-    }
+    return {"filename": unique_filename, "original_name": file.filename, "url": f"/api/uploads/{unique_filename}", "size": len(content), "content_type": content_type}
 
 @upload_router.get("/uploads/{filename}")
 async def serve_file(filename: str):
-    """Serve an uploaded file from MongoDB"""
     if ".." in filename or "/" in filename or "\\" in filename:
         raise HTTPException(status_code=400, detail="Invalid filename")
 
-    db = get_db()
-    file_doc = db.uploaded_files.find_one({"filename": filename}, {"_id": 0})
+    collection = get_files_collection()
+    file_doc = await collection.find_one({"filename": filename}, {"_id": 0})
 
     if not file_doc:
         raise HTTPException(status_code=404, detail="File not found")
@@ -110,20 +88,15 @@ async def serve_file(filename: str):
     content = base64.b64decode(file_doc["content"])
     content_type = file_doc.get("content_type", "application/octet-stream")
 
-    return Response(
-        content=content,
-        media_type=content_type,
-        headers={"Cache-Control": "public, max-age=31536000"}
-    )
+    return Response(content=content, media_type=content_type, headers={"Cache-Control": "public, max-age=31536000"})
 
 @upload_router.delete("/upload/{filename}")
 async def delete_image(filename: str):
-    """Delete an uploaded file from MongoDB"""
     if ".." in filename or "/" in filename or "\\" in filename:
         raise HTTPException(status_code=400, detail="Invalid filename")
 
-    db = get_db()
-    result = db.uploaded_files.delete_one({"filename": filename})
+    collection = get_files_collection()
+    result = await collection.delete_one({"filename": filename})
 
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="File not found")
