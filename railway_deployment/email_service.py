@@ -53,19 +53,46 @@ def send_email(to_email: str, subject: str, html_body: str, text_body: str = Non
         part2 = MIMEText(html_body, 'html')
         msg.attach(part2)
         
-        # Connect and send
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as server:
-            # Try STARTTLS if available
-            try:
-                server.starttls()
-            except smtplib.SMTPException:
-                # Server might not support STARTTLS, continue without it
-                pass
-            
-            server.login(SMTP_USERNAME, SMTP_PASSWORD)
-            server.sendmail(SMTP_FROM_EMAIL, to_email, msg.as_string())
+        # Connect and send - try port 587 (STARTTLS) first, then SSL 465, then original
+        sent = False
+        ports_to_try = []
         
-        logger.info(f"Email sent successfully to {to_email}")
+        if SMTP_PORT == 587:
+            ports_to_try = [(587, 'starttls'), (465, 'ssl')]
+        elif SMTP_PORT == 465:
+            ports_to_try = [(465, 'ssl'), (587, 'starttls')]
+        elif SMTP_PORT == 25:
+            ports_to_try = [(587, 'starttls'), (465, 'ssl'), (25, 'starttls')]
+        else:
+            ports_to_try = [(SMTP_PORT, 'starttls'), (587, 'starttls'), (465, 'ssl')]
+        
+        for port, method in ports_to_try:
+            try:
+                if method == 'ssl':
+                    with smtplib.SMTP_SSL(SMTP_HOST, port, timeout=30) as server:
+                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                        server.sendmail(SMTP_FROM_EMAIL, to_email, msg.as_string())
+                else:
+                    with smtplib.SMTP(SMTP_HOST, port, timeout=30) as server:
+                        server.ehlo()
+                        try:
+                            server.starttls()
+                            server.ehlo()
+                        except smtplib.SMTPException:
+                            pass
+                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                        server.sendmail(SMTP_FROM_EMAIL, to_email, msg.as_string())
+                sent = True
+                logger.info(f"Email sent successfully to {to_email} via port {port}")
+                break
+            except Exception as e:
+                logger.warning(f"Failed to send email via port {port}: {e}")
+                continue
+        
+        if not sent:
+            logger.error(f"Failed to send email to {to_email} - all ports failed")
+            return False
+        
         return True
         
     except smtplib.SMTPAuthenticationError as e:
