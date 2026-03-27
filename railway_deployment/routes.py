@@ -168,20 +168,17 @@ async def create_booking(booking: BookingCreate):
             if not relay_url or not notification_email:
                 logging.warning("EMAIL_RELAY_URL or NOTIFICATION_EMAIL not configured")
                 return
-            subject = f"New Hall Hire Enquiry from {data.get('name', 'Unknown')}"
-            html = f"""<h2>New Hall Hire Enquiry</h2>
-            <p><strong>Name:</strong> {data.get('name','')}</p>
-            <p><strong>Email:</strong> {data.get('email','')}</p>
-            <p><strong>Phone:</strong> {data.get('phone','')}</p>
-            <p><strong>Event Type:</strong> {data.get('event_type','')}</p>
-            <p><strong>Date:</strong> {data.get('date','Not specified')}</p>
-            <p><strong>Guests:</strong> {data.get('guests','')}</p>
-            <p><strong>Message:</strong> {data.get('message','')}</p>"""
             resp = req.post(relay_url, json={
                 "to": notification_email,
-                "subject": subject,
-                "html_body": html
-            }, headers={"X-API-Key": relay_key}, timeout=15)
+                "subject": f"New Hall Hire Enquiry from {data.get('name', 'Unknown')}",
+                "booking_name": data.get('name', ''),
+                "booking_email": data.get('email', ''),
+                "booking_phone": data.get('phone', ''),
+                "booking_event_type": data.get('event_type', ''),
+                "booking_date": data.get('date', 'Not specified'),
+                "booking_guests": str(data.get('guests', '')),
+                "booking_message": data.get('message', '')
+            }, headers={"X-API-Key": relay_key, "User-Agent": "PAN-Backend/2.1"}, timeout=15)
             logging.info(f"Email relay response: {resp.status_code}")
         except Exception as e:
             logging.error(f"Email relay failed: {e}")
