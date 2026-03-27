@@ -45,8 +45,8 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "service": "Polish Association API"}
+    return {"status": "healthy", "service": "Polish Association API", "version": "2.1"}
 
 @app.get("/api/health")
 async def api_health_check():
-    return {"status": "healthy", "service": "Polish Association API"}
+    return {"status": "healthy", "service": "Polish Association API", "version": "2.1"}
