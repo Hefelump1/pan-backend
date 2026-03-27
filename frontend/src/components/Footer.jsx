@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Facebook } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { t } from '../translations/translations';
 
@@ -75,6 +75,10 @@ export const Footer = () => {
                 <Mail size={18} className="text-red-400 flex-shrink-0" />
                 <span className="text-sm">admin@polishassociationnewcastle.org.au</span>
               </li>
+              <li className="flex items-center space-x-3">
+                <Facebook size={18} className="text-red-400 flex-shrink-0" />
+                <a href="https://www.facebook.com/polishassociationnewcastle" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-red-400 transition-colors duration-200">Facebook</a>
+              </li>
             </ul>
           </div>
 
@@ -105,14 +109,6 @@ export const Footer = () => {
             <p className="text-sm text-center md:text-left">
               © {new Date().getFullYear()} Polish Association of Newcastle. {t(language, 'footer.allRights')}.
             </p>
-            <div className="flex space-x-6">
-              <Link to="/constitution" className="text-sm hover:text-red-400 transition-colors duration-200">
-                {t(language, 'footer.privacy')}
-              </Link>
-              <Link to="/constitution" className="text-sm hover:text-red-400 transition-colors duration-200">
-                {t(language, 'footer.terms')}
-              </Link>
-            </div>
           </div>
         </div>
       </div>
