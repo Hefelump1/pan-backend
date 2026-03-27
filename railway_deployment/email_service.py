@@ -1,99 +1,50 @@
 """
-Email service for sending notifications via SMTP
+Email service for sending notifications via HTTP relay
 """
-import smtplib
 import os
 import logging
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import requests
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-# SMTP Configuration
-SMTP_HOST = os.environ.get('SMTP_HOST', '')
-SMTP_PORT = int(os.environ.get('SMTP_PORT', 25))
-SMTP_USERNAME = os.environ.get('SMTP_USERNAME', '')
-SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '')
+# Email relay configuration
+EMAIL_RELAY_URL = os.environ.get('EMAIL_RELAY_URL', '')
+EMAIL_RELAY_KEY = os.environ.get('EMAIL_RELAY_KEY', 'PAN_EMAIL_RELAY_2026_SECRET')
 SMTP_FROM_EMAIL = os.environ.get('SMTP_FROM_EMAIL', '')
 SMTP_FROM_NAME = os.environ.get('SMTP_FROM_NAME', 'Polish Association of Newcastle')
 NOTIFICATION_EMAIL = os.environ.get('NOTIFICATION_EMAIL', '')
 
 
 def send_email(to_email: str, subject: str, html_body: str, text_body: str = None) -> bool:
-    """
-    Send an email via SMTP
-    
-    Args:
-        to_email: Recipient email address
-        subject: Email subject
-        html_body: HTML content of the email
-        text_body: Plain text fallback (optional)
-    
-    Returns:
-        True if email sent successfully, False otherwise
-    """
-    if not all([SMTP_HOST, SMTP_USERNAME, SMTP_PASSWORD, SMTP_FROM_EMAIL]):
-        logger.warning("SMTP not configured - email not sent")
+    """Send an email via HTTP relay on Vodien"""
+    if not EMAIL_RELAY_URL:
+        logger.warning("EMAIL_RELAY_URL not configured - email not sent")
         return False
     
     try:
-        # Create message
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = subject
-        msg['From'] = f"{SMTP_FROM_NAME} <{SMTP_FROM_EMAIL}>"
-        msg['To'] = to_email
+        response = requests.post(
+            EMAIL_RELAY_URL,
+            json={
+                "to": to_email,
+                "subject": subject,
+                "html_body": html_body,
+                "from_name": SMTP_FROM_NAME,
+                "from_email": SMTP_FROM_EMAIL
+            },
+            headers={"X-API-Key": EMAIL_RELAY_KEY},
+            timeout=15
+        )
         
-        # Add plain text version if provided
-        if text_body:
-            part1 = MIMEText(text_body, 'plain')
-            msg.attach(part1)
-        
-        # Add HTML version
-        part2 = MIMEText(html_body, 'html')
-        msg.attach(part2)
-        
-        # Connect and send - try port 587 (STARTTLS) first, then SSL 465, then original
-        sent = False
-        ports_to_try = []
-        
-        if SMTP_PORT == 587:
-            ports_to_try = [(587, 'starttls'), (465, 'ssl')]
-        elif SMTP_PORT == 465:
-            ports_to_try = [(465, 'ssl'), (587, 'starttls')]
-        elif SMTP_PORT == 25:
-            ports_to_try = [(587, 'starttls'), (465, 'ssl'), (25, 'starttls')]
+        if response.status_code == 200:
+            logger.info(f"Email sent successfully to {to_email}")
+            return True
         else:
-            ports_to_try = [(SMTP_PORT, 'starttls'), (587, 'starttls'), (465, 'ssl')]
-        
-        for port, method in ports_to_try:
-            try:
-                if method == 'ssl':
-                    with smtplib.SMTP_SSL(SMTP_HOST, port, timeout=30) as server:
-                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                        server.sendmail(SMTP_FROM_EMAIL, to_email, msg.as_string())
-                else:
-                    with smtplib.SMTP(SMTP_HOST, port, timeout=30) as server:
-                        server.ehlo()
-                        try:
-                            server.starttls()
-                            server.ehlo()
-                        except smtplib.SMTPException:
-                            pass
-                        server.login(SMTP_USERNAME, SMTP_PASSWORD)
-                        server.sendmail(SMTP_FROM_EMAIL, to_email, msg.as_string())
-                sent = True
-                logger.info(f"Email sent successfully to {to_email} via port {port}")
-                break
-            except Exception as e:
-                logger.warning(f"Failed to send email via port {port}: {e}")
-                continue
-        
-        if not sent:
-            logger.error(f"Failed to send email to {to_email} - all ports failed")
+            logger.error(f"Email relay returned {response.status_code}: {response.text}")
             return False
-        
-        return True
+    except Exception as e:
+        logger.error(f"Failed to send email via relay: {e}")
+        return False
         
     except smtplib.SMTPAuthenticationError as e:
         logger.error(f"SMTP Authentication failed: {e}")

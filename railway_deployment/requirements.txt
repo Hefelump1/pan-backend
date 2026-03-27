@@ -25,3 +25,4 @@ python-dotenv==1.2.1
 
 # HTTP
 httpx==0.28.1
+requests==2.32.3
