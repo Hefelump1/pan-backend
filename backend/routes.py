@@ -150,19 +150,15 @@ async def get_bookings():
 @router.post("/bookings", response_model=Booking, status_code=status.HTTP_201_CREATED)
 async def create_booking(booking: BookingCreate):
     """Create hall booking enquiry and send email notification"""
+    import threading
     from email_service import send_booking_notification
     
     booking_dict = booking.dict()
     booking_obj = Booking(**booking_dict)
     await bookings_collection.insert_one(booking_obj.dict())
     
-    # Send email notification (non-blocking - don't fail the request if email fails)
-    try:
-        send_booking_notification(booking_obj.dict())
-    except Exception as e:
-        # Log the error but don't fail the booking creation
-        import logging
-        logging.error(f"Failed to send booking notification email: {e}")
+    # Send email in background thread so the response returns instantly
+    threading.Thread(target=send_booking_notification, args=(booking_obj.dict(),), daemon=True).start()
     
     return booking_obj
 

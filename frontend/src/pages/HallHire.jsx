@@ -20,6 +20,7 @@ export const HallHire = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', eventType: '', guests: '', message: '' });
   const [hallImages, setHallImages] = useState(defaultHallImages);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     fetchHallImages();
@@ -55,6 +56,7 @@ export const HallHire = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
       const bookingData = {
         name: formData.name,
@@ -74,6 +76,8 @@ export const HallHire = () => {
     } catch (error) {
       console.error('Error submitting booking:', error);
       toast.error(t(language, 'hallHire.errorToast'));
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -207,9 +211,9 @@ export const HallHire = () => {
                   <textarea rows="3" value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder={t(language, 'hallHire.messagePlaceholder')} />
                 </div>
-                <button type="submit" className="w-full bg-red-600 text-white font-semibold py-4 px-6 rounded-lg hover:bg-red-700 transition-all duration-300 flex items-center justify-center">
+                <button type="submit" disabled={submitting} className="w-full bg-red-600 text-white font-semibold py-4 px-6 rounded-lg hover:bg-red-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" data-testid="hall-hire-submit">
                   <Send size={20} className="mr-2" />
-                  {t(language, 'hallHire.submit')}
+                  {submitting ? (language === 'pl' ? 'Wysyłanie...' : 'Submitting...') : t(language, 'hallHire.submit')}
                 </button>
               </form>
             </div>
