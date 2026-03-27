@@ -159,6 +159,8 @@ async def create_booking(booking: BookingCreate):
     # Send email via HTTP relay (bypasses Railway SMTP block)
     def send_booking_email(data):
         try:
+            import os
+            import logging
             import requests as req
             relay_url = os.environ.get('EMAIL_RELAY_URL', '')
             relay_key = os.environ.get('EMAIL_RELAY_KEY', 'PAN_EMAIL_RELAY_2026_SECRET')
