@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 import os
@@ -17,13 +16,6 @@ from upload_routes import upload_router
 
 # Create the main app
 app = FastAPI(title="Polish Association of Newcastle API", version="1.0.0")
-
-# Create uploads directory if it doesn't exist
-UPLOAD_DIR = ROOT_DIR / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
-
-# Mount static files for uploads
-app.mount("/api/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 # Include API routes
 app.include_router(router)

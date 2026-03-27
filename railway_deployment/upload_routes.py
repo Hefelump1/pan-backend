@@ -1,15 +1,11 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import Response
 import os
 import uuid
-import shutil
 from pathlib import Path
+import base64
 
 upload_router = APIRouter(prefix="/api", tags=["uploads"])
-
-# Create uploads directory if it doesn't exist
-UPLOAD_DIR = Path(__file__).parent / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
 
 # Allowed file extensions
 ALLOWED_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'}
@@ -17,114 +13,119 @@ ALLOWED_DOCUMENT_EXTENSIONS = {'.pdf', '.doc', '.docx'}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 MAX_DOCUMENT_SIZE = 50 * 1024 * 1024  # 50MB for documents
 
+CONTENT_TYPES = {
+    '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
+    '.gif': 'image/gif', '.webp': 'image/webp', '.svg': 'image/svg+xml',
+    '.pdf': 'application/pdf', '.doc': 'application/msword',
+    '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+}
+
+def get_db():
+    from models import get_database
+    return get_database()
+
 def get_file_extension(filename: str) -> str:
     return Path(filename).suffix.lower()
 
 @upload_router.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    """Upload an image file and return its URL"""
-    
-    # Validate file extension
+    """Upload an image file and store it in MongoDB"""
     ext = get_file_extension(file.filename)
     if ext not in ALLOWED_IMAGE_EXTENSIONS:
-        raise HTTPException(
-            status_code=400,
-            detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_IMAGE_EXTENSIONS)}"
-        )
-    
-    # Reset file position
+        raise HTTPException(status_code=400, detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_IMAGE_EXTENSIONS)}")
+
     await file.seek(0)
-    
-    # Read file content
     content = await file.read()
     file_size = len(content)
-    
+
     if file_size > MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"File too large. Maximum size is {MAX_FILE_SIZE // (1024*1024)}MB"
-        )
-    
-    # Generate unique filename
+        raise HTTPException(status_code=400, detail=f"File too large. Maximum size is {MAX_FILE_SIZE // (1024*1024)}MB")
+
     unique_filename = f"{uuid.uuid4()}{ext}"
-    file_path = UPLOAD_DIR / unique_filename
-    
-    # Save file
-    try:
-        with open(file_path, "wb") as buffer:
-            buffer.write(content)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save file: {str(e)}")
-    
-    # Return the URL path (will be served by static files)
+    content_type = CONTENT_TYPES.get(ext, file.content_type)
+
+    db = get_db()
+    db.uploaded_files.insert_one({
+        "filename": unique_filename,
+        "content": base64.b64encode(content).decode('utf-8'),
+        "content_type": content_type,
+        "size": file_size,
+        "original_name": file.filename
+    })
+
     return {
         "filename": unique_filename,
         "url": f"/api/uploads/{unique_filename}",
         "size": file_size,
-        "content_type": file.content_type
+        "content_type": content_type
     }
-
 
 @upload_router.post("/upload/document")
 async def upload_document(file: UploadFile = File(...)):
-    """Upload a document file (PDF, DOC, DOCX) and return its URL"""
-    
-    # Validate file extension
+    """Upload a document file and store it in MongoDB"""
     ext = get_file_extension(file.filename)
     if ext not in ALLOWED_DOCUMENT_EXTENSIONS:
-        raise HTTPException(
-            status_code=400,
-            detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_DOCUMENT_EXTENSIONS)}"
-        )
-    
-    # Reset file position
+        raise HTTPException(status_code=400, detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_DOCUMENT_EXTENSIONS)}")
+
     await file.seek(0)
-    
-    # Read file content
     content = await file.read()
     file_size = len(content)
-    
+
     if file_size > MAX_DOCUMENT_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"File too large. Maximum size is {MAX_DOCUMENT_SIZE // (1024*1024)}MB"
-        )
-    
-    # Generate unique filename preserving original name for reference
+        raise HTTPException(status_code=400, detail=f"File too large. Maximum size is {MAX_DOCUMENT_SIZE // (1024*1024)}MB")
+
     original_name = Path(file.filename).stem
     unique_filename = f"{uuid.uuid4()}_{original_name}{ext}"
-    file_path = UPLOAD_DIR / unique_filename
-    
-    # Save file
-    try:
-        with open(file_path, "wb") as buffer:
-            buffer.write(content)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save file: {str(e)}")
-    
-    # Return the URL path (will be served by static files)
+    content_type = CONTENT_TYPES.get(ext, file.content_type)
+
+    db = get_db()
+    db.uploaded_files.insert_one({
+        "filename": unique_filename,
+        "content": base64.b64encode(content).decode('utf-8'),
+        "content_type": content_type,
+        "size": file_size,
+        "original_name": file.filename
+    })
+
     return {
         "filename": unique_filename,
         "original_name": file.filename,
         "url": f"/api/uploads/{unique_filename}",
         "size": file_size,
-        "content_type": file.content_type
+        "content_type": content_type
     }
+
+@upload_router.get("/uploads/{filename}")
+async def serve_file(filename: str):
+    """Serve an uploaded file from MongoDB"""
+    if ".." in filename or "/" in filename or "\\" in filename:
+        raise HTTPException(status_code=400, detail="Invalid filename")
+
+    db = get_db()
+    file_doc = db.uploaded_files.find_one({"filename": filename}, {"_id": 0})
+
+    if not file_doc:
+        raise HTTPException(status_code=404, detail="File not found")
+
+    content = base64.b64decode(file_doc["content"])
+    content_type = file_doc.get("content_type", "application/octet-stream")
+
+    return Response(
+        content=content,
+        media_type=content_type,
+        headers={"Cache-Control": "public, max-age=31536000"}
+    )
 
 @upload_router.delete("/upload/{filename}")
 async def delete_image(filename: str):
-    """Delete an uploaded image"""
-    file_path = UPLOAD_DIR / filename
-    
-    # Security check - ensure filename doesn't contain path traversal
+    """Delete an uploaded file from MongoDB"""
     if ".." in filename or "/" in filename or "\\" in filename:
         raise HTTPException(status_code=400, detail="Invalid filename")
-    
-    if not file_path.exists():
+
+    db = get_db()
+    result = db.uploaded_files.delete_one({"filename": filename})
+
+    if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="File not found")
-    
-    try:
-        file_path.unlink()
-        return {"message": "File deleted successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete file: {str(e)}")
+
+    return {"message": "File deleted successfully"}
