@@ -24,6 +24,7 @@ import { AdminHomePage } from "./pages/AdminHomePage";
 import { AdminHallHire } from "./pages/AdminHallHire";
 import { AdminDocuments } from "./pages/AdminDocuments";
 import { AdminAGM } from "./pages/AdminAGM";
+import { AdminUsefulLinks } from "./pages/AdminUsefulLinks";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
             <Route path="/admin/hallhire" element={<AdminHallHire />} />
             <Route path="/admin/documents" element={<AdminDocuments />} />
             <Route path="/admin/agm" element={<AdminAGM />} />
+            <Route path="/admin/useful-links" element={<AdminUsefulLinks />} />
             
             {/* Catch-all redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />

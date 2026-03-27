@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { 
   Calendar, Users, Building2, BookOpen, LogOut, Plus, 
   CheckCircle, XCircle, Clock, TrendingUp, Newspaper, UsersRound, Home, ClipboardList,
-  Settings, Key, X, Eye, EyeOff, FileText
+  Settings, Key, X, Eye, EyeOff, FileText, LinkIcon
 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -342,6 +342,20 @@ export const AdminDashboard = () => {
               </div>
               <h3 className="font-bold text-gray-900 mb-1">Committee</h3>
               <p className="text-sm text-gray-600">{stats.committee} members</p>
+            </Link>
+
+            <Link
+              to="/admin/useful-links"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 group"
+              data-testid="manage-useful-links-link"
+            >
+              <div className="flex items-center mb-3">
+                <div className="p-3 bg-teal-100 rounded-lg group-hover:bg-teal-200 transition-colors">
+                  <LinkIcon size={24} className="text-teal-600" />
+                </div>
+              </div>
+              <h3 className="font-bold text-gray-900 mb-1">Useful Links</h3>
+              <p className="text-sm text-gray-600">Manage governance page links</p>
             </Link>
 
             <Link

@@ -8,7 +8,8 @@ from models import (
     AssociatedGroup, AssociatedGroupCreate, groups_collection,
     NewsArticle, NewsArticleCreate, news_collection,
     SiteSettings, SiteSettingsUpdate, settings_collection,
-    GovernanceDocument, GovernanceDocumentCreate, documents_collection
+    GovernanceDocument, GovernanceDocumentCreate, documents_collection,
+    UsefulLink, UsefulLinkCreate, useful_links_collection
 )
 from datetime import datetime
 import uuid
@@ -442,4 +443,35 @@ async def delete_document(document_id: str):
     result = await documents_collection.delete_one({"id": document_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Document not found")
+    return None
+
+
+# ==================== USEFUL LINKS ====================
+
+@router.get("/useful-links", response_model=List[UsefulLink])
+async def get_useful_links():
+    links = await useful_links_collection.find({}, {"_id": 0}).sort("order", 1).to_list(100)
+    return [UsefulLink(**link) for link in links]
+
+@router.post("/useful-links", response_model=UsefulLink, status_code=status.HTTP_201_CREATED)
+async def create_useful_link(link: UsefulLinkCreate):
+    link_obj = UsefulLink(**link.dict())
+    await useful_links_collection.insert_one(link_obj.dict())
+    return link_obj
+
+@router.put("/useful-links/{link_id}", response_model=UsefulLink)
+async def update_useful_link(link_id: str, link: UsefulLinkCreate):
+    existing = await useful_links_collection.find_one({"id": link_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Link not found")
+    update_dict = link.dict()
+    await useful_links_collection.update_one({"id": link_id}, {"$set": update_dict})
+    updated = await useful_links_collection.find_one({"id": link_id}, {"_id": 0})
+    return UsefulLink(**updated)
+
+@router.delete("/useful-links/{link_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_useful_link(link_id: str):
+    result = await useful_links_collection.delete_one({"id": link_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Link not found")
     return None

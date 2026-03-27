@@ -292,6 +292,20 @@ class GovernanceDocumentCreate(BaseModel):
     file_size: int = 0
     order: int = 0
 
+class UsefulLink(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name_en: str
+    name_pl: Optional[str] = None
+    url: str
+    order: int = 0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class UsefulLinkCreate(BaseModel):
+    name_en: str
+    name_pl: Optional[str] = None
+    url: str
+    order: int = 0
+
 # Collections - these now use lazy loading
 events_collection = db['events']
 activities_collection = db['activities']
@@ -302,3 +316,4 @@ admin_users_collection = db['admin_users']
 news_collection = db['news']
 settings_collection = db['settings']
 documents_collection = db['governance_documents']
+useful_links_collection = db['useful_links']

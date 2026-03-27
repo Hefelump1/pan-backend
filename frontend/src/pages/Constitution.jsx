@@ -6,31 +6,24 @@ import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const usefulLinks = [
-  { name_en: 'Federation of Polish Organisations in NSW', name_pl: 'Federacja Polskich Organizacji w NSW', url: 'https://www.polishfederation.org.au/' },
-  { name_en: 'Polish Community Council in Australia', name_pl: 'Rada Polonii Australijskiej', url: 'https://www.polishcommunitycouncil.org.au/' },
-  { name_en: 'Embassy of Poland', name_pl: 'Ambasada RP', url: 'https://www.gov.pl/web/australia' },
-  { name_en: 'Consulate General of Poland', name_pl: 'Konsulat Generalny RP', url: 'https://www.gov.pl/web/australia' },
-  { name_en: 'Link to Poland', name_pl: 'Link to Poland', url: 'https://linktopoland.com/' },
-  { name_en: 'Mt Kosciuszko Inc.', name_pl: 'Mt Kosciuszko Inc.', url: 'https://mtkosciuszko.org.au/' },
-  { name_en: 'Polish Australian Business Forum', name_pl: 'Polsko-Australijskie Forum Biznesu', url: 'https://pabf.org.au/' }
-];
-
 export const Constitution = () => {
   const { language } = useLanguage();
   const [documents, setDocuments] = useState([]);
   const [settings, setSettings] = useState(null);
+  const [usefulLinks, setUsefulLinks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [docsResponse, settingsResponse] = await Promise.all([
+        const [docsResponse, settingsResponse, linksResponse] = await Promise.allSettled([
           axios.get(`${BACKEND_URL}/api/documents`),
-          axios.get(`${BACKEND_URL}/api/settings`)
+          axios.get(`${BACKEND_URL}/api/settings`),
+          axios.get(`${BACKEND_URL}/api/useful-links`)
         ]);
-        setDocuments(docsResponse.data);
-        setSettings(settingsResponse.data);
+        if (docsResponse.status === 'fulfilled') setDocuments(docsResponse.value.data);
+        if (settingsResponse.status === 'fulfilled') setSettings(settingsResponse.value.data);
+        if (linksResponse.status === 'fulfilled') setUsefulLinks(linksResponse.value.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
